@@ -1,0 +1,25 @@
+{
+	"name": "qpdb/html-builder",
+	"type": "library",
+	"description": "php Html builder",
+	"keywords": [
+		"html",
+		"builder"
+	],
+	"license": "MIT",
+	"authors": [
+		{
+			"name": "Adrian Dumitru",
+			"email": "adrian.dumitru.68@gmail.com",
+			"role": "Developer"
+		}
+	],
+	"require": {
+		"php": ">=5.6"
+	},
+	"autoload": {
+		"psr-4": {
+			"Qpdb\\HtmlBuilder\\": "src/"
+		}
+	}
+}
