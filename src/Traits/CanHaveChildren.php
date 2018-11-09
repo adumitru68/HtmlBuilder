@@ -22,6 +22,19 @@ trait CanHaveChildren
 {
 
 	/**
+	 * @var HtmlElementInterface[]|string[]
+	 */
+	protected $htmlElements = [];
+
+	/**
+	 * @return bool
+	 */
+	protected function isContainer()
+	{
+		return true;
+	}
+
+	/**
 	 * @param HtmlElementInterface $html
 	 * @return $this
 	 */

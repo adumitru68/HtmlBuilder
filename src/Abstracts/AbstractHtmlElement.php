@@ -11,59 +11,42 @@ namespace Qpdb\HtmlBuilder\Abstracts;
 use Qpdb\Common\Helpers\Strings;
 use Qpdb\HtmlBuilder\Exceptions\HtmlBuilderException;
 use Qpdb\HtmlBuilder\Interfaces\HtmlElementInterface;
+use Qpdb\HtmlBuilder\Traits\MarkupGenerator;
 
-abstract class AbstractHtmlElement
+abstract class AbstractHtmlElement implements HtmlElementInterface
 {
+
+	//use MarkupGenerator;
 
 	const ATTRIBUTE_ID = 'id';
 	const ATTRIBUTE_NAME = 'name';
+	const ATTRIBUTE_VALUE = 'value';
 	const ATTRIBUTE_CLASS = 'class';
 	const ATTRIBUTE_STYLE = 'style';
 
 	/**
-	 * @var string
-	 */
-	protected $id;
-
-	/**
 	 * @var array
 	 */
-	protected $classes = [];
-
-	/**
-	 * @var array
-	 */
-	protected $styles = [];
-
-	/**
-	 * @var array
-	 */
-	protected $attributes = [];
-
-	/**
-	 * @var HtmlElementInterface[]|string[]
-	 */
-	protected $htmlElements = [];
-
-	/**
-	 * @var string
-	 */
-	protected $endLine = '';
-
-	/**
-	 * @var string
-	 */
-	protected $indentLine = '\t';
+	protected $attributes = [
+		self::ATTRIBUTE_ID => null,
+		self::ATTRIBUTE_CLASS => [],
+		self::ATTRIBUTE_STYLE => []
+	];
 
 	/**
 	 * @var array
 	 */
 	protected $specialAttributes = [
 		self::ATTRIBUTE_ID,
-		self::ATTRIBUTE_NAME,
 		self::ATTRIBUTE_CLASS,
 		self::ATTRIBUTE_STYLE
 	];
+
+
+	/**
+	 * @var HtmlElementInterface[]|string[]
+	 */
+	protected $htmlElements = [];
 
 	/**
 	 * @return string||null
@@ -73,7 +56,11 @@ abstract class AbstractHtmlElement
 	/**
 	 * @return bool
 	 */
-	abstract protected function isContainer();
+	protected function isContainer()
+	{
+		return false;
+	}
+
 
 	/**
 	 * @param $id string
@@ -81,7 +68,7 @@ abstract class AbstractHtmlElement
 	 */
 	public function withId( $id )
 	{
-		$this->id = $id;
+		$this->attributes[ self::ATTRIBUTE_ID ] = $id;
 
 		return $this;
 	}
@@ -100,9 +87,9 @@ abstract class AbstractHtmlElement
 				if ( empty( $item ) ) {
 					continue;
 				}
-				$this->classes[] = $item;
+				$this->attributes[ self::ATTRIBUTE_CLASS ][] = $item;
 			}
-			$this->classes = array_values( array_unique( $this->classes ) );
+			$this->attributes[ self::ATTRIBUTE_CLASS ] = array_values( array_unique( $this->attributes[ self::ATTRIBUTE_CLASS ] ) );
 		}
 
 		return $this;
@@ -127,7 +114,7 @@ abstract class AbstractHtmlElement
 			throw new HtmlBuilderException( 'Invalid style property value' );
 		}
 
-		$this->styles[ $styleName ] = $styleValue;
+		$this->attributes[ self::ATTRIBUTE_STYLE ][ $styleName ] = $styleValue;
 
 		return $this;
 	}
@@ -152,25 +139,12 @@ abstract class AbstractHtmlElement
 	}
 
 	/**
-	 * @param string $attrName
-	 * @param string|null $attrValue
-	 * @throws HtmlBuilderException
-	 */
-	protected function _createAttribute( $attrName, $attrValue = null )
-	{
-		if ( !is_string( $attrName ) || empty( $attrName ) ) {
-			throw new HtmlBuilderException( 'Invalid attribute name.' );
-		}
-
-	}
-
-	/**
 	 * @return string
 	 */
 	protected function getComputedCSSStyle()
 	{
 		$result = [];
-		foreach ( $this->styles as $styleName => $styleValue ) {
+		foreach ( $this->attributes[ self::ATTRIBUTE_STYLE ] as $styleName => $styleValue ) {
 			if ( $styleValue !== '' ) {
 				$result[] = $styleName . ':' . $styleValue;
 			}

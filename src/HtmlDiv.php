@@ -12,7 +12,6 @@ namespace Qpdb\HtmlBuilder;
 use Qpdb\HtmlBuilder\Abstracts\AbstractHtmlElement;
 use Qpdb\HtmlBuilder\Interfaces\HtmlElementInterface;
 use Qpdb\HtmlBuilder\Traits\CanHaveChildren;
-use Qpdb\HtmlBuilder\Traits\CreateInstance;
 use Qpdb\HtmlBuilder\Traits\MarkupGenerator;
 
 class HtmlDiv extends AbstractHtmlElement implements HtmlElementInterface
@@ -28,11 +27,4 @@ class HtmlDiv extends AbstractHtmlElement implements HtmlElementInterface
 		return 'div';
 	}
 
-	/**
-	 * @return bool
-	 */
-	protected function isContainer()
-	{
-		return true;
-	}
 }

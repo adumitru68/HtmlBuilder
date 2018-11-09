@@ -20,10 +20,17 @@ trait MarkupGenerator
 {
 
 	/**
+	 * @var string
+	 */
+	protected $endLine = '';
+
+
+	/**
 	 * @return string
 	 */
 	public function getHTMLMarkup()
 	{
+
 		$content = $this->isContainer() ? $this->__getContent() : '';
 
 		if ( !empty( $this->getHtmlTag() ) ) {
@@ -49,19 +56,20 @@ trait MarkupGenerator
 	{
 		$allAttributes = [];
 
-		if ( !empty( $this->id ) ) {
-			$allAttributes[ self::ATTRIBUTE_ID ] = htmlspecialchars( $this->id);
-		}
-
-		if ( !empty( $this->classes ) ) {
-			$allAttributes[ self::ATTRIBUTE_CLASS ] = implode( ' ', $this->classes );
-		}
-
-		if ( !empty( $this->styles ) ) {
-			$allAttributes[ self::ATTRIBUTE_STYLE ] = $this->getComputedCSSStyle();
-		}
-
 		foreach ( $this->attributes as $attributeName => $attributeValue ) {
+
+			if(empty($attributeValue) && in_array($attributeName, $this->specialAttributes)) {
+				continue;
+			}
+
+			if($attributeName == self::ATTRIBUTE_CLASS) {
+				$attributeValue = implode(' ', $attributeValue);
+			}
+
+			if($attributeName == self::ATTRIBUTE_STYLE) {
+				$attributeValue = $this->getComputedCSSStyle();
+			}
+
 			$allAttributes[ htmlspecialchars($attributeName) ] = htmlspecialchars($attributeValue);
 		}
 
@@ -70,8 +78,6 @@ trait MarkupGenerator
 		foreach ( $allAttributes as $attributeName => $attributeValue ) {
 			$allAttributesFormatted[] = $attributeName  . ' = "' . $attributeValue . '"';
 		}
-
-		$a=1;
 
 		return trim( implode( ' ', $allAttributesFormatted ) );
 
@@ -99,7 +105,7 @@ trait MarkupGenerator
 	private function __getStartTag()
 	{
 		$attributes = $this->__getAttributes();
-		$a=1;
+
 		if ( empty( $attributes ) ) {
 			return '<' . $this->getHtmlTag() . '>' . $this->endLine ;
 		}
