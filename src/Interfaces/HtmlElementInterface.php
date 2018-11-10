@@ -14,6 +14,12 @@ namespace Qpdb\HtmlBuilder\Interfaces;
  */
 interface HtmlElementInterface
 {
+	const ATTRIBUTE_ID = 'id';
+	const ATTRIBUTE_NAME = 'name';
+	const ATTRIBUTE_VALUE = 'value';
+	const ATTRIBUTE_CLASS = 'class';
+	const ATTRIBUTE_STYLE = 'style';
+
 	/**
 	 * @return string
 	 */

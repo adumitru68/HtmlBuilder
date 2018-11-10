@@ -11,37 +11,18 @@ namespace Qpdb\HtmlBuilder\Abstracts;
 use Qpdb\Common\Helpers\Strings;
 use Qpdb\HtmlBuilder\Exceptions\HtmlBuilderException;
 use Qpdb\HtmlBuilder\Interfaces\HtmlElementInterface;
-use Qpdb\HtmlBuilder\Traits\MarkupGenerator;
 
 abstract class AbstractHtmlElement implements HtmlElementInterface
 {
-
-	//use MarkupGenerator;
-
-	const ATTRIBUTE_ID = 'id';
-	const ATTRIBUTE_NAME = 'name';
-	const ATTRIBUTE_VALUE = 'value';
-	const ATTRIBUTE_CLASS = 'class';
-	const ATTRIBUTE_STYLE = 'style';
 
 	/**
 	 * @var array
 	 */
 	protected $attributes = [
-		self::ATTRIBUTE_ID => null,
-		self::ATTRIBUTE_CLASS => [],
-		self::ATTRIBUTE_STYLE => []
+		HtmlElementInterface::ATTRIBUTE_ID => null,
+		HtmlElementInterface::ATTRIBUTE_CLASS => [],
+		HtmlElementInterface::ATTRIBUTE_STYLE => []
 	];
-
-	/**
-	 * @var array
-	 */
-	protected $specialAttributes = [
-		self::ATTRIBUTE_ID,
-		self::ATTRIBUTE_CLASS,
-		self::ATTRIBUTE_STYLE
-	];
-
 
 	/**
 	 * @var HtmlElementInterface[]|string[]
@@ -61,14 +42,13 @@ abstract class AbstractHtmlElement implements HtmlElementInterface
 		return false;
 	}
 
-
 	/**
 	 * @param $id string
 	 * @return $this
 	 */
 	public function withId( $id )
 	{
-		$this->attributes[ self::ATTRIBUTE_ID ] = $id;
+		$this->attributes[ HtmlElementInterface::ATTRIBUTE_ID ] = $id;
 
 		return $this;
 	}
@@ -87,9 +67,9 @@ abstract class AbstractHtmlElement implements HtmlElementInterface
 				if ( empty( $item ) ) {
 					continue;
 				}
-				$this->attributes[ self::ATTRIBUTE_CLASS ][] = $item;
+				$this->attributes[ HtmlElementInterface::ATTRIBUTE_CLASS ][] = $item;
 			}
-			$this->attributes[ self::ATTRIBUTE_CLASS ] = array_values( array_unique( $this->attributes[ self::ATTRIBUTE_CLASS ] ) );
+			$this->attributes[ HtmlElementInterface::ATTRIBUTE_CLASS ] = array_values( array_unique( $this->attributes[ HtmlElementInterface::ATTRIBUTE_CLASS ] ) );
 		}
 
 		return $this;
@@ -114,7 +94,7 @@ abstract class AbstractHtmlElement implements HtmlElementInterface
 			throw new HtmlBuilderException( 'Invalid style property value' );
 		}
 
-		$this->attributes[ self::ATTRIBUTE_STYLE ][ $styleName ] = $styleValue;
+		$this->attributes[ HtmlElementInterface::ATTRIBUTE_STYLE ][ $styleName ] = $styleValue;
 
 		return $this;
 	}
@@ -138,20 +118,6 @@ abstract class AbstractHtmlElement implements HtmlElementInterface
 		return $this;
 	}
 
-	/**
-	 * @return string
-	 */
-	protected function getComputedCSSStyle()
-	{
-		$result = [];
-		foreach ( $this->attributes[ self::ATTRIBUTE_STYLE ] as $styleName => $styleValue ) {
-			if ( $styleValue !== '' ) {
-				$result[] = $styleName . ':' . $styleValue;
-			}
-		}
-
-		return implode( '; ', $result );
-	}
 
 	/**
 	 * @return $this

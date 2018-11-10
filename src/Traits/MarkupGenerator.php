@@ -24,6 +24,15 @@ trait MarkupGenerator
 	 */
 	protected $endLine = '';
 
+	/**
+	 * @var array
+	 */
+	protected $specialAttributes = [
+		HtmlElementInterface::ATTRIBUTE_ID,
+		HtmlElementInterface::ATTRIBUTE_CLASS,
+		HtmlElementInterface::ATTRIBUTE_STYLE
+	];
+
 
 	/**
 	 * @return string
@@ -31,10 +40,14 @@ trait MarkupGenerator
 	public function getHTMLMarkup()
 	{
 
-		$content = $this->isContainer() ? $this->__getContent() : '';
+		if ( !$this instanceof AbstractHtmlElement ) {
+			return '';
+		}
+
+		$content = $this->isContainer() ? $this->getHtmlElementContent() : '';
 
 		if ( !empty( $this->getHtmlTag() ) ) {
-			$content = $this->__getStartTag() . $content . $this->__getEndTag();
+			$content = $this->getHtmlElementStartTag() . $content . $this->getHtmlElementEndTag();
 		}
 
 		return $content;
@@ -46,37 +59,42 @@ trait MarkupGenerator
 	 */
 	public function render()
 	{
-		echo $this->getHTMLMarkup();
+		if(function_exists('tidy_parse_string')) {
+			echo tidy_parse_string($this->getHTMLMarkup(), array('show-body-only'=>true, 'indent'=>true, 'wrap'=> 200));
+		} else {
+			echo $this->getHTMLMarkup();
+		}
+
 	}
 
 	/**
 	 * @return string
 	 */
-	private function __getAttributes()
+	private function getHtmlElementAttributes()
 	{
 		$allAttributes = [];
 
 		foreach ( $this->attributes as $attributeName => $attributeValue ) {
 
-			if(empty($attributeValue) && in_array($attributeName, $this->specialAttributes)) {
+			if ( empty( $attributeValue ) && in_array( $attributeName, $this->specialAttributes ) ) {
 				continue;
 			}
 
-			if($attributeName == self::ATTRIBUTE_CLASS) {
-				$attributeValue = implode(' ', $attributeValue);
+			if ( $attributeName == HtmlElementInterface::ATTRIBUTE_CLASS ) {
+				$attributeValue = implode( ' ', $attributeValue );
 			}
 
-			if($attributeName == self::ATTRIBUTE_STYLE) {
+			if ( $attributeName == HtmlElementInterface::ATTRIBUTE_STYLE ) {
 				$attributeValue = $this->getComputedCSSStyle();
 			}
 
-			$allAttributes[ htmlspecialchars($attributeName) ] = htmlspecialchars($attributeValue);
+			$allAttributes[ htmlspecialchars( $attributeName ) ] = htmlentities( $attributeValue );
 		}
 
 		$allAttributesFormatted = [];
 
 		foreach ( $allAttributes as $attributeName => $attributeValue ) {
-			$allAttributesFormatted[] = $attributeName  . ' = "' . $attributeValue . '"';
+			$allAttributesFormatted[] = $attributeName . ' = "' . $attributeValue . '"';
 		}
 
 		return trim( implode( ' ', $allAttributesFormatted ) );
@@ -86,14 +104,14 @@ trait MarkupGenerator
 	/**
 	 * @return string
 	 */
-	private function __getContent()
+	private function getHtmlElementContent()
 	{
 		$result = [];
 		foreach ( $this->htmlElements as $htmlElement ) {
 			if ( $htmlElement instanceof HtmlElementInterface )
 				$result[] = $htmlElement->getHTMLMarkup();
 			else
-				$result[] = $htmlElement . $this->endLine ;
+				$result[] = $htmlElement . $this->endLine;
 		}
 
 		return implode( '', $result );
@@ -102,27 +120,41 @@ trait MarkupGenerator
 	/**
 	 * @return string
 	 */
-	private function __getStartTag()
+	private function getHtmlElementStartTag()
 	{
-		$attributes = $this->__getAttributes();
+		$attributes = $this->getHtmlElementAttributes();
 
 		if ( empty( $attributes ) ) {
-			return '<' . $this->getHtmlTag() . '>' . $this->endLine ;
+			return '<' . $this->getHtmlTag() . '>' . $this->endLine;
 		}
 
-		return '<' . $this->getHtmlTag() . ' ' . $attributes . '>' . $this->endLine ;
+		return '<' . $this->getHtmlTag() . ' ' . $attributes . '>' . $this->endLine;
 	}
 
 	/**
 	 * @return string
 	 */
-	private function __getEndTag()
+	private function getHtmlElementEndTag()
 	{
 		if ( !$this->isContainer() ) {
 			return '';
 		}
 
-		return  "</" . $this->getHtmlTag() . ">" . $this->endLine ;
+		return "</" . $this->getHtmlTag() . ">" . $this->endLine;
 	}
 
+	/**
+	 * @return string
+	 */
+	protected function getComputedCSSStyle()
+	{
+		$result = [];
+		foreach ( $this->attributes[ HtmlElementInterface::ATTRIBUTE_STYLE ] as $styleName => $styleValue ) {
+			if ( $styleValue !== '' ) {
+				$result[] = $styleName . ':' . $styleValue;
+			}
+		}
+
+		return implode( '; ', $result );
+	}
 }
