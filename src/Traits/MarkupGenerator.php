@@ -9,6 +9,8 @@
 namespace Qpdb\HtmlBuilder\Traits;
 
 use Qpdb\HtmlBuilder\Abstracts\AbstractHtmlElement;
+use Qpdb\HtmlBuilder\Exceptions\HtmlBuilderException;
+use Qpdb\HtmlBuilder\Helper\TagsCollection;
 use Qpdb\HtmlBuilder\Interfaces\HtmlElementInterface;
 
 /**
@@ -36,6 +38,7 @@ trait MarkupGenerator
 
 	/**
 	 * @return string
+	 * @throws HtmlBuilderException
 	 */
 	public function getHTMLMarkup()
 	{
@@ -59,9 +62,21 @@ trait MarkupGenerator
 	 */
 	public function render()
 	{
-		if(function_exists('tidy_parse_string')) {
-			echo tidy_parse_string($this->getHTMLMarkup(), array('show-body-only'=>true, 'indent'=>true, 'wrap'=> 200));
-		} else {
+		if ( function_exists( 'tidy_parse_string' ) && 1 === 1 ) {
+			echo tidy_parse_string(
+				$this->getHTMLMarkup(),
+				array(
+					'show-body-only' => true,
+					'indent' => true, 'wrap' => 500,
+					'drop-empty-elements' => false,
+					'new-blocklevel-tags' => TagsCollection::getInstance()->getNewTags(true),
+					'new-empty-tags' => TagsCollection::getInstance()->getNewClosedTags(true),
+					'new-inline-tags' => TagsCollection::getInstance()->getNewInlineTags(true),
+					'new-pre-tags' => '',
+				)
+			);
+		}
+		else {
 			echo $this->getHTMLMarkup();
 		}
 
@@ -88,7 +103,7 @@ trait MarkupGenerator
 				$attributeValue = $this->getComputedCSSStyle();
 			}
 
-			$allAttributes[ htmlspecialchars( $attributeName ) ] = htmlentities( $attributeValue );
+			$allAttributes[ htmlspecialchars( $attributeName ) ] = htmlspecialchars( $attributeValue );
 		}
 
 		$allAttributesFormatted = [];
@@ -103,6 +118,7 @@ trait MarkupGenerator
 
 	/**
 	 * @return string
+	 * @throws HtmlBuilderException
 	 */
 	private function getHtmlElementContent()
 	{
@@ -110,8 +126,10 @@ trait MarkupGenerator
 		foreach ( $this->htmlElements as $htmlElement ) {
 			if ( $htmlElement instanceof HtmlElementInterface )
 				$result[] = $htmlElement->getHTMLMarkup();
-			else
+			elseif (is_string($htmlElement))
 				$result[] = $htmlElement . $this->endLine;
+			else
+				throw new HtmlBuilderException('Invalid html content. Accepted only instanceof HtmlElementInterface and String');
 		}
 
 		return implode( '', $result );

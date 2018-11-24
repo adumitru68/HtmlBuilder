@@ -12,7 +12,7 @@ use Qpdb\Common\Helpers\Strings;
 use Qpdb\HtmlBuilder\Exceptions\HtmlBuilderException;
 use Qpdb\HtmlBuilder\Interfaces\HtmlElementInterface;
 
-abstract class AbstractHtmlElement implements HtmlElementInterface
+abstract class AbstractHtmlElement
 {
 
 	/**
