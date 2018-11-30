@@ -8,13 +8,15 @@
 
 namespace Qpdb\HtmlBuilder\Abstracts;
 
-use Qpdb\Common\Helpers\Strings;
-use Qpdb\HtmlBuilder\Exceptions\HtmlBuilderException;
+
 use Qpdb\HtmlBuilder\Helper\Tags;
 use Qpdb\HtmlBuilder\Interfaces\HtmlElementInterface;
+use Qpdb\HtmlBuilder\Traits\MakeAttributes;
 
 abstract class AbstractHtmlElement
 {
+
+	use MakeAttributes;
 
 	/**
 	 * @var Tags
@@ -35,6 +37,16 @@ abstract class AbstractHtmlElement
 	 */
 	protected $htmlElements = [];
 
+
+	/**
+	 * AbstractHtmlElement constructor.
+	 * @param Tags|null $tags
+	 */
+	public function __construct( Tags $tags = null )
+	{
+		$this->tags = $tags ?: Tags::getInstance();
+	}
+
 	/**
 	 * @return string||null
 	 */
@@ -50,96 +62,8 @@ abstract class AbstractHtmlElement
 
 	protected function isSelfClosed()
 	{
-
+		return true;
 	}
-
-
-
-	/**
-	 * AbstractHtmlElement constructor.
-	 * @param Tags|null $tags
-	 */
-	public function __construct( Tags $tags = null )
-	{
-		$this->tags = $tags ?: Tags::getInstance();
-	}
-
-	/**
-	 * @param $id string
-	 * @return $this
-	 */
-	public function withId( $id )
-	{
-		$this->attributes[ HtmlElementInterface::ATTRIBUTE_ID ] = $id;
-
-		return $this;
-	}
-
-	/**
-	 * @param string[] ...$classes
-	 * @return $this
-	 */
-	public function withClass( ...$classes )
-	{
-		foreach ( $classes as $class ) {
-			$class = Strings::removeMultipleSpace( (string)$class );
-			$class = str_replace( ' ', ',', $class );
-			foreach ( explode( ',', $class ) as $item ) {
-				$item = Strings::removeMultipleSpace( (string)$item );
-				if ( empty( $item ) ) {
-					continue;
-				}
-				$this->attributes[ HtmlElementInterface::ATTRIBUTE_CLASS ][] = $item;
-			}
-			$this->attributes[ HtmlElementInterface::ATTRIBUTE_CLASS ] = array_values( array_unique( $this->attributes[ HtmlElementInterface::ATTRIBUTE_CLASS ] ) );
-		}
-
-		return $this;
-	}
-
-	/**
-	 * @param string $styleName
-	 * @param string $styleValue
-	 * @return $this
-	 * @throws HtmlBuilderException
-	 */
-	public function withStyle( $styleName, $styleValue )
-	{
-		$styleName = trim( (string)$styleName );
-		$styleValue = trim( (string)$styleValue );
-
-		if ( empty( $styleName ) ) {
-			throw new HtmlBuilderException( 'Invalid style property name' );
-		}
-
-		if ( empty( $styleValue ) ) {
-			throw new HtmlBuilderException( 'Invalid style property value' );
-		}
-
-		$this->attributes[ HtmlElementInterface::ATTRIBUTE_STYLE ][ $styleName ] = $styleValue;
-
-		return $this;
-	}
-
-	/**
-	 * @param string $attributeName
-	 * @param string $attributeValue
-	 * @return $this
-	 * @throws HtmlBuilderException
-	 */
-	public function withAttribute( $attributeName, $attributeValue = null )
-	{
-		$attributeName = trim( (string)$attributeName );
-
-		if ( empty( $attributeName ) ) {
-			throw  new HtmlBuilderException( 'Attribute name is empty' );
-		}
-
-		$this->attributes[ $attributeName ] = is_null( $attributeValue ) ? null : trim( (string)$attributeValue );
-
-		return $this;
-	}
-
 
 	/**
 	 * @return $this

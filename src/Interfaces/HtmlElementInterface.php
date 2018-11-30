@@ -19,6 +19,8 @@ interface HtmlElementInterface
 	const ATTRIBUTE_VALUE = 'value';
 	const ATTRIBUTE_CLASS = 'class';
 	const ATTRIBUTE_STYLE = 'style';
+	const ATTRIBUTE_DATA = 'data';
+	const ATTRIBUTE_PLACEHOLDER = 'placeholder';
 
 	/**
 	 * @return string
