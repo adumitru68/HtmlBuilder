@@ -67,7 +67,8 @@ trait MarkupGenerator
 				$this->getHTMLMarkup(),
 				array(
 					'show-body-only' => true,
-					'indent' => true, 'wrap' => 500,
+					'indent' => true,
+					'wrap' => 1000,
 					'drop-empty-elements' => false,
 					'new-blocklevel-tags' => TagsCollection::getInstance()->getNewTags(true),
 					'new-empty-tags' => TagsCollection::getInstance()->getNewClosedTags(true),

@@ -9,7 +9,7 @@
 namespace Qpdb\HtmlBuilder;
 
 
-use Qpdb\HtmlBuilder\OtherElements\ContainerElement;
+use Qpdb\HtmlBuilder\OtherElements\HtmlElement;
 use Qpdb\HtmlBuilder\OtherElements\SimpleElement;
 
 final class Html
@@ -26,7 +26,7 @@ final class Html
 	 */
 	private function __construct( $htmlTag )
 	{
-		$this->htmlTag = $htmlTag;
+		$this->htmlTag = trim( $htmlTag );
 	}
 
 	/**
@@ -57,11 +57,11 @@ final class Html
 
 	/**
 	 * @param string $tagElement
-	 * @return ContainerElement
+	 * @return HtmlElement
 	 */
 	public static function createContainerElement( $tagElement = null )
 	{
-		return new ContainerElement( self::getThis( $tagElement ) );
+		return new HtmlElement( self::getThis( $tagElement ) );
 	}
 
 }

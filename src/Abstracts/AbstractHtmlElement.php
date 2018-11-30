@@ -10,10 +10,16 @@ namespace Qpdb\HtmlBuilder\Abstracts;
 
 use Qpdb\Common\Helpers\Strings;
 use Qpdb\HtmlBuilder\Exceptions\HtmlBuilderException;
+use Qpdb\HtmlBuilder\Helper\Tags;
 use Qpdb\HtmlBuilder\Interfaces\HtmlElementInterface;
 
 abstract class AbstractHtmlElement
 {
+
+	/**
+	 * @var Tags
+	 */
+	protected $tags;
 
 	/**
 	 * @var array
@@ -40,6 +46,22 @@ abstract class AbstractHtmlElement
 	protected function isContainer()
 	{
 		return false;
+	}
+
+	protected function isSelfClosed()
+	{
+
+	}
+
+
+
+	/**
+	 * AbstractHtmlElement constructor.
+	 * @param Tags|null $tags
+	 */
+	public function __construct( Tags $tags = null )
+	{
+		$this->tags = $tags ?: Tags::getInstance();
 	}
 
 	/**

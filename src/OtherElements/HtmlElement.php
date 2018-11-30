@@ -12,7 +12,7 @@ namespace Qpdb\HtmlBuilder\OtherElements;
 use Qpdb\HtmlBuilder\Helper\TagsCollection;
 use Qpdb\HtmlBuilder\Traits\CanHaveChildren;
 
-class ContainerElement extends SimpleElement
+class HtmlElement extends SimpleElement
 {
 	use CanHaveChildren;
 
