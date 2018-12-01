@@ -26,15 +26,6 @@ trait MarkupGenerator
 	 */
 	protected $endLine = '';
 
-	/**
-	 * @var array
-	 */
-	protected $specialAttributes = [
-		HtmlElementInterface::ATTRIBUTE_ID,
-		HtmlElementInterface::ATTRIBUTE_CLASS,
-		HtmlElementInterface::ATTRIBUTE_STYLE
-	];
-
 
 	/**
 	 * @return string
@@ -85,40 +76,6 @@ trait MarkupGenerator
 
 	/**
 	 * @return string
-	 */
-	private function getHtmlElementAttributes()
-	{
-		$allAttributes = [];
-
-		foreach ( $this->attributes as $attributeName => $attributeValue ) {
-
-			if ( empty( $attributeValue ) && in_array( $attributeName, $this->specialAttributes ) ) {
-				continue;
-			}
-
-			if ( $attributeName == HtmlElementInterface::ATTRIBUTE_CLASS ) {
-				$attributeValue = implode( ' ', $attributeValue );
-			}
-
-			if ( $attributeName == HtmlElementInterface::ATTRIBUTE_STYLE ) {
-				$attributeValue = $this->getComputedCSSStyle();
-			}
-
-			$allAttributes[ htmlspecialchars( $attributeName ) ] = htmlspecialchars( $attributeValue );
-		}
-
-		$allAttributesFormatted = [];
-
-		foreach ( $allAttributes as $attributeName => $attributeValue ) {
-			$allAttributesFormatted[] = $attributeName . ' = "' . $attributeValue . '"';
-		}
-
-		return trim( implode( ' ', $allAttributesFormatted ) );
-
-	}
-
-	/**
-	 * @return string
 	 * @throws HtmlBuilderException
 	 */
 	private function getHtmlElementContent()
@@ -141,7 +98,7 @@ trait MarkupGenerator
 	 */
 	private function getHtmlElementStartTag()
 	{
-		$attributes = $this->getHtmlElementAttributes();
+		$attributes = $this->getComputedAttributes();
 
 		if ( empty( $attributes ) ) {
 			return '<' . $this->getHtmlTag() . '>' . $this->endLine;
@@ -162,18 +119,5 @@ trait MarkupGenerator
 		return "</" . $this->getHtmlTag() . ">" . $this->endLine;
 	}
 
-	/**
-	 * @return string
-	 */
-	protected function getComputedCSSStyle()
-	{
-		$result = [];
-		foreach ( $this->attributes[ HtmlElementInterface::ATTRIBUTE_STYLE ] as $styleName => $styleValue ) {
-			if ( $styleValue !== '' ) {
-				$result[] = $styleName . ':' . $styleValue;
-			}
-		}
 
-		return implode( '; ', $result );
-	}
 }

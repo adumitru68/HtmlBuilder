@@ -30,8 +30,8 @@ trait MakeAttributes
 	 */
 	public function withId( $id )
 	{
-		if(!is_string($id)) {
-			throw new HtmlBuilderException("Invalid argument id");
+		if ( !is_string( $id ) ) {
+			throw new HtmlBuilderException( "Invalid argument id" );
 		}
 
 		$this->attributes[ HtmlElementInterface::ATTRIBUTE_ID ] = $id;
@@ -64,8 +64,6 @@ trait MakeAttributes
 			}
 
 		}
-
-		$this->attributes[ HtmlElementInterface::ATTRIBUTE_CLASS ] = array_values( array_unique( $this->attributes[ HtmlElementInterface::ATTRIBUTE_CLASS ] ) );
 
 		return $this;
 	}
@@ -127,7 +125,7 @@ trait MakeAttributes
 	{
 
 		$this->validateAttributeName( $attributeName );
-		$this->validateAttributeValue($attributeValue);
+		$this->validateAttributeValue( $attributeValue );
 
 		$attributeName = trim( strtolower( $attributeName ) );
 
@@ -145,6 +143,60 @@ trait MakeAttributes
 
 
 	/**
+	 * @return string
+	 */
+	protected function getComputedAttributes()
+	{
+
+		$this->attributes[ HtmlElementInterface::ATTRIBUTE_CLASS ] = array_values( array_unique( $this->attributes[ HtmlElementInterface::ATTRIBUTE_CLASS ] ) );
+		$allAttributes = [];
+		foreach ( $this->attributes as $name => $value ) {
+			switch ( $name ) {
+				case HtmlDef::ATTRIBUTE_ID:
+				case HtmlDef::ATTRIBUTE_NAME:
+					if ( empty( $value ) ) {
+						continue;
+					}
+					$allAttributes[] = $name . ' = "' . htmlspecialchars( $value ) . '"';
+					break;
+				case HtmlDef::ATTRIBUTE_CLASS:
+					if ( empty( $value ) ) {
+						continue;
+					}
+					$allAttributes[] = $name . ' = "' . htmlspecialchars( implode( ' ', $this->attributes[ HtmlDef::ATTRIBUTE_CLASS ] ) ) . '"';
+					break;
+				case HtmlDef::ATTRIBUTE_STYLE:
+					if ( empty( $value ) ) {
+						continue;
+					}
+					$allAttributes[] = $name . ' = "' . htmlspecialchars($this->getComputedCSSStyle()) . '"';
+					break;
+				default:
+					$allAttributes[]  = (null === $value) ? $name : empty($value) ? $name . ' = ""' : $name . ' = "' . htmlspecialchars($value) . '"';
+					break;
+			}
+		}
+
+		return implode(' ', $allAttributes);
+	}
+
+	/**
+	 * @return string
+	 */
+	private function getComputedCSSStyle()
+	{
+		$result = [];
+		foreach ( $this->attributes[ HtmlElementInterface::ATTRIBUTE_STYLE ] as $styleName => $styleValue ) {
+			if ( $styleValue !== '' ) {
+				$result[] = $styleName . ':' . $styleValue;
+			}
+		}
+
+		return implode( '; ', $result );
+	}
+
+
+	/**
 	 * @param string $classes
 	 */
 	private function addClassesByString( $classes )
@@ -155,7 +207,7 @@ trait MakeAttributes
 			if ( empty( $item ) ) {
 				continue;
 			}
-			$this->attributes[ HtmlElementInterface::ATTRIBUTE_CLASS ][] = htmlspecialchars( $item );
+			$this->attributes[ HtmlElementInterface::ATTRIBUTE_CLASS ][] =  $item ;
 		}
 	}
 
@@ -197,7 +249,12 @@ trait MakeAttributes
 		}
 	}
 
-	private function validateAttributeValue($attributeValue) {
+	/**
+	 * @param $attributeValue
+	 * @throws HtmlBuilderException
+	 */
+	private function validateAttributeValue( $attributeValue )
+	{
 		if ( null !== $attributeValue && !is_string( $attributeValue ) ) {
 			throw new HtmlBuilderException( 'Invalid attribute value. It must be string.' );
 		}

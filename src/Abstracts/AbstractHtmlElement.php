@@ -9,6 +9,7 @@
 namespace Qpdb\HtmlBuilder\Abstracts;
 
 
+use Qpdb\HtmlBuilder\Helper\HtmlDef;
 use Qpdb\HtmlBuilder\Helper\Tags;
 use Qpdb\HtmlBuilder\Interfaces\HtmlElementInterface;
 use Qpdb\HtmlBuilder\Traits\MakeAttributes;
@@ -28,8 +29,9 @@ abstract class AbstractHtmlElement
 	 */
 	protected $attributes = [
 		HtmlElementInterface::ATTRIBUTE_ID => null,
+		HtmlDef::ATTRIBUTE_NAME => null,
 		HtmlElementInterface::ATTRIBUTE_CLASS => [],
-		HtmlElementInterface::ATTRIBUTE_STYLE => []
+		HtmlElementInterface::ATTRIBUTE_STYLE => [],
 	];
 
 	/**
