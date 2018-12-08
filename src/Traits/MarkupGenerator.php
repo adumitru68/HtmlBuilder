@@ -31,28 +31,18 @@ trait MarkupGenerator
 	 * @return string
 	 * @throws HtmlBuilderException
 	 */
-	public function getHTMLMarkup()
-	{
+	public function getHTMLMarkup() {
 
-		if ( !$this instanceof AbstractHtmlElement ) {
-			return '';
-		}
+		$content = $this->isSelfClosed() ? '' : $this->getHtmlElementContent();
+		$attributes = $this->getComputedAttributes();
 
-		$content = $this->isContainer() ? $this->getHtmlElementContent() : '';
-
-		if ( !empty( $this->getHtmlTag() ) ) {
-			$content = $this->getHtmlElementStartTag() . $content . $this->getHtmlElementEndTag();
-		}
-
-		return $content;
-
+		return $this->makeTag($attributes, $content);
 	}
 
 	/**
 	 * Display Html content
 	 */
-	public function render()
-	{
+	public function render() {
 		if ( function_exists( 'tidy_parse_string' ) && 1 === 1 ) {
 			echo tidy_parse_string(
 				$this->getHTMLMarkup(),
@@ -61,62 +51,74 @@ trait MarkupGenerator
 					'indent' => true,
 					'wrap' => 1000,
 					'drop-empty-elements' => false,
-					'new-blocklevel-tags' => TagsCollection::getInstance()->getNewTags(true),
-					'new-empty-tags' => TagsCollection::getInstance()->getNewClosedTags(true),
-					'new-inline-tags' => TagsCollection::getInstance()->getNewInlineTags(true),
+					'new-blocklevel-tags' => TagsCollection::getInstance()->getNewTags( true ),
+					'new-empty-tags' => TagsCollection::getInstance()->getNewClosedTags( true ),
+					'new-inline-tags' => TagsCollection::getInstance()->getNewInlineTags( true ),
 					'new-pre-tags' => '',
 				)
 			);
-		}
-		else {
+		} else {
 			echo $this->getHTMLMarkup();
 		}
 
+	}
+
+	private function makeTag( $attributes, $content = '' ) {
+
+		$tag = $this->getHtmlTag();
+		$attributes = trim( $attributes );
+
+		if ( $this->isSelfClosed() ) {
+			return $this->makeTagSelf( $content );
+		}
+
+		if ( empty( $tag ) ) {
+			return $content;
+		}
+
+		$formattedTag = "<{$tag}";
+		$formattedTag .= empty( $attributes ) ? '>' : " {$attributes}>";
+		$formattedTag .= $content;
+		$formattedTag .= "</{$tag}>";
+
+		return $formattedTag;
+	}
+
+	/**
+	 * @param $tag
+	 * @param $attributes
+	 * @return string
+	 */
+	private function makeTagSelf( $attributes ) {
+
+		$tag = $this->getHtmlTag();
+
+		if ( empty( $tag ) ) {
+			return '';
+		}
+
+		$formattedTag = "<{$tag}";
+		$formattedTag .= empty( $attributes ) ? '>' : " {$attributes}>";
+
+		return $formattedTag;
 	}
 
 	/**
 	 * @return string
 	 * @throws HtmlBuilderException
 	 */
-	private function getHtmlElementContent()
-	{
+	private function getHtmlElementContent() {
 		$result = [];
 		foreach ( $this->htmlElements as $htmlElement ) {
 			if ( $htmlElement instanceof HtmlElementInterface )
 				$result[] = $htmlElement->getHTMLMarkup();
-			elseif (is_string($htmlElement))
+			elseif ( is_string( $htmlElement ) )
 				$result[] = $htmlElement . $this->endLine;
 			else
-				throw new HtmlBuilderException('Invalid html content. Accepted only instanceof HtmlElementInterface and String');
+				throw new HtmlBuilderException( 'Invalid html content. Accepted only instanceof HtmlElementInterface and String' );
 		}
 
 		return implode( '', $result );
-	}
-
-	/**
-	 * @return string
-	 */
-	private function getHtmlElementStartTag()
-	{
-		$attributes = $this->getComputedAttributes();
-
-		if ( empty( $attributes ) ) {
-			return '<' . $this->getHtmlTag() . '>' . $this->endLine;
-		}
-
-		return '<' . $this->getHtmlTag() . ' ' . $attributes . '>' . $this->endLine;
-	}
-
-	/**
-	 * @return string
-	 */
-	private function getHtmlElementEndTag()
-	{
-		if ( !$this->isContainer() ) {
-			return '';
-		}
-
-		return "</" . $this->getHtmlTag() . ">" . $this->endLine;
 	}
 
 

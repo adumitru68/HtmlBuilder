@@ -9,7 +9,7 @@
 namespace Qpdb\HtmlBuilder\Helper;
 
 
-class HtmlDef
+class ConstHtml
 {
 
 	const TAG_START_OPEN  = '<';
@@ -18,6 +18,9 @@ class HtmlDef
 	const TAG_END_CLOSE   = '>';
 	const TAG_SELF_OPEN   = '<';
 	const TAG_SELF_CLOSE  = '>';
+
+	const TAG_TEMPLATE     = '<{%%tag%%}{%%attributes%%}>{%%content%%}</{%%tag%%}>';
+	const TAG_TEMPLATE_SEF = '<{%%tag%%}{%%attributes%%}>';
 
 	const ATTRIBUTE_ID          = 'id';
 	const ATTRIBUTE_NAME        = 'name';

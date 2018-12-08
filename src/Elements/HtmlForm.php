@@ -6,12 +6,14 @@
  * Time: 1:30 AM
  */
 
-namespace Qpdb\HtmlBuilder\Traits;
+namespace Qpdb\HtmlBuilder\Elements;
 
 
 use Qpdb\HtmlBuilder\Abstracts\AbstractHtmlElement;
 use Qpdb\HtmlBuilder\Exceptions\HtmlBuilderException;
 use Qpdb\HtmlBuilder\Interfaces\HtmlElementInterface;
+use Qpdb\HtmlBuilder\Traits\CanHaveChildren;
+use Qpdb\HtmlBuilder\Traits\MarkupGenerator;
 
 class HtmlForm extends AbstractHtmlElement implements HtmlElementInterface
 {

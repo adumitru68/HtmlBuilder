@@ -29,9 +29,9 @@ trait CanHaveChildren
 	/**
 	 * @return bool
 	 */
-	protected function isContainer()
+	protected function isSelfClosed()
 	{
-		return true;
+		return false;
 	}
 
 	/**

@@ -6,7 +6,7 @@
  * Time: 5:22 PM
  */
 
-namespace Qpdb\HtmlBuilder;
+namespace Qpdb\HtmlBuilder\Elements;
 
 
 use Qpdb\HtmlBuilder\Abstracts\AbstractHtmlElement;

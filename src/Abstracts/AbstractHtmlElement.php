@@ -9,7 +9,7 @@
 namespace Qpdb\HtmlBuilder\Abstracts;
 
 
-use Qpdb\HtmlBuilder\Helper\HtmlDef;
+use Qpdb\HtmlBuilder\Helper\ConstHtml;
 use Qpdb\HtmlBuilder\Helper\Tags;
 use Qpdb\HtmlBuilder\Interfaces\HtmlElementInterface;
 use Qpdb\HtmlBuilder\Traits\MakeAttributes;
@@ -28,10 +28,10 @@ abstract class AbstractHtmlElement
 	 * @var array
 	 */
 	protected $attributes = [
-		HtmlElementInterface::ATTRIBUTE_ID => null,
-		HtmlDef::ATTRIBUTE_NAME => null,
-		HtmlElementInterface::ATTRIBUTE_CLASS => [],
-		HtmlElementInterface::ATTRIBUTE_STYLE => [],
+		ConstHtml::ATTRIBUTE_ID => null,
+		ConstHtml::ATTRIBUTE_NAME => null,
+		ConstHtml::ATTRIBUTE_CLASS => [],
+		ConstHtml::ATTRIBUTE_STYLE => [],
 	];
 
 	/**
@@ -57,11 +57,6 @@ abstract class AbstractHtmlElement
 	/**
 	 * @return bool
 	 */
-	protected function isContainer()
-	{
-		return false;
-	}
-
 	protected function isSelfClosed()
 	{
 		return true;

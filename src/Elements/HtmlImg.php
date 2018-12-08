@@ -6,7 +6,7 @@
  * Time: 3:37 AM
  */
 
-namespace Qpdb\HtmlBuilder;
+namespace Qpdb\HtmlBuilder\Elements;
 
 
 use Qpdb\HtmlBuilder\Abstracts\AbstractHtmlElement;
@@ -28,7 +28,7 @@ class HtmlImg extends AbstractHtmlElement implements HtmlElementInterface
 	/**
 	 * @param string $src
 	 * @return $this
-	 * @throws Exceptions\HtmlBuilderException
+	 * @throws \Qpdb\HtmlBuilder\Exceptions\HtmlBuilderException
 	 */
 	public function src( $src )
 	{
@@ -38,7 +38,7 @@ class HtmlImg extends AbstractHtmlElement implements HtmlElementInterface
 	/**
 	 * @param string $alt
 	 * @return $this
-	 * @throws Exceptions\HtmlBuilderException
+	 * @throws \Qpdb\HtmlBuilder\Exceptions\HtmlBuilderException
 	 */
 	public function alt( $alt )
 	{

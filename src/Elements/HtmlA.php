@@ -6,7 +6,7 @@
  * Time: 2:25 AM
  */
 
-namespace Qpdb\HtmlBuilder;
+namespace Qpdb\HtmlBuilder\Elements;
 
 
 use Qpdb\HtmlBuilder\Abstracts\AbstractHtmlElement;
@@ -34,7 +34,7 @@ class HtmlA extends AbstractHtmlElement implements HtmlElementInterface
 	/**
 	 * @param $href
 	 * @return $this
-	 * @throws Exceptions\HtmlBuilderException
+	 * @throws \Qpdb\HtmlBuilder\Exceptions\HtmlBuilderException
 	 */
 	public function href($href) {
 		return $this->withAttribute('href', $href);
@@ -43,7 +43,7 @@ class HtmlA extends AbstractHtmlElement implements HtmlElementInterface
 	/**
 	 * @param $target
 	 * @return $this
-	 * @throws Exceptions\HtmlBuilderException
+	 * @throws \Qpdb\HtmlBuilder\Exceptions\HtmlBuilderException
 	 */
 	public function target($target) {
 		return $this->withAttribute('target', $target);

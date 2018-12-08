@@ -12,7 +12,7 @@ namespace Qpdb\HtmlBuilder\Traits;
 use Qpdb\Common\Helpers\Strings;
 use Qpdb\HtmlBuilder\Abstracts\AbstractHtmlElement;
 use Qpdb\HtmlBuilder\Exceptions\HtmlBuilderException;
-use Qpdb\HtmlBuilder\Helper\HtmlDef;
+use Qpdb\HtmlBuilder\Helper\ConstHtml;
 use Qpdb\HtmlBuilder\Interfaces\HtmlElementInterface;
 
 /**
@@ -33,7 +33,7 @@ trait MakeAttributes
 			throw new HtmlBuilderException( "Invalid argument id" );
 		}
 
-		$this->attributes[ HtmlElementInterface::ATTRIBUTE_ID ] = $id;
+		$this->attributes[ ConstHtml::ATTRIBUTE_ID ] = $id;
 
 		return $this;
 	}
@@ -85,7 +85,7 @@ trait MakeAttributes
 			throw new HtmlBuilderException( 'Invalid style property value' );
 		}
 
-		$this->attributes[ HtmlElementInterface::ATTRIBUTE_STYLE ][ $propertyName ] = $propertyValue;
+		$this->attributes[ ConstHtml::ATTRIBUTE_STYLE ][ $propertyName ] = $propertyValue;
 
 		return $this;
 	}
@@ -126,9 +126,9 @@ trait MakeAttributes
 		$attributeName = trim( strtolower( $attributeName ) );
 
 		switch ( $attributeName ) {
-			case HtmlDef::ATTRIBUTE_CLASS:
+			case ConstHtml::ATTRIBUTE_CLASS:
 				return $this->withClass( $attributeValue );
-			case HtmlDef::ATTRIBUTE_STYLE:
+			case ConstHtml::ATTRIBUTE_STYLE:
 				return $this->withCssStyle( $attributeValue );
 		}
 
@@ -143,24 +143,24 @@ trait MakeAttributes
 	 */
 	protected function getComputedAttributes() {
 
-		$this->attributes[ HtmlElementInterface::ATTRIBUTE_CLASS ] = array_values( array_unique( $this->attributes[ HtmlElementInterface::ATTRIBUTE_CLASS ] ) );
+		$this->attributes[ ConstHtml::ATTRIBUTE_CLASS ] = array_values( array_unique( $this->attributes[ ConstHtml::ATTRIBUTE_CLASS ] ) );
 		$allAttributes = [];
 		foreach ( $this->attributes as $name => $value ) {
 			switch ( $name ) {
-				case HtmlDef::ATTRIBUTE_ID:
-				case HtmlDef::ATTRIBUTE_NAME:
+				case ConstHtml::ATTRIBUTE_ID:
+				case ConstHtml::ATTRIBUTE_NAME:
 					if ( empty( $value ) ) {
 						continue;
 					}
 					$allAttributes[] = $name . ' = "' . htmlspecialchars( $value ) . '"';
 					break;
-				case HtmlDef::ATTRIBUTE_CLASS:
+				case ConstHtml::ATTRIBUTE_CLASS:
 					if ( empty( $value ) ) {
 						continue;
 					}
-					$allAttributes[] = $name . ' = "' . htmlspecialchars( implode( ' ', $this->attributes[ HtmlDef::ATTRIBUTE_CLASS ] ) ) . '"';
+					$allAttributes[] = $name . ' = "' . htmlspecialchars( implode( ' ', $this->attributes[ ConstHtml::ATTRIBUTE_CLASS ] ) ) . '"';
 					break;
-				case HtmlDef::ATTRIBUTE_STYLE:
+				case ConstHtml::ATTRIBUTE_STYLE:
 					if ( empty( $value ) ) {
 						continue;
 					}
@@ -180,7 +180,7 @@ trait MakeAttributes
 	 */
 	private function getComputedCSSStyle() {
 		$result = [];
-		foreach ( $this->attributes[ HtmlElementInterface::ATTRIBUTE_STYLE ] as $styleName => $styleValue ) {
+		foreach ( $this->attributes[ ConstHtml::ATTRIBUTE_STYLE ] as $styleName => $styleValue ) {
 			if ( $styleValue !== '' ) {
 				$result[] = $styleName . ':' . $styleValue;
 			}
@@ -200,7 +200,7 @@ trait MakeAttributes
 			if ( empty( $item ) ) {
 				continue;
 			}
-			$this->attributes[ HtmlElementInterface::ATTRIBUTE_CLASS ][] = $item;
+			$this->attributes[ ConstHtml::ATTRIBUTE_CLASS ][] = $item;
 		}
 	}
 

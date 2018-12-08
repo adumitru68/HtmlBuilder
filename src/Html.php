@@ -2,66 +2,39 @@
 /**
  * Created by PhpStorm.
  * User: Adi
- * Date: 11/10/2018
- * Time: 1:11 PM
+ * Date: 12/8/2018
+ * Time: 4:09 AM
  */
 
 namespace Qpdb\HtmlBuilder;
 
 
-use Qpdb\HtmlBuilder\OtherElements\HtmlElement;
-use Qpdb\HtmlBuilder\OtherElements\SimpleElement;
+use Qpdb\HtmlBuilder\Elements\HtmlDiv;
+use Qpdb\HtmlBuilder\Elements\HtmlForm;
+use Qpdb\HtmlBuilder\Elements\HtmlTemplate;
 
-final class Html
+class Html
 {
 
 	/**
-	 * @var string
+	 * @return HtmlDiv
 	 */
-	private $htmlTag;
-
-	/**
-	 * Html constructor.
-	 * @param $htmlTag
-	 */
-	private function __construct( $htmlTag )
-	{
-		$this->htmlTag = trim( $htmlTag );
+	public static function div() {
+		return HtmlDiv::create();
 	}
 
 	/**
-	 * @param $htmlTag
-	 * @return $this
+	 * @return HtmlTemplate
 	 */
-	private static function getThis( $htmlTag )
-	{
-		return new static( $htmlTag );
+	public static function template() {
+		return HtmlTemplate::create();
 	}
 
 	/**
-	 * @return string
+	 * @return HtmlForm
 	 */
-	public function getHtmlTag()
-	{
-		return $this->htmlTag;
-	}
-
-	/**
-	 * @param string $tagElement
-	 * @return SimpleElement
-	 */
-	public static function createSimpleElement( $tagElement = null )
-	{
-		return new SimpleElement( self::getThis( $tagElement ) );
-	}
-
-	/**
-	 * @param string $tagElement
-	 * @return HtmlElement
-	 */
-	public static function createContainerElement( $tagElement = null )
-	{
-		return new HtmlElement( self::getThis( $tagElement ) );
+	public static function form() {
+		return HtmlForm::create();
 	}
 
 }

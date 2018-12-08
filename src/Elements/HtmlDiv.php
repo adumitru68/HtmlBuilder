@@ -2,11 +2,11 @@
 /**
  * Created by PhpStorm.
  * User: Adi
- * Date: 11/10/2018
- * Time: 2:09 AM
+ * Date: 9/30/2018
+ * Time: 2:14 AM
  */
 
-namespace Qpdb\HtmlBuilder;
+namespace Qpdb\HtmlBuilder\Elements;
 
 
 use Qpdb\HtmlBuilder\Abstracts\AbstractHtmlElement;
@@ -14,8 +14,9 @@ use Qpdb\HtmlBuilder\Interfaces\HtmlElementInterface;
 use Qpdb\HtmlBuilder\Traits\CanHaveChildren;
 use Qpdb\HtmlBuilder\Traits\MarkupGenerator;
 
-class HtmlSpan extends AbstractHtmlElement implements HtmlElementInterface
+class HtmlDiv extends AbstractHtmlElement implements HtmlElementInterface
 {
+
 	use MarkupGenerator, CanHaveChildren;
 
 	/**
@@ -23,6 +24,7 @@ class HtmlSpan extends AbstractHtmlElement implements HtmlElementInterface
 	 */
 	protected function getHtmlTag()
 	{
-		return 'span';
+		return 'div';
 	}
+
 }
