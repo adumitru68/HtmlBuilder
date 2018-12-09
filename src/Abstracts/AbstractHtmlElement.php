@@ -30,6 +30,7 @@ abstract class AbstractHtmlElement
 	protected $attributes = [
 		ConstHtml::ATTRIBUTE_ID => null,
 		ConstHtml::ATTRIBUTE_NAME => null,
+		ConstHtml::ATTRIBUTE_VALUE => null,
 		ConstHtml::ATTRIBUTE_CLASS => [],
 		ConstHtml::ATTRIBUTE_STYLE => [],
 	];

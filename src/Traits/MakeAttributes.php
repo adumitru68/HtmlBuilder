@@ -13,7 +13,6 @@ use Qpdb\Common\Helpers\Strings;
 use Qpdb\HtmlBuilder\Abstracts\AbstractHtmlElement;
 use Qpdb\HtmlBuilder\Exceptions\HtmlBuilderException;
 use Qpdb\HtmlBuilder\Helper\ConstHtml;
-use Qpdb\HtmlBuilder\Interfaces\HtmlElementInterface;
 
 /**
  * Trait MakeAttributes
@@ -22,6 +21,8 @@ use Qpdb\HtmlBuilder\Interfaces\HtmlElementInterface;
  */
 trait MakeAttributes
 {
+
+	use SpecialChars;
 
 	/**
 	 * @param $id string
@@ -38,6 +39,58 @@ trait MakeAttributes
 		return $this;
 	}
 
+	/**
+	 * @param string      $attributeName
+	 * @param string|null $attributeValue
+	 * @return $this
+	 * @throws HtmlBuilderException
+	 */
+	public function withAttribute( $attributeName, $attributeValue = null ) {
+
+		$this->validateAttributeName( $attributeName );
+		$this->validateAttributeValue( $attributeValue );
+
+		$attributeName = trim( strtolower( $attributeName ) );
+
+		switch ( $attributeName ) {
+			case ConstHtml::ATTRIBUTE_CLASS:
+				return $this->withClass( $attributeValue );
+			case ConstHtml::ATTRIBUTE_STYLE:
+				return $this->withCssStyle( $attributeValue );
+		}
+
+		$this->attributes[ $attributeName ] = $attributeValue;
+
+		return $this;
+	}
+
+	/**
+	 * @param $attributeName
+	 * @throws HtmlBuilderException
+	 */
+	private function validateAttributeName( $attributeName ) {
+		if ( !is_string( $attributeName ) ) {
+			throw new HtmlBuilderException( 'Invalid attribute name. It must be string.' );
+		}
+
+		if ( empty( trim( $attributeName ) ) ) {
+			throw new HtmlBuilderException( 'Invalid attribute name. It is empty' );
+		}
+
+		if ( $attributeName !== htmlspecialchars( $attributeName ) ) {
+			throw new HtmlBuilderException( 'Invalid attribute name: ' . $attributeName );
+		}
+	}
+
+	/**
+	 * @param $attributeValue
+	 * @throws HtmlBuilderException
+	 */
+	private function validateAttributeValue( $attributeValue ) {
+		if ( null !== $attributeValue && !is_string( $attributeValue ) ) {
+			throw new HtmlBuilderException( 'Invalid attribute value. It must be string.' );
+		}
+	}
 
 	/**
 	 * @param string ...$classes
@@ -61,6 +114,63 @@ trait MakeAttributes
 					throw new HtmlBuilderException( 'Invalid argument class type' );
 			}
 
+		}
+
+		return $this;
+	}
+
+	private function _withAlt($value, $specialChars) {
+
+	}
+
+	/**
+	 * @param array $classes
+	 * @throws HtmlBuilderException
+	 */
+	private function addClassesByArray( Array $classes ) {
+		foreach ( $classes as $class ) {
+			if ( is_array( $class ) ) {
+				$this->addClassesByArray( $class );
+			} else {
+				if ( empty( $class ) ) {
+					continue;
+				}
+				$this->withClass( $class );
+			}
+		}
+	}
+
+	/**
+	 * @param string $classes
+	 */
+	private function addClassesByString( $classes ) {
+		$classes = str_ireplace( [ ',', ';' ], ' ', $classes );
+		$classes = Strings::removeMultipleSpace( $classes );
+		foreach ( explode( ' ', $classes ) as $item ) {
+			if ( empty( $item ) ) {
+				continue;
+			}
+			$this->attributes[ ConstHtml::ATTRIBUTE_CLASS ][] = $item;
+		}
+	}
+
+	/**
+	 * @param string $cssStyle
+	 * @return $this
+	 * @throws HtmlBuilderException
+	 */
+	public function withCssStyle( $cssStyle ) {
+		if ( !is_string( $cssStyle ) ) {
+			throw new HtmlBuilderException( 'Invalid style expression' );
+		}
+		$cssStyle = Strings::removeMultipleSpace( $cssStyle );
+		$cssStyleArray = explode( ';', $cssStyle );
+		foreach ( $cssStyleArray as $prop ) {
+			$property = explode( ':', $prop );
+			if ( count( $property ) !== 2 ) {
+				continue;
+			}
+			$this->withCssProperty( $property[ 0 ], $property[ 1 ] );
 		}
 
 		return $this;
@@ -91,54 +201,6 @@ trait MakeAttributes
 	}
 
 	/**
-	 * @param string $cssStyle
-	 * @return $this
-	 * @throws HtmlBuilderException
-	 */
-	public function withCssStyle( $cssStyle ) {
-		if ( !is_string( $cssStyle ) ) {
-			throw new HtmlBuilderException( 'Invalid style expression' );
-		}
-		$cssStyle = Strings::removeMultipleSpace( $cssStyle );
-		$cssStyleArray = explode( ';', $cssStyle );
-		foreach ( $cssStyleArray as $prop ) {
-			$property = explode( ':', $prop );
-			if ( count( $property ) !== 2 ) {
-				continue;
-			}
-			$this->withCssProperty( $property[ 0 ], $property[ 1 ] );
-		}
-
-		return $this;
-	}
-
-	/**
-	 * @param string      $attributeName
-	 * @param string|null $attributeValue
-	 * @return $this
-	 * @throws HtmlBuilderException
-	 */
-	public function withAttribute( $attributeName, $attributeValue = null ) {
-
-		$this->validateAttributeName( $attributeName );
-		$this->validateAttributeValue( $attributeValue );
-
-		$attributeName = trim( strtolower( $attributeName ) );
-
-		switch ( $attributeName ) {
-			case ConstHtml::ATTRIBUTE_CLASS:
-				return $this->withClass( $attributeValue );
-			case ConstHtml::ATTRIBUTE_STYLE:
-				return $this->withCssStyle( $attributeValue );
-		}
-
-		$this->attributes[ $attributeName ] = $attributeValue;
-
-		return $this;
-	}
-
-
-	/**
 	 * @return string
 	 */
 	protected function getComputedAttributes() {
@@ -158,7 +220,7 @@ trait MakeAttributes
 					if ( empty( $value ) ) {
 						continue;
 					}
-					$allAttributes[] = $name . ' = "' . htmlspecialchars( implode( ' ', $this->attributes[ ConstHtml::ATTRIBUTE_CLASS ] ) ) . '"';
+					$allAttributes[] = $name . ' = "' . htmlspecialchars( implode( ' ', $value ) ) . '"';
 					break;
 				case ConstHtml::ATTRIBUTE_STYLE:
 					if ( empty( $value ) ) {
@@ -187,66 +249,6 @@ trait MakeAttributes
 		}
 
 		return implode( '; ', $result );
-	}
-
-
-	/**
-	 * @param string $classes
-	 */
-	private function addClassesByString( $classes ) {
-		$classes = str_ireplace( [ ',', ';' ], ' ', $classes );
-		$classes = Strings::removeMultipleSpace( $classes );
-		foreach ( explode( ' ', $classes ) as $item ) {
-			if ( empty( $item ) ) {
-				continue;
-			}
-			$this->attributes[ ConstHtml::ATTRIBUTE_CLASS ][] = $item;
-		}
-	}
-
-	/**
-	 * @param array $classes
-	 * @throws HtmlBuilderException
-	 */
-	private function addClassesByArray( Array $classes ) {
-		foreach ( $classes as $class ) {
-			if ( is_array( $class ) ) {
-				$this->addClassesByArray( $class );
-			} else {
-				if ( empty( $class ) ) {
-					continue;
-				}
-				$this->withClass( $class );
-			}
-		}
-	}
-
-	/**
-	 * @param $attributeName
-	 * @throws HtmlBuilderException
-	 */
-	private function validateAttributeName( $attributeName ) {
-		if ( !is_string( $attributeName ) ) {
-			throw new HtmlBuilderException( 'Invalid attribute name. It must be string.' );
-		}
-
-		if ( empty( trim( $attributeName ) ) ) {
-			throw new HtmlBuilderException( 'Invalid attribute name. It is empty' );
-		}
-
-		if ( $attributeName !== htmlspecialchars( $attributeName ) ) {
-			throw new HtmlBuilderException( 'Invalid attribute name: ' . $attributeName );
-		}
-	}
-
-	/**
-	 * @param $attributeValue
-	 * @throws HtmlBuilderException
-	 */
-	private function validateAttributeValue( $attributeValue ) {
-		if ( null !== $attributeValue && !is_string( $attributeValue ) ) {
-			throw new HtmlBuilderException( 'Invalid attribute value. It must be string.' );
-		}
 	}
 
 
