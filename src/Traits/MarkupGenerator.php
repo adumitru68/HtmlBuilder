@@ -42,7 +42,7 @@ trait MarkupGenerator
 	 * Display Html content
 	 */
 	public function render() {
-		if ( function_exists( 'tidy_parse_string' ) && 1 === 2 ) {
+		if ( function_exists( 'tidy_parse_string' ) && 1 === 1 ) {
 			echo tidy_parse_string(
 				$this->getHTMLMarkup(),
 				array(

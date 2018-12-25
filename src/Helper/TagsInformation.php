@@ -11,7 +11,7 @@ namespace Qpdb\HtmlBuilder\Helper;
 
 use Qpdb\Common\Prototypes\Traits\AsSingletonPrototype;
 
-class Tags
+class TagsInformation
 {
 
 	use AsSingletonPrototype;
@@ -33,7 +33,7 @@ class Tags
 
 
 	/**
-	 * Tags constructor.
+	 * TagsInformation constructor.
 	 */
 	public function __construct() {
 		$this->htmlTags = require __DIR__ . '/../../resources/tags_html5.php';

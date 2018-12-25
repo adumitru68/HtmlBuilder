@@ -12,7 +12,7 @@ namespace Qpdb\HtmlBuilder\Abstracts;
 use Qpdb\HtmlBuilder\Elements\TagAttributes;
 use Qpdb\HtmlBuilder\Exceptions\HtmlBuilderException;
 use Qpdb\HtmlBuilder\Helper\ConstHtml;
-use Qpdb\HtmlBuilder\Helper\Tags;
+use Qpdb\HtmlBuilder\Helper\TagsInformation;
 use Qpdb\HtmlBuilder\Interfaces\HtmlElementInterface;
 use Qpdb\HtmlBuilder\Interfaces\TagAttributesInterface;
 
@@ -21,7 +21,7 @@ abstract class AbstractHtmlElement
 {
 
 	/**
-	 * @var Tags
+	 * @var TagsInformation
 	 */
 	protected $tags;
 
@@ -38,11 +38,11 @@ abstract class AbstractHtmlElement
 
 	/**
 	 * AbstractHtmlElement constructor.
-	 * @param Tags|null              $tags
+	 * @param TagsInformation|null   $tags
 	 * @param TagAttributesInterface $tagAttributes
 	 */
-	public function __construct( Tags $tags = null, TagAttributesInterface $tagAttributes = null ) {
-		$this->tags = $tags ?: Tags::getInstance();
+	public function __construct( TagsInformation $tags = null, TagAttributesInterface $tagAttributes = null ) {
+		$this->tags = $tags ?: TagsInformation::getInstance();
 		$this->attributes = $tagAttributes ?: new TagAttributes();
 	}
 
