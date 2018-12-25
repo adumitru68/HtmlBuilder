@@ -16,7 +16,7 @@ use Qpdb\HtmlBuilder\Interfaces\HtmlElementInterface;
 /**
  * Trait MarkupGenerator
  * @package Qpdb\HtmlBuilder\Traits
- * @var AbstractHtmlElement $this
+ * @var  $this AbstractHtmlElement
  */
 trait MarkupGenerator
 {
@@ -34,16 +34,15 @@ trait MarkupGenerator
 	public function getHTMLMarkup() {
 
 		$content = $this->isSelfClosed() ? '' : $this->getHtmlElementContent();
-		$attributes = $this->getComputedAttributes();
 
-		return $this->makeTag($attributes, $content);
+		return $this->makeTag( $this->getComputedAttributes(), $content );
 	}
 
 	/**
 	 * Display Html content
 	 */
 	public function render() {
-		if ( function_exists( 'tidy_parse_string' ) && 1 === 1 ) {
+		if ( function_exists( 'tidy_parse_string' ) && 1 === 2 ) {
 			echo tidy_parse_string(
 				$this->getHTMLMarkup(),
 				array(

@@ -26,32 +26,43 @@ class Tags
 	 */
 	private $htmlTagsSelfClosed;
 
+	/**
+	 * @var array
+	 */
+	private $htmlInlineTags;
+
 
 	/**
 	 * Tags constructor.
 	 */
-	public function __construct()
-	{
+	public function __construct() {
 		$this->htmlTags = require __DIR__ . '/../../resources/tags_html5.php';
 		$this->htmlTagsSelfClosed = __DIR__ . '/../../resources/tags_html5_self_clossing.php';
+		$this->htmlInlineTags = __DIR__ . '/../../resources/tags_html5_inline.php';
 	}
 
 	/**
 	 * @param string $tag
 	 * @return bool
 	 */
-	public function isTag( $tag )
-	{
+	public function isTag( $tag ) {
 		return in_array( trim( $tag ), $this->htmlTags );
 	}
 
 	/**
-	 * @param $tag
+	 * @param string $tag
 	 * @return bool
 	 */
-	public function isSelfClosedTag( $tag )
-	{
+	public function isSelfClosedTag( $tag ) {
 		return in_array( trim( $tag ), $this->htmlTagsSelfClosed );
+	}
+
+	/**
+	 * @param string $tag
+	 * @return bool
+	 */
+	public function isInlineTag( $tag ) {
+		return in_array( trim( $tag ), $this->htmlInlineTags );
 	}
 
 }
