@@ -17,12 +17,16 @@ interface HtmlElementInterface
 	/**
 	 * @return string
 	 */
-	public function getHTMLMarkup();
+	public function getMarkup();
 
 	/**
 	 * @return void
 	 */
 	public function render();
 
+	/**
+	 * @return $this
+	 */
+	public static function create();
 
 }

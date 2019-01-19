@@ -2,8 +2,8 @@
 /**
  * Created by PhpStorm.
  * User: Adi
- * Date: 9/30/2018
- * Time: 2:14 AM
+ * Date: 12/25/2018
+ * Time: 11:30 PM
  */
 
 namespace Qpdb\HtmlBuilder\Elements;
@@ -20,10 +20,9 @@ class HtmlDiv extends AbstractHtmlElement implements HtmlElementInterface
 	use MarkupGenerator, CanHaveChildren;
 
 	/**
-	 * @return string||null
+	 * @return string
 	 */
-	protected function getHtmlTag()
-	{
+	public function getTag() {
 		return 'div';
 	}
 

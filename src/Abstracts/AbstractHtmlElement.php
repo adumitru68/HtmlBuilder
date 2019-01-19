@@ -9,9 +9,7 @@
 namespace Qpdb\HtmlBuilder\Abstracts;
 
 
-use Qpdb\HtmlBuilder\Elements\TagAttributes;
-use Qpdb\HtmlBuilder\Exceptions\HtmlBuilderException;
-use Qpdb\HtmlBuilder\Helper\ConstHtml;
+use Qpdb\HtmlBuilder\Elements\OldTagAttributes;
 use Qpdb\HtmlBuilder\Helper\TagsInformation;
 use Qpdb\HtmlBuilder\Interfaces\HtmlElementInterface;
 use Qpdb\HtmlBuilder\Interfaces\TagAttributesInterface;
@@ -38,76 +36,52 @@ abstract class AbstractHtmlElement
 
 	/**
 	 * AbstractHtmlElement constructor.
-	 * @param TagsInformation|null   $tags
 	 * @param TagAttributesInterface $tagAttributes
 	 */
-	public function __construct( TagsInformation $tags = null, TagAttributesInterface $tagAttributes = null ) {
-		$this->tags = $tags ?: TagsInformation::getInstance();
-		$this->attributes = $tagAttributes ?: new TagAttributes();
+	public function __construct( TagAttributesInterface $tagAttributes = null ) {
+		$this->tags = TagsInformation::getInstance();
+		$this->attributes = $tagAttributes ?: new OldTagAttributes();
 	}
 
 	/**
-	 * @return string||null
+	 * @return HtmlElementInterface[]|string[]
 	 */
-	abstract protected function getHtmlTag();
+	public function getChildren() {
+		return $this->htmlElements;
+	}
+
+	/**
+	 * @param TagAttributesInterface $tagAttributes
+	 * @return $this
+	 */
+	public function setTagAttributes( TagAttributesInterface $tagAttributes ) {
+		$this->attributes = $tagAttributes;
+
+		return $this;
+	}
+
+	/**
+	 * @return OldTagAttributes|TagAttributesInterface
+	 */
+	public function getTagAttributes() {
+		return $this->attributes;
+	}
+
+	/**
+	 * @return string
+	 */
+	abstract public function getTag();
+
+	/**
+	 * @return bool
+	 */
+	abstract public function isSelfClosed();
 
 	/**
 	 * @return string
 	 */
 	protected function getComputedAttributes() {
 		return $this->attributes->getComputedAttributes();
-	}
-
-	/**
-	 * @param $id
-	 * @return $this
-	 * @throws HtmlBuilderException
-	 */
-	public function withId( $id ) {
-		$this->attributes->withAttribute( ConstHtml::ATTRIBUTE_ID, $id );
-
-		return $this;
-	}
-
-	/**
-	 * @param $title
-	 * @return $this
-	 * @throws HtmlBuilderException
-	 */
-	public function withTitle( $title ) {
-		$this->attributes->withAttribute( ConstHtml::ATTRIBUTE_TITLE, $title );
-
-		return $this;
-	}
-
-	/**
-	 * @param mixed ...$classes
-	 * @return $this
-	 * @throws HtmlBuilderException
-	 */
-	public function withClass( ...$classes ) {
-		$this->attributes->withAttribute( ConstHtml::ATTRIBUTE_CLASS, $classes );
-
-		return $this;
-	}
-
-	/**
-	 * @param string $attributeName
-	 * @param string||array $attributeValue
-	 * @return $this
-	 * @throws HtmlBuilderException
-	 */
-	public function withAttribute( $attributeName, $attributeValue ) {
-		$this->attributes->withAttribute( $attributeName, $attributeValue );
-
-		return $this;
-	}
-
-	/**
-	 * @return bool
-	 */
-	protected function isSelfClosed() {
-		return true;
 	}
 
 	/**

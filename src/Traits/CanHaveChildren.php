@@ -29,18 +29,18 @@ trait CanHaveChildren
 	/**
 	 * @return bool
 	 */
-	protected function isSelfClosed()
-	{
+	protected function isSelfClosed() {
 		return false;
 	}
 
 	/**
-	 * @param HtmlElementInterface $html
+	 * @param HtmlElementInterface ...$htmlElement
 	 * @return $this
 	 */
-	public function withHtmlElement( HtmlElementInterface $html )
-	{
-		$this->htmlElements[] = $html;
+	public function withHtmlElement( HtmlElementInterface ...$htmlElement ) {
+		foreach ( $htmlElement as $element ) {
+			$this->htmlElements[] = $element;
+		}
 
 		return $this;
 	}
@@ -50,8 +50,7 @@ trait CanHaveChildren
 	 * @return $this
 	 * @throws HtmlBuilderException
 	 */
-	public function withCustomContent( $content = '' )
-	{
+	public function withPlainText( $content = '' ) {
 		if ( !is_string( $content ) ) {
 			throw new HtmlBuilderException( 'Invalid content type' );
 		}

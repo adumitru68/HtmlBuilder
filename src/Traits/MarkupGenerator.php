@@ -31,7 +31,7 @@ trait MarkupGenerator
 	 * @return string
 	 * @throws HtmlBuilderException
 	 */
-	public function getHTMLMarkup() {
+	public function getMarkup() {
 
 		$content = $this->isSelfClosed() ? '' : $this->getHtmlElementContent();
 
@@ -44,7 +44,7 @@ trait MarkupGenerator
 	public function render() {
 		if ( function_exists( 'tidy_parse_string' ) && 1 === 1 ) {
 			echo tidy_parse_string(
-				$this->getHTMLMarkup(),
+				$this->getMarkup(),
 				array(
 					'show-body-only' => true,
 					'indent' => true,
@@ -57,14 +57,14 @@ trait MarkupGenerator
 				)
 			);
 		} else {
-			echo $this->getHTMLMarkup();
+			echo $this->getMarkup();
 		}
 
 	}
 
 	private function makeTag( $attributes, $content = '' ) {
 
-		$tag = $this->getHtmlTag();
+		$tag = $this->getTag();
 		$attributes = trim( $attributes );
 
 		if ( $this->isSelfClosed() ) {
@@ -90,7 +90,7 @@ trait MarkupGenerator
 	 */
 	private function makeTagSelf( $attributes ) {
 
-		$tag = $this->getHtmlTag();
+		$tag = $this->getTag();
 
 		if ( empty( $tag ) ) {
 			return '';
@@ -110,7 +110,7 @@ trait MarkupGenerator
 		$result = [];
 		foreach ( $this->htmlElements as $htmlElement ) {
 			if ( $htmlElement instanceof HtmlElementInterface )
-				$result[] = $htmlElement->getHTMLMarkup();
+				$result[] = $htmlElement->getMarkup();
 			elseif ( is_string( $htmlElement ) )
 				$result[] = $htmlElement . $this->endLine;
 			else
