@@ -1,0 +1,34 @@
+<?php
+
+use Qpdb\HtmlBuilder\Abstracts\AbstractView;
+
+/** @var $this AbstractView */
+
+?>
+
+<h1>View template not found</h1>
+Please set correct template path!
+<h3>Defined variables:</h3>
+
+<?php
+foreach ( $this->getStoredData() as $key => $value ) {
+	$line = "<b>{$key}</b>: => ";
+	switch ( gettype( $value ) ) {
+		case 'string':
+		case 'integer':
+		case 'double':
+			$line .= (string)$value;
+			break;
+		case 'boolean':
+			$line .= $value ? 'TRUE' : 'FALSE';
+			break;
+        case 'object':
+            $line .= get_class($value);
+            break;
+		default:
+			$line .= gettype( $value );
+	}
+	$line .= "\n" . "<br>";
+	echo $line;
+}
+?>
