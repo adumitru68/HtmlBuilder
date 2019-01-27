@@ -56,7 +56,7 @@ interface TagAttributesInterface
 	 * @param mixed ...$styles
 	 * @return $this
 	 */
-	public function withInLineStyle( ...$styles );
+	public function withStyle( ...$styles );
 
 	/**
 	 * @param string ...$propertyName

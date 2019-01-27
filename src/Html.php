@@ -10,6 +10,7 @@ namespace Qpdb\HtmlBuilder;
 
 
 use Qpdb\HtmlBuilder\Elements\HtmlDiv;
+use Qpdb\HtmlBuilder\Elements\HtmlSpan;
 use Qpdb\HtmlBuilder\Elements\Parts\CustomElement;
 use Qpdb\HtmlBuilder\Exceptions\HtmlBuilderException;
 
@@ -29,7 +30,7 @@ class Html
 	 * @return CustomElement
 	 * @throws HtmlBuilderException
 	 */
-	public function elementCollection() {
+	public static function container() {
 		return new CustomElement('');
 	}
 
@@ -39,6 +40,14 @@ class Html
 	 */
 	public static function div() {
 		return new HtmlDiv();
+	}
+
+	/**
+	 * @return HtmlSpan
+	 * @throws HtmlBuilderException
+	 */
+	public static function span() {
+		return new HtmlSpan();
 	}
 
 

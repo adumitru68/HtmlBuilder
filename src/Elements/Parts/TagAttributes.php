@@ -47,7 +47,7 @@ class TagAttributes implements TagAttributesInterface
 				$this->withClass( $attributeValue );
 				break;
 			case ConstHtml::ATTRIBUTE_STYLE:
-				$this->withInLineStyle( $attributeValue );
+				$this->withStyle( $attributeValue );
 				break;
 			default:
 				$this->attributes[ $attributeName ] = Strings::toString($attributeValue);
@@ -83,8 +83,9 @@ class TagAttributes implements TagAttributesInterface
 	 * @param string ...$styles
 	 * @return $this
 	 * @throws HtmlBuilderException
+	 * @throws PrototypeException
 	 */
-	public function withInLineStyle( ...$styles ) {
+	public function withStyle( ...$styles ) {
 
 		$styles = Arrays::flatValues( $styles );
 
@@ -102,6 +103,7 @@ class TagAttributes implements TagAttributesInterface
 	 * @param array $propertiesArray
 	 * @return $this
 	 * @throws HtmlBuilderException
+	 * @throws PrototypeException
 	 */
 	public function withStyleProperties( array $propertiesArray ) {
 		foreach ( $propertiesArray as $propertyName => $propertyValue ) {
@@ -260,6 +262,8 @@ class TagAttributes implements TagAttributesInterface
 	public function getClone() {
 		return clone $this;
 	}
+
+
 
 	/**
 	 * @param $arrayValues

@@ -78,7 +78,7 @@ abstract class AbstractHtmlElement implements HtmlElementInterface
 	 * @return $this
 	 */
 	public function withTagAttributes( TagAttributesInterface $tagAttributes ) {
-		$this->attributes = $tagAttributes;
+		$this->attributes = clone $tagAttributes;
 
 		return $this;
 	}
@@ -88,25 +88,6 @@ abstract class AbstractHtmlElement implements HtmlElementInterface
 	 */
 	public function getTagAttributes() {
 		return $this->attributes;
-	}
-
-	/**
-	 * @param string $name
-	 * @param string $value
-	 * @return $this
-	 * @throws HtmlBuilderException
-	 * @throws PrototypeException
-	 */
-	public function withAttribute( $name, $value = null ) {
-		$this->attributes->withAttribute( $name, $value );
-
-		return $this;
-	}
-
-	public function withId( $id ) {
-		$this->attributes->withAttribute( ConstHtml::ATTRIBUTE_ID, $id );
-
-		return $this;
 	}
 
 	/**
@@ -127,6 +108,130 @@ abstract class AbstractHtmlElement implements HtmlElementInterface
 		return TagsInformation::getInstance()->isInlineTag( $this->getTag() );
 	}
 
+	/**
+	 * @param $id
+	 * @return $this
+	 * @throws HtmlBuilderException
+	 * @throws PrototypeException
+	 */
+	public function withId( $id ) {
+		$this->attributes->withAttribute( ConstHtml::ATTRIBUTE_ID, $id );
+
+		return $this;
+	}
+
+	/**
+	 * @param string $title
+	 * @return $this
+	 * @throws HtmlBuilderException
+	 * @throws PrototypeException
+	 */
+	public function withTitle( $title ) {
+		$this->attributes->withAttribute( ConstHtml::ATTRIBUTE_TITLE, $title );
+
+		return $this;
+	}
+
+	/**
+	 * @param string $name
+	 * @param string $value
+	 * @return $this
+	 * @throws HtmlBuilderException
+	 * @throws PrototypeException
+	 */
+	public function withAttribute( $name, $value = null ) {
+		$this->attributes->withAttribute( $name, $value );
+
+		return $this;
+	}
+
+	/**
+	 * @param mixed ...$attributes
+	 * @return $this
+	 * @throws HtmlBuilderException
+	 */
+	public function withOutAttribute( ...$attributes ) {
+		$this->attributes->withOutAttribute( $attributes );
+
+		return $this;
+	}
+
+	/**
+	 * @param mixed ...$classes
+	 * @return $this
+	 * @throws HtmlBuilderException
+	 */
+	public function withClass( ...$classes ) {
+		$this->attributes->withClass( $classes );
+
+		return $this;
+	}
+
+	/**
+	 * @param mixed ...$classes
+	 * @return $this
+	 */
+	public function withOutClass( ...$classes ) {
+		$this->attributes->withOutClass( $classes );
+
+		return $this;
+	}
+
+	/**
+	 * @param mixed ...$styles
+	 * @return $this
+	 * @throws HtmlBuilderException
+	 * @throws PrototypeException
+	 */
+	public function withStyle( ...$styles ) {
+		$this->attributes->withStyle( $styles );
+
+		return $this;
+	}
+
+	/**
+	 * @param $propertyName
+	 * @param $propertyValue
+	 * @return $this
+	 * @throws HtmlBuilderException
+	 * @throws PrototypeException
+	 */
+	public function withStyleProperty( $propertyName, $propertyValue ) {
+		$this->attributes->withStyleProperty( $propertyName, $propertyValue );
+
+		return $this;
+	}
+
+	/**
+	 * CSS properties array Ex: ['display' => 'block', 'property name' => 'property value' ...]
+	 *
+	 * @param array $propertiesArray
+	 * @return $this
+	 * @throws HtmlBuilderException
+	 * @throws PrototypeException
+	 */
+	public function withStyleProperties( array $propertiesArray ) {
+		$this->attributes->withStyleProperties( $propertiesArray );
+
+		return $this;
+	}
+
+	/**
+	 * @param mixed ...$propertyName
+	 * @return $this
+	 */
+	public function withOutStyleProperty( ...$propertyName ) {
+		$this->attributes->withOutStyleProperty( $propertyName );
+
+		return $this;
+	}
+
+	/**
+	 * @return $this
+	 */
+	public function getClone() {
+		return clone $this->withTagAttributes(clone $this->attributes);
+	}
 
 	/**
 	 * @return $this
@@ -144,4 +249,3 @@ abstract class AbstractHtmlElement implements HtmlElementInterface
 	}
 
 }
-
