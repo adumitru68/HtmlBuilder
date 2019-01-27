@@ -8,8 +8,7 @@
 
 namespace Qpdb\HtmlBuilder\Helper;
 
-
-use Qpdb\Prototype\Traits\AsSingletonPrototype;
+use Qpdb\Common\Prototypes\Traits\AsSingletonPrototype;
 
 class TagsCollection
 {

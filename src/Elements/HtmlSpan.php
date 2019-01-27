@@ -2,8 +2,8 @@
 /**
  * Created by PhpStorm.
  * User: Adi
- * Date: 12/25/2018
- * Time: 11:30 PM
+ * Date: 1/26/2019
+ * Time: 12:21 PM
  */
 
 namespace Qpdb\HtmlBuilder\Elements;
@@ -12,7 +12,7 @@ namespace Qpdb\HtmlBuilder\Elements;
 use Qpdb\HtmlBuilder\Abstracts\AbstractHtmlElement;
 use Qpdb\HtmlBuilder\Traits\CanHaveChildren;
 
-class HtmlDiv extends AbstractHtmlElement
+class HtmlSpan extends AbstractHtmlElement
 {
 	use CanHaveChildren;
 
@@ -20,7 +20,6 @@ class HtmlDiv extends AbstractHtmlElement
 	 * @return string
 	 */
 	public function getTag() {
-		return 'div';
+		return 'span';
 	}
-
 }

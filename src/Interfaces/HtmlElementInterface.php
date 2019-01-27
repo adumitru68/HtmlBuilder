@@ -24,9 +24,5 @@ interface HtmlElementInterface
 	 */
 	public function render();
 
-	/**
-	 * @return $this
-	 */
-	public static function create();
 
 }

@@ -9,6 +9,7 @@
 namespace Qpdb\HtmlBuilder\Helper;
 
 
+use Qpdb\Common\Exceptions\PrototypeException;
 use Qpdb\Common\Helpers\Strings;
 use Qpdb\HtmlBuilder\Exceptions\HtmlBuilderException;
 
@@ -32,16 +33,6 @@ class HtmlHelper
 	}
 
 	/**
-	 * @param string $value
-	 * @throws HtmlBuilderException
-	 */
-	public static function validateValueOfAttribute( $value ) {
-		if ( null === Strings::toString( $value ) ) {
-			throw new HtmlBuilderException( 'Value off attribute not is string' );
-		}
-	}
-
-	/**
 	 * @param string $attribute
 	 * @return bool
 	 */
@@ -58,9 +49,10 @@ class HtmlHelper
 	 * @param string $style
 	 * @return array
 	 * @throws HtmlBuilderException
+	 * @throws PrototypeException
 	 */
 	public static function parseInLineStyle( $style ) {
-		self::validateValueOfAttribute( $style );
+		$style = Strings::toString($style);
 		$properties = [];
 		$style = Strings::removeMultipleSpace( $style, true );
 		$style = explode( ';', $style );

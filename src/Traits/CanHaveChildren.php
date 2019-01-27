@@ -9,7 +9,11 @@
 namespace Qpdb\HtmlBuilder\Traits;
 
 
+use Qpdb\Common\Exceptions\PrototypeException;
+use Qpdb\Common\Helpers\Arrays;
+use Qpdb\Common\Helpers\Strings;
 use Qpdb\HtmlBuilder\Abstracts\AbstractHtmlElement;
+use Qpdb\HtmlBuilder\Elements\HtmlPlainText;
 use Qpdb\HtmlBuilder\Exceptions\HtmlBuilderException;
 use Qpdb\HtmlBuilder\Interfaces\HtmlElementInterface;
 
@@ -22,23 +26,16 @@ trait CanHaveChildren
 {
 
 	/**
-	 * @var HtmlElementInterface[]|string[]
-	 */
-	protected $htmlElements = [];
-
-	/**
-	 * @return bool
-	 */
-	protected function isSelfClosed() {
-		return false;
-	}
-
-	/**
-	 * @param HtmlElementInterface ...$htmlElement
+	 * @param HtmlElementInterface[] ...$htmlElement
 	 * @return $this
+	 * @throws HtmlBuilderException
 	 */
-	public function withHtmlElement( HtmlElementInterface ...$htmlElement ) {
+	public function withHtmlElement( ...$htmlElement ) {
+		$htmlElement = Arrays::flatValues( $htmlElement );
 		foreach ( $htmlElement as $element ) {
+			if ( !$element instanceof HtmlElementInterface ) {
+				throw new HtmlBuilderException( 'The element needs to be implemented HtmlElementInterface' );
+			}
 			$this->htmlElements[] = $element;
 		}
 
@@ -46,15 +43,17 @@ trait CanHaveChildren
 	}
 
 	/**
-	 * @param string $content
+	 * @param array|string ...$textContents
 	 * @return $this
 	 * @throws HtmlBuilderException
 	 */
-	public function withPlainText( $content = '' ) {
-		if ( !is_string( $content ) ) {
-			throw new HtmlBuilderException( 'Invalid content type' );
+	public function withPlainText( ...$textContents ) {
+		try {
+			$this->withHtmlElement(
+				( new HtmlPlainText() )->withPlainText( $textContents ) );
+		} catch ( PrototypeException $e ) {
+			throw new HtmlBuilderException( 'Invalid plain text or html. Trait CanHaveChildren' );
 		}
-		$this->htmlElements[] = $content;
 
 		return $this;
 	}

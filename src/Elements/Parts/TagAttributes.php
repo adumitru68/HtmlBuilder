@@ -9,6 +9,7 @@
 namespace Qpdb\HtmlBuilder\Elements\Parts;
 
 
+use Qpdb\Common\Exceptions\PrototypeException;
 use Qpdb\Common\Helpers\Arrays;
 use Qpdb\Common\Helpers\Strings;
 use Qpdb\HtmlBuilder\Exceptions\HtmlBuilderException;
@@ -18,8 +19,6 @@ use Qpdb\HtmlBuilder\Interfaces\TagAttributesInterface;
 
 class TagAttributes implements TagAttributesInterface
 {
-
-	const ATTRIBUTES_ALL = '*';
 
 	/**
 	 * @var array
@@ -38,6 +37,7 @@ class TagAttributes implements TagAttributesInterface
 	 * @param string|array $attributeValue
 	 * @return $this
 	 * @throws HtmlBuilderException
+	 * @throws PrototypeException
 	 */
 	public function withAttribute( $attributeName, $attributeValue ) {
 
@@ -50,8 +50,8 @@ class TagAttributes implements TagAttributesInterface
 				$this->withInLineStyle( $attributeValue );
 				break;
 			default:
-				HtmlHelper::validateValueOfAttribute( $attributeValue );
-				$this->attributes[ $attributeName ] = $attributeValue;
+				$this->attributes[ $attributeName ] = Strings::toString($attributeValue);
+				break;
 		}
 
 		return $this;
@@ -116,10 +116,11 @@ class TagAttributes implements TagAttributesInterface
 	 * @param string $propertyValue
 	 * @return $this
 	 * @throws HtmlBuilderException
+	 * @throws PrototypeException
 	 */
 	public function withStyleProperty( $propertyName, $propertyValue ) {
 		HtmlHelper::validateNameOfAttribute( $propertyName );
-		HtmlHelper::validateValueOfAttribute( $propertyValue );
+		$propertyValue = Strings::toString($propertyValue);
 		$this->attributes[ ConstHtml::ATTRIBUTE_STYLE ][ $propertyName ] = $propertyValue;
 
 		return $this;
@@ -260,6 +261,10 @@ class TagAttributes implements TagAttributesInterface
 		return clone $this;
 	}
 
+	/**
+	 * @param $arrayValues
+	 * @return array
+	 */
 	protected function toArrayValues( $arrayValues ) {
 		return Arrays::flatValues( $arrayValues );
 	}

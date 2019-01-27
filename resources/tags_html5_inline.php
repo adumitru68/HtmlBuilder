@@ -46,5 +46,6 @@ return [
 	'ruby',
 	's',
 	'samp',
-
+	'span',
+	'textarea'
 ];

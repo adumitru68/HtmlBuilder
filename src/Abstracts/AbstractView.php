@@ -9,78 +9,74 @@
 namespace Qpdb\HtmlBuilder\Abstracts;
 
 
-use Qpdb\HtmlBuilder\Exceptions\HtmlBuilderException;
-use Qpdb\HtmlBuilder\Interfaces\HtmlElementInterface;
+use Qpdb\Common\Exceptions\PrototypeException;
+use Qpdb\Common\Prototypes\Traits\AsStoredSettings;
+use Qpdb\HtmlBuilder\Interfaces\HtmlViewInterface;
 
-abstract class AbstractView implements HtmlElementInterface
+abstract class AbstractView implements HtmlViewInterface
 {
+
+	use AsStoredSettings;
 
 	/**
 	 * @var string
 	 */
-	protected $basePath;
-
-	/**
-	 * @var
-	 */
 	protected $templatePath;
 
-	/**
-	 * @var array
-	 */
-	protected $vars = [];
 
 	/**
-	 * @param $varName
-	 * @param $value
+	 * @param string $templatePath
 	 * @return $this
-	 * @throws HtmlBuilderException
 	 */
-	public function set( $varName, $value ) {
-		$this->validateVarName( $varName );
-		$this->vars[ $varName ] = $value;
+	public function withTemplate( $templatePath ) {
+		$this->templatePath = $templatePath;
 
 		return $this;
-	}
-
-	/**
-	 * @param null $varName
-	 * @param bool $throwExceptionIfNotDefine
-	 * @return array|mixed|null
-	 * @throws HtmlBuilderException
-	 */
-	public function get( $varName = null, $throwExceptionIfNotDefine = false ) {
-		if(null === $varName) {
-			return $this->vars;
-		}
-		$this->validateVarName($varName);
-		if(!isset($this->vars[$varName]) && $throwExceptionIfNotDefine) {
-			throw new HtmlBuilderException('Variable view '. $varName . ' is not define');
-		}
-
-		return isset($this->vars[$varName]) ? $this->vars[$varName] : null;
 	}
 
 	/**
 	 * @return string
 	 */
 	public function getMarkup() {
-		// TODO: Implement getHTMLMarkup() method.
+
+		foreach ( $this->__prototype_stored_settings_vars as $name => $value ) {
+			$$name = $value;
+		}
+
+		ob_start();
+
+		/** @noinspection PhpIncludeInspection */
+		include $this->getRealTemplatePath();
+
+		return ob_get_clean();
 	}
 
 	/**
 	 * @return void
 	 */
 	public function render() {
-		// TODO: Implement render() method.
+		echo $this->getMarkup();
 	}
 
 	/**
-	 * @param string $varName
-	 * @throws HtmlBuilderException
+	 * @return $this
+	 * @throws PrototypeException
 	 */
-	protected function validateVarName( $varName ) {
-		throw new HtmlBuilderException( 'Variable name must be string' );
+	public static function create() {
+		return new static();
+	}
+
+	/**
+	 * @return string
+	 */
+	protected function getRealTemplatePath() {
+		$templatePath = '';
+
+		if ( empty( $templatePath ) ) {
+			$templatePath = __DIR__ . '/../../resources/views/view_not_found.phtml';
+		}
+
+		return $templatePath;
 	}
 
 }

@@ -37,8 +37,8 @@ class TagsInformation
 	 */
 	public function __construct() {
 		$this->htmlTags = require __DIR__ . '/../../resources/tags_html5.php';
-		$this->htmlTagsSelfClosed = __DIR__ . '/../../resources/tags_html5_self_clossing.php';
-		$this->htmlInlineTags = __DIR__ . '/../../resources/tags_html5_inline.php';
+		$this->htmlTagsSelfClosed = require __DIR__ . '/../../resources/tags_html5_self_clossing.php';
+		$this->htmlInlineTags = require __DIR__ . '/../../resources/tags_html5_inline.php';
 	}
 
 	/**

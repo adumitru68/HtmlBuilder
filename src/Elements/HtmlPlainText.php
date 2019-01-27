@@ -1,0 +1,71 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: Adi
+ * Date: 1/26/2019
+ * Time: 8:47 AM
+ */
+
+namespace Qpdb\HtmlBuilder\Elements;
+
+
+use Qpdb\Common\Exceptions\PrototypeException;
+use Qpdb\Common\Helpers\Arrays;
+use Qpdb\Common\Helpers\Strings;
+use Qpdb\HtmlBuilder\Abstracts\AbstractHtmlElement;
+use Qpdb\HtmlBuilder\Exceptions\HtmlBuilderException;
+
+class HtmlPlainText extends AbstractHtmlElement
+{
+
+	/**
+	 * @var array
+	 */
+	protected $plainTexts = [];
+
+	/**
+	 * @var string
+	 */
+	protected $separator = '';
+
+	/**
+	 * @return string
+	 */
+	public function getTag() {
+		return '';
+	}
+
+
+	/**
+	 * @param string|array ...$texts
+	 * @return $this
+	 * @throws HtmlBuilderException
+	 */
+	public function withPlainText( ...$texts ) {
+		$texts = Arrays::flatValues( $texts );
+		foreach ( $texts as $text ) {
+			try {
+				$this->plainTexts[] = Strings::toString( $text );
+			} catch ( PrototypeException $e ) {
+				throw new HtmlBuilderException( 'Invalid plain text or html' );
+			}
+		}
+
+		return $this;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getMarkup() {
+		return implode( $this->separator, $this->plainTexts );
+	}
+
+	/**
+	 * @return void
+	 */
+	public function render() {
+		echo $this->getMarkup();
+	}
+
+}

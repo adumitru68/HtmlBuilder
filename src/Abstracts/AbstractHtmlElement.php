@@ -9,19 +9,25 @@
 namespace Qpdb\HtmlBuilder\Abstracts;
 
 
-use Qpdb\HtmlBuilder\Elements\OldTagAttributes;
+use Qpdb\Common\Exceptions\PrototypeException;
+use Qpdb\HtmlBuilder\Elements\Parts\TagAttributes;
+use Qpdb\HtmlBuilder\Exceptions\HtmlBuilderException;
+use Qpdb\HtmlBuilder\Helper\ConstHtml;
 use Qpdb\HtmlBuilder\Helper\TagsInformation;
 use Qpdb\HtmlBuilder\Interfaces\HtmlElementInterface;
 use Qpdb\HtmlBuilder\Interfaces\TagAttributesInterface;
+use Qpdb\HtmlBuilder\Traits\MarkupGenerator;
 
 
-abstract class AbstractHtmlElement
+abstract class AbstractHtmlElement implements HtmlElementInterface
 {
 
+	use MarkupGenerator;
+
 	/**
-	 * @var TagsInformation
+	 * @var string;
 	 */
-	protected $tags;
+	protected $tag;
 
 	/**
 	 * @var TagAttributesInterface
@@ -37,11 +43,28 @@ abstract class AbstractHtmlElement
 	/**
 	 * AbstractHtmlElement constructor.
 	 * @param TagAttributesInterface $tagAttributes
+	 * @throws HtmlBuilderException
 	 */
 	public function __construct( TagAttributesInterface $tagAttributes = null ) {
-		$this->tags = TagsInformation::getInstance();
-		$this->attributes = $tagAttributes ?: new OldTagAttributes();
+		$this->checkTag();
+		$this->attributes = $tagAttributes ?: new TagAttributes();
 	}
+
+	/**
+	 * @throws HtmlBuilderException
+	 */
+	protected function checkTag() {
+		if ( TagsInformation::getInstance()->isTag( $this->getTag() ) || empty( $this->getTag() ) ) {
+			$this->tag = $this->getTag();
+		} else {
+			throw new HtmlBuilderException( 'It not is html5 tag: ' . $this->getTag() );
+		}
+	}
+
+	/**
+	 * @return string
+	 */
+	abstract public function getTag();
 
 	/**
 	 * @return HtmlElementInterface[]|string[]
@@ -54,41 +77,70 @@ abstract class AbstractHtmlElement
 	 * @param TagAttributesInterface $tagAttributes
 	 * @return $this
 	 */
-	public function setTagAttributes( TagAttributesInterface $tagAttributes ) {
+	public function withTagAttributes( TagAttributesInterface $tagAttributes ) {
 		$this->attributes = $tagAttributes;
 
 		return $this;
 	}
 
 	/**
-	 * @return OldTagAttributes|TagAttributesInterface
+	 * @return TagAttributesInterface
 	 */
 	public function getTagAttributes() {
 		return $this->attributes;
 	}
 
 	/**
-	 * @return string
+	 * @param string $name
+	 * @param string $value
+	 * @return $this
+	 * @throws HtmlBuilderException
+	 * @throws PrototypeException
 	 */
-	abstract public function getTag();
+	public function withAttribute( $name, $value = null ) {
+		$this->attributes->withAttribute( $name, $value );
+
+		return $this;
+	}
+
+	public function withId( $id ) {
+		$this->attributes->withAttribute( ConstHtml::ATTRIBUTE_ID, $id );
+
+		return $this;
+	}
 
 	/**
 	 * @return bool
 	 */
-	abstract public function isSelfClosed();
+	public function isSelfClosed() {
+		return TagsInformation::getInstance()->isSelfClosedTag( $this->tag );
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function isInlineTag() {
+		if ( empty( $this->getTag() ) ) {
+			return true;
+		}
+
+		return TagsInformation::getInstance()->isInlineTag( $this->getTag() );
+	}
+
+
+	/**
+	 * @return $this
+	 * @throws HtmlBuilderException
+	 */
+	public static function create() {
+		return new static();
+	}
 
 	/**
 	 * @return string
 	 */
 	protected function getComputedAttributes() {
 		return $this->attributes->getComputedAttributes();
-	}
-
-	/**
-	 * @return $this
-	 */
-	public static function create() {
-		return new static();
 	}
 
 }

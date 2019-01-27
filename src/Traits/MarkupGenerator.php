@@ -24,7 +24,7 @@ trait MarkupGenerator
 	/**
 	 * @var string
 	 */
-	protected $endLine = '';
+	protected $endLine = PHP_EOL;
 
 
 	/**
@@ -32,6 +32,10 @@ trait MarkupGenerator
 	 * @throws HtmlBuilderException
 	 */
 	public function getMarkup() {
+
+		if ( $this->isInlineTag() ) {
+			$this->endLine = '';
+		}
 
 		$content = $this->isSelfClosed() ? '' : $this->getHtmlElementContent();
 
@@ -50,10 +54,10 @@ trait MarkupGenerator
 					'indent' => true,
 					'wrap' => 1000,
 					'drop-empty-elements' => false,
-					'new-blocklevel-tags' => TagsCollection::getInstance()->getNewTags( true ),
-					'new-empty-tags' => TagsCollection::getInstance()->getNewClosedTags( true ),
-					'new-inline-tags' => TagsCollection::getInstance()->getNewInlineTags( true ),
-					'new-pre-tags' => '',
+//					'new-blocklevel-tags' => TagsCollection::getInstance()->getNewTags( true ),
+//					'new-empty-tags' => TagsCollection::getInstance()->getNewClosedTags( true ),
+//					'new-inline-tags' => TagsCollection::getInstance()->getNewInlineTags( true ),
+//					'new-pre-tags' => '',
 				)
 			);
 		} else {
@@ -68,7 +72,7 @@ trait MarkupGenerator
 		$attributes = trim( $attributes );
 
 		if ( $this->isSelfClosed() ) {
-			return $this->makeTagSelf( $content );
+			return $this->makeTagSelf( $attributes );
 		}
 
 		if ( empty( $tag ) ) {
@@ -77,14 +81,15 @@ trait MarkupGenerator
 
 		$formattedTag = "<{$tag}";
 		$formattedTag .= empty( $attributes ) ? '>' : " {$attributes}>";
+		$formattedTag .= $this->endLine;
 		$formattedTag .= $content;
+		$formattedTag .= $this->endLine;
 		$formattedTag .= "</{$tag}>";
 
 		return $formattedTag;
 	}
 
 	/**
-	 * @param $tag
 	 * @param $attributes
 	 * @return string
 	 */
@@ -96,7 +101,7 @@ trait MarkupGenerator
 			return '';
 		}
 
-		$formattedTag = "<{$tag}";
+		$formattedTag = $this->endLine . "<{$tag}";
 		$formattedTag .= empty( $attributes ) ? '>' : " {$attributes}>";
 
 		return $formattedTag;
@@ -111,10 +116,8 @@ trait MarkupGenerator
 		foreach ( $this->htmlElements as $htmlElement ) {
 			if ( $htmlElement instanceof HtmlElementInterface )
 				$result[] = $htmlElement->getMarkup();
-			elseif ( is_string( $htmlElement ) )
-				$result[] = $htmlElement . $this->endLine;
 			else
-				throw new HtmlBuilderException( 'Invalid html content. Accepted only instanceof HtmlElementInterface and String' );
+				throw new HtmlBuilderException( 'Invalid html content. Accepted only instanceof HtmlElementInterface' );
 		}
 
 		return implode( '', $result );
