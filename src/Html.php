@@ -10,7 +10,13 @@ namespace Qpdb\HtmlBuilder;
 
 
 use Qpdb\HtmlBuilder\Elements\HtmlDiv;
+use Qpdb\HtmlBuilder\Elements\HtmlImg;
+use Qpdb\HtmlBuilder\Elements\HtmlLabel;
+use Qpdb\HtmlBuilder\Elements\HtmlPlainText;
 use Qpdb\HtmlBuilder\Elements\HtmlSpan;
+use Qpdb\HtmlBuilder\Elements\HtmlTemplate;
+use Qpdb\HtmlBuilder\Elements\HtmlTextarea;
+use Qpdb\HtmlBuilder\Elements\HtmlView;
 use Qpdb\HtmlBuilder\Elements\Parts\CustomElement;
 use Qpdb\HtmlBuilder\Exceptions\HtmlBuilderException;
 
@@ -31,7 +37,7 @@ class Html
 	 * @throws HtmlBuilderException
 	 */
 	public static function container() {
-		return new CustomElement('');
+		return new CustomElement( '' );
 	}
 
 	/**
@@ -40,6 +46,62 @@ class Html
 	 */
 	public static function div() {
 		return new HtmlDiv();
+	}
+
+	/**
+	 * @param null $src
+	 * @return HtmlImg
+	 * @throws HtmlBuilderException
+	 * @throws \Qpdb\Common\Exceptions\PrototypeException
+	 */
+	public static function img( $src = null ) {
+		$img = new HtmlImg();
+		if ( !empty( $src ) ) {
+			$img->withSrc( $src );
+		}
+
+		return $img;
+	}
+
+	/**
+	 * @param null $labelText
+	 * @return HtmlLabel
+	 * @throws HtmlBuilderException
+	 */
+	public static function label( $labelText = null ) {
+		return ( new HtmlLabel() )->withPlainText( $labelText );
+	}
+
+	/**
+	 * @param mixed ...$texts
+	 * @return HtmlPlainText
+	 * @throws HtmlBuilderException
+	 */
+	public static function plainText( ...$texts ) {
+		return ( new HtmlPlainText() )->withPlainText( $texts );
+	}
+
+	/**
+	 * @return HtmlTemplate
+	 * @throws HtmlBuilderException
+	 */
+	public static function template() {
+		return new HtmlTemplate();
+	}
+
+	/**
+	 * @return HtmlTextarea
+	 * @throws HtmlBuilderException
+	 */
+	public static function textarea() {
+		return new HtmlTextarea();
+	}
+
+	/**
+	 * @return HtmlView
+	 */
+	public static function view() {
+		return new HtmlView();
 	}
 
 	/**

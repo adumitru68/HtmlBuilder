@@ -46,7 +46,7 @@ trait MarkupGenerator
 	 * Display Html content
 	 */
 	public function render() {
-		if ( function_exists( 'tidy_parse_string' ) && 1 === 1 ) {
+		if ( function_exists( 'tidy_parse_string' ) && 1 === 2 ) {
 			echo tidy_parse_string(
 				$this->getMarkup(),
 				array(
@@ -81,10 +81,11 @@ trait MarkupGenerator
 
 		$formattedTag = "<{$tag}";
 		$formattedTag .= empty( $attributes ) ? '>' : " {$attributes}>";
-		$formattedTag .= $this->endLine;
+		$formattedTag .= empty($this->getChildren()) ? '' : $this->endLine;
 		$formattedTag .= $content;
-		$formattedTag .= $this->endLine;
+		$formattedTag .= empty($this->getChildren()) ? '' : $this->endLine;
 		$formattedTag .= "</{$tag}>";
+		$formattedTag .= $this->endLine;
 
 		return $formattedTag;
 	}
