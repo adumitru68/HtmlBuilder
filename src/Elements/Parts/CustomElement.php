@@ -11,7 +11,6 @@ namespace Qpdb\HtmlBuilder\Elements\Parts;
 
 use Qpdb\HtmlBuilder\Abstracts\AbstractHtmlElement;
 use Qpdb\HtmlBuilder\Exceptions\HtmlBuilderException;
-use Qpdb\HtmlBuilder\Interfaces\TagAttributesInterface;
 use Qpdb\HtmlBuilder\Traits\CanHaveChildren;
 
 class CustomElement extends AbstractHtmlElement
@@ -21,13 +20,13 @@ class CustomElement extends AbstractHtmlElement
 
 	/**
 	 * CustomElement constructor.
-	 * @param string                     $tag
-	 * @param TagAttributesInterface|null $tagAttributes
+	 * @param string $tag
+	 * @param array  $attributes
 	 * @throws HtmlBuilderException
 	 */
-	public function __construct( $tag, TagAttributesInterface $tagAttributes = null ) {
+	public function __construct( $tag, array $attributes = null ) {
 		$this->tag = $tag;
-		parent::__construct( $tagAttributes );
+		parent::__construct( $attributes );
 	}
 
 	/**
