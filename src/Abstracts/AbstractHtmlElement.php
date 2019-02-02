@@ -374,13 +374,4 @@ abstract class AbstractHtmlElement implements HtmlElementInterface
 		return clone $this;
 	}
 
-
-	/**
-	 * @return $this
-	 * @throws HtmlBuilderException
-	 */
-	public static function create() {
-		return new static();
-	}
-
 }

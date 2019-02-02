@@ -59,14 +59,6 @@ abstract class AbstractView implements HtmlViewInterface
 	}
 
 	/**
-	 * @return $this
-	 * @throws CommonException
-	 */
-	public static function create() {
-		return new static();
-	}
-
-	/**
 	 * @return string
 	 */
 	protected function getRealTemplatePath() {
