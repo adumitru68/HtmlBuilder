@@ -9,7 +9,7 @@
 namespace Qpdb\HtmlBuilder\Helper;
 
 
-use Qpdb\Common\Exceptions\PrototypeException;
+use Qpdb\Common\Exceptions\CommonException;
 use Qpdb\Common\Helpers\Strings;
 use Qpdb\HtmlBuilder\Exceptions\HtmlBuilderException;
 
@@ -49,7 +49,7 @@ class HtmlHelper
 	 * @param string $style
 	 * @return array
 	 * @throws HtmlBuilderException
-	 * @throws PrototypeException
+	 * @throws CommonException
 	 */
 	public static function parseInLineStyle( $style ) {
 		$style = Strings::toString($style);

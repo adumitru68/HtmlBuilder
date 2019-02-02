@@ -9,7 +9,7 @@
 namespace Qpdb\HtmlBuilder\Abstracts;
 
 
-use Qpdb\Common\Exceptions\PrototypeException;
+use Qpdb\Common\Exceptions\CommonException;
 use Qpdb\Common\Helpers\Arrays;
 use Qpdb\Common\Helpers\Strings;
 use Qpdb\HtmlBuilder\Exceptions\HtmlBuilderException;
@@ -123,7 +123,7 @@ abstract class AbstractHtmlElement implements HtmlElementInterface
 	 * @param $id
 	 * @return $this
 	 * @throws HtmlBuilderException
-	 * @throws PrototypeException
+	 * @throws CommonException
 	 */
 	public function withId( $id ) {
 		$this->withAttribute( ConstHtml::ATTRIBUTE_ID, $id );
@@ -135,7 +135,7 @@ abstract class AbstractHtmlElement implements HtmlElementInterface
 	 * @param string $title
 	 * @return $this
 	 * @throws HtmlBuilderException
-	 * @throws PrototypeException
+	 * @throws CommonException
 	 */
 	public function withTitle( $title ) {
 		$this->withAttribute( ConstHtml::ATTRIBUTE_TITLE, $title );
@@ -148,7 +148,7 @@ abstract class AbstractHtmlElement implements HtmlElementInterface
 	 * @param $attributeValue
 	 * @return $this
 	 * @throws HtmlBuilderException
-	 * @throws PrototypeException
+	 * @throws CommonException
 	 */
 	public function withAttribute( $attributeName, $attributeValue ) {
 
@@ -194,7 +194,7 @@ abstract class AbstractHtmlElement implements HtmlElementInterface
 	 * @param string ...$styles
 	 * @return $this
 	 * @throws HtmlBuilderException
-	 * @throws PrototypeException
+	 * @throws CommonException
 	 */
 	public function withStyle( ...$styles ) {
 
@@ -213,7 +213,7 @@ abstract class AbstractHtmlElement implements HtmlElementInterface
 	 * @param string $propertyValue
 	 * @return $this
 	 * @throws HtmlBuilderException
-	 * @throws PrototypeException
+	 * @throws CommonException
 	 */
 	public function withCssProperty( $propertyName, $propertyValue ) {
 		HtmlHelper::validateNameOfAttribute( $propertyName );
@@ -245,7 +245,7 @@ abstract class AbstractHtmlElement implements HtmlElementInterface
 	 * @param array $propertiesArray
 	 * @return $this
 	 * @throws HtmlBuilderException
-	 * @throws PrototypeException
+	 * @throws CommonException
 	 */
 	public function withCssProperties( array $propertiesArray ) {
 		foreach ( $propertiesArray as $propertyName => $propertyValue ) {

@@ -9,7 +9,7 @@
 namespace Qpdb\HtmlBuilder\Elements;
 
 
-use Qpdb\Common\Exceptions\PrototypeException;
+use Qpdb\Common\Exceptions\CommonException;
 use Qpdb\Common\Helpers\Arrays;
 use Qpdb\Common\Helpers\Strings;
 use Qpdb\HtmlBuilder\Abstracts\AbstractHtmlElement;
@@ -46,7 +46,7 @@ class HtmlPlainText extends AbstractHtmlElement
 		foreach ( $texts as $text ) {
 			try {
 				$this->plainTexts[] = Strings::toString( $text );
-			} catch ( PrototypeException $e ) {
+			} catch ( CommonException $e ) {
 				throw new HtmlBuilderException( 'Invalid plain text or html' );
 			}
 		}

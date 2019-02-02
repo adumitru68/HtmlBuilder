@@ -9,7 +9,7 @@
 namespace Qpdb\HtmlBuilder\Abstracts;
 
 
-use Qpdb\Common\Exceptions\PrototypeException;
+use Qpdb\Common\Exceptions\CommonException;
 use Qpdb\Common\Prototypes\Traits\AsStoredSettings;
 use Qpdb\HtmlBuilder\Interfaces\HtmlViewInterface;
 
@@ -60,7 +60,7 @@ abstract class AbstractView implements HtmlViewInterface
 
 	/**
 	 * @return $this
-	 * @throws PrototypeException
+	 * @throws CommonException
 	 */
 	public static function create() {
 		return new static();

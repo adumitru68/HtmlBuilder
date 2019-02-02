@@ -9,9 +9,10 @@
 namespace Qpdb\HtmlBuilder\Elements;
 
 
+use Qpdb\Common\Exceptions\CommonException;
 use Qpdb\HtmlBuilder\Abstracts\AbstractHtmlElement;
+use Qpdb\HtmlBuilder\Exceptions\HtmlBuilderException;
 use Qpdb\HtmlBuilder\Helper\ConstHtml;
-use Qpdb\HtmlBuilder\Traits\MarkupGenerator;
 
 class HtmlImg extends AbstractHtmlElement
 {
@@ -25,8 +26,8 @@ class HtmlImg extends AbstractHtmlElement
 	/**
 	 * @param $src
 	 * @return $this
-	 * @throws \Qpdb\Common\Exceptions\PrototypeException
-	 * @throws \Qpdb\HtmlBuilder\Exceptions\HtmlBuilderException
+	 * @throws CommonException
+	 * @throws HtmlBuilderException
 	 */
 	public function withSrc( $src ) {
 		$this->withAttribute( ConstHtml::ATTRIBUTE_SRC, $src );
@@ -37,11 +38,11 @@ class HtmlImg extends AbstractHtmlElement
 	/**
 	 * @param $alt
 	 * @return $this
-	 * @throws \Qpdb\Common\Exceptions\PrototypeException
-	 * @throws \Qpdb\HtmlBuilder\Exceptions\HtmlBuilderException
+	 * @throws CommonException
+	 * @throws HtmlBuilderException
 	 */
-	public function withAlt($alt) {
-		$this->withAttribute(ConstHtml::ATTRIBUTE_ALT, $alt);
+	public function withAlt( $alt ) {
+		$this->withAttribute( ConstHtml::ATTRIBUTE_ALT, $alt );
 
 		return $this;
 	}

@@ -9,6 +9,7 @@
 namespace Qpdb\HtmlBuilder;
 
 
+use Qpdb\Common\Exceptions\CommonException;
 use Qpdb\HtmlBuilder\Elements\HtmlDiv;
 use Qpdb\HtmlBuilder\Elements\HtmlImg;
 use Qpdb\HtmlBuilder\Elements\HtmlLabel;
@@ -52,7 +53,7 @@ class Html
 	 * @param null $src
 	 * @return HtmlImg
 	 * @throws HtmlBuilderException
-	 * @throws \Qpdb\Common\Exceptions\PrototypeException
+	 * @throws CommonException
 	 */
 	public static function img( $src = null ) {
 		$img = new HtmlImg();

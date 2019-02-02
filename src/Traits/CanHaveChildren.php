@@ -9,7 +9,7 @@
 namespace Qpdb\HtmlBuilder\Traits;
 
 
-use Qpdb\Common\Exceptions\PrototypeException;
+use Qpdb\Common\Exceptions\CommonException;
 use Qpdb\Common\Helpers\Arrays;
 use Qpdb\Common\Helpers\Strings;
 use Qpdb\HtmlBuilder\Abstracts\AbstractHtmlElement;
@@ -51,7 +51,7 @@ trait CanHaveChildren
 		try {
 			$this->withHtmlElement(
 				( new HtmlPlainText() )->withPlainText( $textContents ) );
-		} catch ( PrototypeException $e ) {
+		} catch ( CommonException $e ) {
 			throw new HtmlBuilderException( 'Invalid plain text or html. Trait CanHaveChildren' );
 		}
 
