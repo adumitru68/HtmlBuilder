@@ -21,12 +21,11 @@ class CustomElement extends AbstractHtmlElement
 	/**
 	 * CustomElement constructor.
 	 * @param string $tag
-	 * @param array  $attributes
 	 * @throws HtmlBuilderException
 	 */
-	public function __construct( $tag, array $attributes = null ) {
+	public function __construct( $tag ) {
 		$this->tag = $tag;
-		parent::__construct( $attributes );
+		parent::__construct();
 	}
 
 	/**
@@ -36,11 +35,4 @@ class CustomElement extends AbstractHtmlElement
 		return $this->tag;
 	}
 
-	/**
-	 * @return AbstractHtmlElement|void
-	 * @throws HtmlBuilderException
-	 */
-	public static function create() {
-		throw new HtmlBuilderException('Please use constructor');
-	}
 }

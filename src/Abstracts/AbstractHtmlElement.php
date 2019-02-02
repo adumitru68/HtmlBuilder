@@ -50,14 +50,10 @@ abstract class AbstractHtmlElement implements HtmlElementInterface
 
 	/**
 	 * AbstractHtmlElement constructor.
-	 * @param array|null $attributes
 	 * @throws HtmlBuilderException
 	 */
-	public function __construct( array $attributes = null ) {
+	public function __construct() {
 		$this->checkTag();
-		if ( !empty( $attributes ) ) {
-			$this->attributes = $attributes;
-		}
 	}
 
 	/**
