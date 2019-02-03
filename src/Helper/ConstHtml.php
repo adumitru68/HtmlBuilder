@@ -19,9 +19,6 @@ class ConstHtml
 	const TAG_SELF_OPEN   = '<';
 	const TAG_SELF_CLOSE  = '>';
 
-//	const TAG_TEMPLATE     = '<{%%tag%%}{%%attributes%%}>{%%content%%}</{%%tag%%}>';
-//	const TAG_TEMPLATE_SEF = '<{%%tag%%}{%%attributes%%}>';
-
 	const ATTRIBUTE_ID          = 'id';
 	const ATTRIBUTE_NAME        = 'name';
 	const ATTRIBUTE_VALUE       = 'value';
@@ -32,10 +29,9 @@ class ConstHtml
 	const ATTRIBUTE_TITLE       = 'title';
 	const ATTRIBUTE_PLACEHOLDER = 'placeholder';
 	const ATTRIBUTE_SRC         = 'src';
-
-//	const CLEAN_ATTRIBUTE_VALUE_NONE      = 0;
-//	const CLEAN_ATTRIBUTE_VALUE_IF_NEEDED = 1;
-//	const CLEAN_ATTRIBUTE_VALUE_ALWAYS    = 2;
+	const ATTRIBUTE_DISABLED    = 'disabled';
+	const ATTRIBUTE_READONLY    = 'readonly';
+	const ATTRIBUTE_CHECKED     = 'checked';
 
 	const FORM_ENCTYPE                     = 'enctype';
 	const FORM_ENCTYPE_WWW_FORM_URLENCODED = 'application/x-www-form-urlencoded';

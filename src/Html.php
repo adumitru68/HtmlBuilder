@@ -11,7 +11,9 @@ namespace Qpdb\HtmlBuilder;
 
 use Qpdb\Common\Exceptions\CommonException;
 use Qpdb\HtmlBuilder\Elements\HtmlDiv;
+use Qpdb\HtmlBuilder\Elements\HtmlForm;
 use Qpdb\HtmlBuilder\Elements\HtmlImg;
+use Qpdb\HtmlBuilder\Elements\HtmlInput;
 use Qpdb\HtmlBuilder\Elements\HtmlLabel;
 use Qpdb\HtmlBuilder\Elements\HtmlPlainText;
 use Qpdb\HtmlBuilder\Elements\HtmlSelect;
@@ -138,6 +140,21 @@ class Html
 	 */
 	public static function select() {
 		return new HtmlSelect();
+	}
+
+	/**
+	 * @return HtmlForm
+	 * @throws HtmlBuilderException
+	 */
+	public static function form() {
+		return new HtmlForm();
+	}
+
+	/**
+	 * @return HtmlInput
+	 */
+	public static function input() {
+		return new HtmlInput();
 	}
 
 }
