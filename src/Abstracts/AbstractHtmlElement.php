@@ -146,7 +146,7 @@ abstract class AbstractHtmlElement implements HtmlElementInterface
 	 * @throws HtmlBuilderException
 	 * @throws CommonException
 	 */
-	public function withAttribute( $attributeName, $attributeValue ) {
+	public function withAttribute( $attributeName, $attributeValue = null ) {
 
 		HtmlHelper::validateNameOfAttribute( $attributeName );
 		switch ( $attributeName ) {

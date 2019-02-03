@@ -47,5 +47,6 @@ return [
 	's',
 	'samp',
 	'span',
-	'textarea'
+	'textarea',
+	'option'
 ];

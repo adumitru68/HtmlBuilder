@@ -14,11 +14,14 @@ use Qpdb\HtmlBuilder\Elements\HtmlDiv;
 use Qpdb\HtmlBuilder\Elements\HtmlImg;
 use Qpdb\HtmlBuilder\Elements\HtmlLabel;
 use Qpdb\HtmlBuilder\Elements\HtmlPlainText;
+use Qpdb\HtmlBuilder\Elements\HtmlSelect;
 use Qpdb\HtmlBuilder\Elements\HtmlSpan;
 use Qpdb\HtmlBuilder\Elements\HtmlTemplate;
 use Qpdb\HtmlBuilder\Elements\HtmlTextarea;
 use Qpdb\HtmlBuilder\Elements\HtmlView;
 use Qpdb\HtmlBuilder\Elements\Parts\CustomElement;
+use Qpdb\HtmlBuilder\Elements\Parts\SelectOptgroup;
+use Qpdb\HtmlBuilder\Elements\Parts\SelectOption;
 use Qpdb\HtmlBuilder\Exceptions\HtmlBuilderException;
 
 class Html
@@ -113,5 +116,28 @@ class Html
 		return new HtmlSpan();
 	}
 
+	/**
+	 * @return SelectOption
+	 * @throws HtmlBuilderException
+	 */
+	public static function option() {
+		return ( new SelectOption() );
+	}
+
+	/**
+	 * @return SelectOptgroup
+	 * @throws HtmlBuilderException
+	 */
+	public static function optgroup() {
+		return new SelectOptgroup();
+	}
+
+	/**
+	 * @return HtmlSelect
+	 * @throws HtmlBuilderException
+	 */
+	public static function select() {
+		return new HtmlSelect();
+	}
 
 }
