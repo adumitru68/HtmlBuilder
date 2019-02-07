@@ -29,7 +29,10 @@ abstract class AbstractHtmlElement implements HtmlElementInterface
 	 * @var string;
 	 */
 	protected $tag;
-
+	/**
+	 * @var HtmlElementInterface[]|string[]
+	 */
+	protected $htmlElements = [];
 	/**
 	 * @var array
 	 */
@@ -41,12 +44,6 @@ abstract class AbstractHtmlElement implements HtmlElementInterface
 		ConstHtml::ATTRIBUTE_CLASS => [],
 		ConstHtml::ATTRIBUTE_STYLE => [],
 	];
-
-	/**
-	 * @var HtmlElementInterface[]|string[]
-	 */
-	protected $htmlElements = [];
-
 
 	/**
 	 * AbstractHtmlElement constructor.
@@ -79,6 +76,16 @@ abstract class AbstractHtmlElement implements HtmlElementInterface
 		return $this->htmlElements;
 	}
 
+	/**
+	 * @param AbstractHtmlElement[] $children
+	 * @return $this
+	 */
+	public function setChildren( $children ) {
+		$this->htmlElements = $children;
+
+		return $this;
+	}
+
 
 	/**
 	 * @return array
@@ -95,6 +102,27 @@ abstract class AbstractHtmlElement implements HtmlElementInterface
 		$this->attributes = array_merge( $this->attributes, $attributes );
 
 		return $this;
+	}
+
+	/**
+	 * @return array
+	 */
+	protected function getCleanAttributes() {
+		$preparedArray = [];
+		foreach ( $this->attributes as $key => $value ) {
+			if ( null === $value || ( is_array( $value ) && empty( $value ) ) ) {
+				continue;
+			}
+			switch ( $key ) {
+				case ConstHtml::ATTRIBUTE_CLASS:
+					$preparedArray[ $key ] = Arrays::flatValues( $value, true );
+					break;
+				default:
+					$preparedArray[ $key ] = $value;
+			}
+		}
+
+		return $preparedArray;
 	}
 
 	/**
@@ -123,18 +151,6 @@ abstract class AbstractHtmlElement implements HtmlElementInterface
 	 */
 	public function withId( $id ) {
 		$this->withAttribute( ConstHtml::ATTRIBUTE_ID, $id );
-
-		return $this;
-	}
-
-	/**
-	 * @param string $title
-	 * @return $this
-	 * @throws HtmlBuilderException
-	 * @throws CommonException
-	 */
-	public function withTitle( $title ) {
-		$this->withAttribute( ConstHtml::ATTRIBUTE_TITLE, $title );
 
 		return $this;
 	}
@@ -205,6 +221,22 @@ abstract class AbstractHtmlElement implements HtmlElementInterface
 	}
 
 	/**
+	 * CSS properties array Ex: ['display' => 'block', 'property name' => 'property value' ...]
+	 *
+	 * @param array $propertiesArray
+	 * @return $this
+	 * @throws HtmlBuilderException
+	 * @throws CommonException
+	 */
+	public function withCssProperties( array $propertiesArray ) {
+		foreach ( $propertiesArray as $propertyName => $propertyValue ) {
+			$this->withCssProperty( $propertyName, $propertyValue );
+		}
+
+		return $this;
+	}
+
+	/**
 	 * @param string $propertyName
 	 * @param string $propertyValue
 	 * @return $this
@@ -220,6 +252,18 @@ abstract class AbstractHtmlElement implements HtmlElementInterface
 	}
 
 	/**
+	 * @param string $title
+	 * @return $this
+	 * @throws HtmlBuilderException
+	 * @throws CommonException
+	 */
+	public function withTitle( $title ) {
+		$this->withAttribute( ConstHtml::ATTRIBUTE_TITLE, $title );
+
+		return $this;
+	}
+
+	/**
 	 * @param string ...$propertyName
 	 * @return $this
 	 */
@@ -230,22 +274,6 @@ abstract class AbstractHtmlElement implements HtmlElementInterface
 			if ( isset( $this->attributes[ ConstHtml::ATTRIBUTE_STYLE ][ $property ] ) ) {
 				unset( $this->attributes[ ConstHtml::ATTRIBUTE_STYLE ][ $property ] );
 			}
-		}
-
-		return $this;
-	}
-
-	/**
-	 * CSS properties array Ex: ['display' => 'block', 'property name' => 'property value' ...]
-	 *
-	 * @param array $propertiesArray
-	 * @return $this
-	 * @throws HtmlBuilderException
-	 * @throws CommonException
-	 */
-	public function withCssProperties( array $propertiesArray ) {
-		foreach ( $propertiesArray as $propertyName => $propertyValue ) {
-			$this->withCssProperty( $propertyName, $propertyValue );
 		}
 
 		return $this;
@@ -297,24 +325,10 @@ abstract class AbstractHtmlElement implements HtmlElementInterface
 	}
 
 	/**
-	 * @return string
+	 * @return $this
 	 */
-	protected function getComputedClass() {
-		return implode( ' ', Arrays::flatValues( $this->attributes[ ConstHtml::ATTRIBUTE_CLASS ], true ) );
-	}
-
-	/**
-	 * @return string
-	 */
-	protected function getComputedStyle() {
-		$result = [];
-		foreach ( $this->attributes[ ConstHtml::ATTRIBUTE_STYLE ] as $styleName => $styleValue ) {
-			if ( $styleValue !== '' ) {
-				$result[] = $styleName . ':' . $styleValue;
-			}
-		}
-
-		return implode( '; ', $result );
+	public function getClone() {
+		return clone $this;
 	}
 
 	/**
@@ -343,31 +357,24 @@ abstract class AbstractHtmlElement implements HtmlElementInterface
 	}
 
 	/**
-	 * @return array
+	 * @return string
 	 */
-	protected function getCleanAttributes() {
-		$preparedArray = [];
-		foreach ( $this->attributes as $key => $value ) {
-			if ( null === $value || ( is_array( $value ) && empty( $value ) ) ) {
-				continue;
-			}
-			switch ( $key ) {
-				case ConstHtml::ATTRIBUTE_CLASS:
-					$preparedArray[ $key ] = Arrays::flatValues( $value, true );
-					break;
-				default:
-					$preparedArray[ $key ] = $value;
-			}
-		}
-
-		return $preparedArray;
+	protected function getComputedClass() {
+		return implode( ' ', Arrays::flatValues( $this->attributes[ ConstHtml::ATTRIBUTE_CLASS ], true ) );
 	}
 
 	/**
-	 * @return $this
+	 * @return string
 	 */
-	public function getClone() {
-		return clone $this;
+	protected function getComputedStyle() {
+		$result = [];
+		foreach ( $this->attributes[ ConstHtml::ATTRIBUTE_STYLE ] as $styleName => $styleValue ) {
+			if ( $styleValue !== '' ) {
+				$result[] = $styleName . ':' . $styleValue;
+			}
+		}
+
+		return implode( '; ', $result );
 	}
 
 }

@@ -13,7 +13,7 @@ use Qpdb\Common\Exceptions\CommonException;
 use Qpdb\HtmlBuilder\Exceptions\HtmlBuilderException;
 use Qpdb\HtmlBuilder\Helper\ConstHtml;
 
-abstract class AbstractCheckOrRadio extends AbstractInput
+abstract class AbstractCheck extends AbstractInput
 {
 
 	/**

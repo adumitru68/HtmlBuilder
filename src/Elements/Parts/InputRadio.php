@@ -9,9 +9,9 @@
 namespace Qpdb\HtmlBuilder\Elements\Parts;
 
 
-use Qpdb\HtmlBuilder\Abstracts\AbstractCheckOrRadio;
+use Qpdb\HtmlBuilder\Abstracts\AbstractCheck;
 
-class InputRadio extends AbstractCheckOrRadio
+class InputRadio extends AbstractCheck
 {
 
 	/**
