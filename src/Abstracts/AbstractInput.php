@@ -12,9 +12,12 @@ namespace Qpdb\HtmlBuilder\Abstracts;
 use Qpdb\Common\Exceptions\CommonException;
 use Qpdb\HtmlBuilder\Exceptions\HtmlBuilderException;
 use Qpdb\HtmlBuilder\Helper\ConstHtml;
+use Qpdb\HtmlBuilder\Traits\CanDisabledReadonly;
 
 abstract class AbstractInput extends AbstractHtmlElement
 {
+
+	use CanDisabledReadonly;
 
 	/**
 	 * AbstractInput constructor.
@@ -44,38 +47,6 @@ abstract class AbstractInput extends AbstractHtmlElement
 	 */
 	public function withValue( $value ) {
 		return $this->withAttribute( ConstHtml::ATTRIBUTE_VALUE, $value );
-	}
-
-	/**
-	 * @param bool $disabled
-	 * @return $this
-	 * @throws CommonException
-	 * @throws HtmlBuilderException
-	 */
-	public function disabled( $disabled = true ) {
-		if ( $disabled ) {
-			$this->withAttribute( ConstHtml::ATTRIBUTE_DISABLED );
-		} else {
-			$this->withOutAttribute( ConstHtml::ATTRIBUTE_DISABLED );
-		}
-
-		return $this;
-	}
-
-	/**
-	 * @param bool $readonly
-	 * @return $this
-	 * @throws CommonException
-	 * @throws HtmlBuilderException
-	 */
-	public function readonly( $readonly = true ) {
-		if ( $readonly ) {
-			$this->withAttribute( ConstHtml::ATTRIBUTE_READONLY );
-		} else {
-			$this->withOutAttribute( ConstHtml::ATTRIBUTE_READONLY);
-		}
-
-		return $this;
 	}
 
 	/**

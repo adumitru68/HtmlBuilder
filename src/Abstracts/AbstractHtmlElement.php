@@ -29,8 +29,9 @@ abstract class AbstractHtmlElement implements HtmlElementInterface
 	 * @var string;
 	 */
 	protected $tag;
+
 	/**
-	 * @var HtmlElementInterface[]|string[]
+	 * @var HtmlElementInterface[]
 	 */
 	protected $htmlElements = [];
 	/**
@@ -322,6 +323,23 @@ abstract class AbstractHtmlElement implements HtmlElementInterface
 		}
 
 		return $this;
+	}
+
+	/**
+	 * Prepare element clone
+	 */
+	public function __clone() {
+		foreach ( $this->htmlElements as $index => $htmlElement ) {
+			$this->htmlElements[ $index ] = clone $htmlElement;
+		}
+	}
+
+	/**
+	 * @return string
+	 * @throws HtmlBuilderException
+	 */
+	public function __toString() {
+		return $this->getMarkup();
 	}
 
 	/**

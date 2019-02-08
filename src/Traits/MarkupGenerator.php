@@ -10,7 +10,6 @@ namespace Qpdb\HtmlBuilder\Traits;
 
 use Qpdb\HtmlBuilder\Abstracts\AbstractHtmlElement;
 use Qpdb\HtmlBuilder\Exceptions\HtmlBuilderException;
-use Qpdb\HtmlBuilder\Helper\TagsCollection;
 use Qpdb\HtmlBuilder\Interfaces\HtmlElementInterface;
 
 /**
