@@ -21,6 +21,17 @@ class HtmlSelect extends AbstractOptionsContainer
 	 */
 	protected $selectElementValue;
 
+	/**
+	 * @param string $name
+	 * @return $this
+	 * @throws \Qpdb\Common\Exceptions\CommonException
+	 * @throws \Qpdb\HtmlBuilder\Exceptions\HtmlBuilderException
+	 */
+	public function name( $name ) {
+		$this->withAttribute( 'name', $name );
+
+		return $this;
+	}
 
 	/**
 	 * @param $value
@@ -28,11 +39,11 @@ class HtmlSelect extends AbstractOptionsContainer
 	 * @throws \Qpdb\Common\Exceptions\CommonException
 	 * @throws \Qpdb\HtmlBuilder\Exceptions\HtmlBuilderException
 	 */
-	public function withSelectedValue( $value ) {
-		foreach ($this->getOptions() as $element) {
+	public function selectValue( $value ) {
+		foreach ( $this->getOptions() as $element ) {
 			/** @var SelectOption $element */
 			$element->withOutAttribute( 'selected' );
-			if(isset($element->getAttributes()['value']) && Strings::toString($element->getAttributes()['value']) === Strings::toString($value) ) {
+			if ( isset( $element->getAttributes()[ 'value' ] ) && Strings::toString( $element->getAttributes()[ 'value' ] ) === Strings::toString( $value ) ) {
 				$element->selected();
 			}
 		}

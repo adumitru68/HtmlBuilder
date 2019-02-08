@@ -35,7 +35,7 @@ abstract class AbstractInput extends AbstractHtmlElement
 	 * @throws CommonException
 	 * @throws HtmlBuilderException
 	 */
-	public function withName( $name ) {
+	public function name( $name ) {
 		return $this->withAttribute( ConstHtml::ATTRIBUTE_NAME, $name );
 	}
 
@@ -45,7 +45,7 @@ abstract class AbstractInput extends AbstractHtmlElement
 	 * @throws CommonException
 	 * @throws HtmlBuilderException
 	 */
-	public function withValue( $value ) {
+	public function value( $value ) {
 		return $this->withAttribute( ConstHtml::ATTRIBUTE_VALUE, $value );
 	}
 

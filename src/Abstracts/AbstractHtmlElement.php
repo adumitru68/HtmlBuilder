@@ -351,6 +351,7 @@ abstract class AbstractHtmlElement implements HtmlElementInterface
 
 	/**
 	 * @return string
+	 * @throws HtmlBuilderException
 	 */
 	protected function getComputedAttributes() {
 		$attributes = [];
@@ -365,7 +366,7 @@ abstract class AbstractHtmlElement implements HtmlElementInterface
 			}
 			$value = trim( $value );
 			$computed = $key;
-			if ( !empty( $value ) ) {
+			if ( !Strings::isEmpty($value) ) {
 				$computed .= ' = ' . HtmlHelper::getSafeHtmlString( $value );
 			}
 			$attributes[] = $computed;

@@ -27,15 +27,15 @@ abstract class AbstractOptionsContainer extends AbstractHtmlElement
 	 * @throws HtmlBuilderException
 	 */
 	public function withOptions( ...$options ) {
-		$options = Arrays::flatValues( $options );
+		$options = $this->prepareOptions( $options );
 		foreach ( $options as $option ) {
-			switch (true) {
+			switch ( true ) {
 				case $option instanceof SelectOption:
 				case $option instanceof SelectOptgroup:
 					$this->htmlElements[] = $option;
 					break;
 				default:
-					throw new HtmlBuilderException('Option must SelectOption or SelectOptgroup instance');
+					throw new HtmlBuilderException( 'Option must SelectOption or SelectOptgroup instance' );
 					break;
 			}
 		}
@@ -44,33 +44,35 @@ abstract class AbstractOptionsContainer extends AbstractHtmlElement
 	}
 
 	/**
-	 * @param array $assocArray
-	 * @return $this
-	 * @throws HtmlBuilderException
-	 * @throws \Qpdb\Common\Exceptions\CommonException
+	 * @return SelectOption[]
 	 */
-	public function withOptionsByAssoc($assocArray = []) {
-		foreach ($assocArray as $value => $label) {
-			$this->htmlElements[] = (new SelectOption())
-				->withLabel($label)
-				->withValue($value);
-		}
-
-		return $this;
-	}
-
-
 	public function getOptions() {
 		$options = [];
-		foreach ($this->htmlElements as $element) {
-			if($element instanceof SelectOptgroup) {
+		foreach ( $this->htmlElements as $element ) {
+			if ( $element instanceof SelectOptgroup ) {
 				$options[] = $element->getOptions();
 			} else {
 				$options [] = $element;
 			}
 		}
 
-		return Arrays::flatValues($options);
+		return Arrays::flatValues( $options );
+	}
+
+	/**
+	 * @param mixed $array
+	 * @return array
+	 */
+	protected function prepareOptions( $array = [] ) {
+		$array = (array)$array;
+		$return = array();
+		array_walk_recursive( $array, function( $a, $k ) use ( &$return ) {
+			$return[] = $a instanceof SelectOption || $a instanceof SelectOptgroup
+				? $a
+				: ( new SelectOption() )->withValue( $k )->withLabel( $a );
+		} );
+
+		return $return;
 	}
 
 }

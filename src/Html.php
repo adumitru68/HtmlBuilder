@@ -10,6 +10,8 @@ namespace Qpdb\HtmlBuilder;
 
 
 use Qpdb\Common\Exceptions\CommonException;
+use Qpdb\HtmlBuilder\Elements\HtmlBlockStyle;
+use Qpdb\HtmlBuilder\Elements\HtmlButton;
 use Qpdb\HtmlBuilder\Elements\HtmlDiv;
 use Qpdb\HtmlBuilder\Elements\HtmlForm;
 use Qpdb\HtmlBuilder\Elements\HtmlImg;
@@ -156,5 +158,14 @@ class Html
 	public static function input() {
 		return new HtmlInput();
 	}
+
+	/**
+	 * @return HtmlButton
+	 * @throws HtmlBuilderException
+	 */
+	public static function button() {
+		return new HtmlButton();
+	}
+
 
 }
