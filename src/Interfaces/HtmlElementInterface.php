@@ -15,6 +15,11 @@ namespace Qpdb\HtmlBuilder\Interfaces;
 interface HtmlElementInterface
 {
 	/**
+	 * @return $this
+	 */
+	public function getClone();
+
+	/**
 	 * @return string
 	 */
 	public function getMarkup();
