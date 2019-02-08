@@ -31,32 +31,98 @@ abstract class AbstractInput extends AbstractHtmlElement
 
 	/**
 	 * @param $name
-	 * @return AbstractInput
+	 * @return $this
 	 * @throws CommonException
 	 * @throws HtmlBuilderException
 	 */
 	public function name( $name ) {
-		return $this->withAttribute( ConstHtml::ATTRIBUTE_NAME, $name );
+		$this->withAttribute( ConstHtml::ATTRIBUTE_NAME, $name );
+
+		return $this;
 	}
 
 	/**
 	 * @param string $value
-	 * @return AbstractInput
+	 * @return $this
 	 * @throws CommonException
 	 * @throws HtmlBuilderException
 	 */
 	public function value( $value ) {
-		return $this->withAttribute( ConstHtml::ATTRIBUTE_VALUE, $value );
+		$this->withAttribute( ConstHtml::ATTRIBUTE_VALUE, $value );
+
+		return $this;
 	}
 
 	/**
 	 * @param $placeholder
-	 * @return AbstractInput
+	 * @return $this
 	 * @throws CommonException
 	 * @throws HtmlBuilderException
 	 */
-	public function withPlaceholder($placeholder) {
-		return $this->withAttribute(ConstHtml::ATTRIBUTE_PLACEHOLDER, $placeholder);
+	public function placeholder( $placeholder ) {
+		$this->withAttribute( ConstHtml::ATTRIBUTE_PLACEHOLDER, $placeholder );
+
+		return $this;
+	}
+
+	/**
+	 * @param $length
+	 * @return $this
+	 * @throws CommonException
+	 * @throws HtmlBuilderException
+	 */
+	public function maxLength( $length ) {
+		$this->withAttribute( 'maxlength', $length );
+
+		return $this;
+	}
+
+	/**
+	 * @param $length
+	 * @return $this
+	 * @throws CommonException
+	 * @throws HtmlBuilderException
+	 */
+	public function minLength( $length ) {
+		$this->withAttribute( 'minlength', $length );
+
+		return $this;
+	}
+
+	/**
+	 * @param $min
+	 * @return $this
+	 * @throws \Qpdb\Common\Exceptions\CommonException
+	 * @throws \Qpdb\HtmlBuilder\Exceptions\HtmlBuilderException
+	 */
+	public function min( $min ) {
+		$this->withAttribute( 'min', $min );
+
+		return $this;
+	}
+
+	/**
+	 * @param $max
+	 * @return $this
+	 * @throws \Qpdb\Common\Exceptions\CommonException
+	 * @throws \Qpdb\HtmlBuilder\Exceptions\HtmlBuilderException
+	 */
+	public function max( $max ) {
+		$this->withAttribute( 'max', $max );
+
+		return $this;
+	}
+
+	/**
+	 * @param $step
+	 * @return $this
+	 * @throws \Qpdb\Common\Exceptions\CommonException
+	 * @throws \Qpdb\HtmlBuilder\Exceptions\HtmlBuilderException
+	 */
+	public function step( $step ) {
+		$this->withAttribute( 'step', $step );
+
+		return $this;
 	}
 
 	/**

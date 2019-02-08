@@ -11,8 +11,12 @@ namespace Qpdb\HtmlBuilder\Elements;
 
 use Qpdb\HtmlBuilder\Elements\Parts\InputButton;
 use Qpdb\HtmlBuilder\Elements\Parts\InputCheckbox;
+use Qpdb\HtmlBuilder\Elements\Parts\InputColor;
+use Qpdb\HtmlBuilder\Elements\Parts\InputHidden;
+use Qpdb\HtmlBuilder\Elements\Parts\InputNumber;
 use Qpdb\HtmlBuilder\Elements\Parts\InputPassword;
 use Qpdb\HtmlBuilder\Elements\Parts\InputRadio;
+use Qpdb\HtmlBuilder\Elements\Parts\InputRange;
 use Qpdb\HtmlBuilder\Elements\Parts\InputReset;
 use Qpdb\HtmlBuilder\Elements\Parts\InputSubmit;
 use Qpdb\HtmlBuilder\Elements\Parts\InputText;
@@ -81,6 +85,42 @@ class HtmlInput
 	 */
 	public function reset() {
 		return new InputReset();
+	}
+
+	/**
+	 * @return InputColor
+	 * @throws \Qpdb\Common\Exceptions\CommonException
+	 * @throws \Qpdb\HtmlBuilder\Exceptions\HtmlBuilderException
+	 */
+	public function color() {
+		return new InputColor();
+	}
+
+	/**
+	 * @return InputNumber
+	 * @throws \Qpdb\Common\Exceptions\CommonException
+	 * @throws \Qpdb\HtmlBuilder\Exceptions\HtmlBuilderException
+	 */
+	public function number() {
+		return new InputNumber();
+	}
+
+	/**
+	 * @return InputRange
+	 * @throws \Qpdb\Common\Exceptions\CommonException
+	 * @throws \Qpdb\HtmlBuilder\Exceptions\HtmlBuilderException
+	 */
+	public function range() {
+		return new InputRange();
+	}
+
+	/**
+	 * @return InputHidden
+	 * @throws \Qpdb\Common\Exceptions\CommonException
+	 * @throws \Qpdb\HtmlBuilder\Exceptions\HtmlBuilderException
+	 */
+	public function hidden() {
+		return new InputHidden();
 	}
 
 }

@@ -24,6 +24,7 @@ use Qpdb\HtmlBuilder\Elements\HtmlTemplate;
 use Qpdb\HtmlBuilder\Elements\HtmlTextarea;
 use Qpdb\HtmlBuilder\Elements\HtmlView;
 use Qpdb\HtmlBuilder\Elements\Parts\CustomElement;
+use Qpdb\HtmlBuilder\Elements\Parts\InputNumber;
 use Qpdb\HtmlBuilder\Elements\Parts\SelectOptgroup;
 use Qpdb\HtmlBuilder\Elements\Parts\SelectOption;
 use Qpdb\HtmlBuilder\Exceptions\HtmlBuilderException;
@@ -153,7 +154,7 @@ class Html
 	}
 
 	/**
-	 * @return HtmlInput
+	 * @return HtmlInput|InputNumber
 	 */
 	public static function input() {
 		return new HtmlInput();
