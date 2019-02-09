@@ -30,6 +30,11 @@ abstract class AbstractInput extends AbstractHtmlElement
 	}
 
 	/**
+	 * @return string
+	 */
+	abstract public function getType();
+
+	/**
 	 * @param $name
 	 * @return $this
 	 * @throws CommonException
@@ -49,6 +54,18 @@ abstract class AbstractInput extends AbstractHtmlElement
 	 */
 	public function value( $value ) {
 		$this->withAttribute( ConstHtml::ATTRIBUTE_VALUE, $value );
+
+		return $this;
+	}
+
+	/**
+	 * @param string $datalistId
+	 * @return $this
+	 * @throws CommonException
+	 * @throws HtmlBuilderException
+	 */
+	public function datalist( $datalistId ) {
+		$this->withAttribute( 'list', $datalistId );
 
 		return $this;
 	}
@@ -124,11 +141,6 @@ abstract class AbstractInput extends AbstractHtmlElement
 
 		return $this;
 	}
-
-	/**
-	 * @return string
-	 */
-	abstract public function getType();
 
 	/**
 	 * @return string

@@ -15,6 +15,7 @@ use Qpdb\HtmlBuilder\Elements\HtmlA;
 use Qpdb\HtmlBuilder\Elements\HtmlArticle;
 use Qpdb\HtmlBuilder\Elements\HtmlAside;
 use Qpdb\HtmlBuilder\Elements\HtmlButton;
+use Qpdb\HtmlBuilder\Elements\HtmlDataList;
 use Qpdb\HtmlBuilder\Elements\HtmlDiv;
 use Qpdb\HtmlBuilder\Elements\HtmlFooter;
 use Qpdb\HtmlBuilder\Elements\HtmlForm;
@@ -41,6 +42,7 @@ use Qpdb\HtmlBuilder\Elements\HtmlTr;
 use Qpdb\HtmlBuilder\Elements\HtmlUl;
 use Qpdb\HtmlBuilder\Elements\HtmlView;
 use Qpdb\HtmlBuilder\Elements\Parts\CustomElement;
+use Qpdb\HtmlBuilder\Elements\Parts\DatalistOption;
 use Qpdb\HtmlBuilder\Elements\Parts\InputNumber;
 use Qpdb\HtmlBuilder\Elements\Parts\SelectOptgroup;
 use Qpdb\HtmlBuilder\Elements\Parts\SelectOption;
@@ -328,6 +330,24 @@ class Html
 	 */
 	public static function nav() {
 		return new HtmlNav();
+	}
+
+	/**
+	 * @param null $value
+	 * @return DatalistOption
+	 * @throws CommonException
+	 * @throws HtmlBuilderException
+	 */
+	public static function optionData($value = null) {
+		return new DatalistOption($value);
+	}
+
+	/**
+	 * @return HtmlDataList
+	 * @throws HtmlBuilderException
+	 */
+	public static function datalist() {
+		return new HtmlDataList();
 	}
 
 }
