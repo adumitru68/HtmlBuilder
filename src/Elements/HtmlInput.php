@@ -12,6 +12,8 @@ namespace Qpdb\HtmlBuilder\Elements;
 use Qpdb\HtmlBuilder\Elements\Parts\InputButton;
 use Qpdb\HtmlBuilder\Elements\Parts\InputCheckbox;
 use Qpdb\HtmlBuilder\Elements\Parts\InputColor;
+use Qpdb\HtmlBuilder\Elements\Parts\InputCustom;
+use Qpdb\HtmlBuilder\Elements\Parts\InputDate;
 use Qpdb\HtmlBuilder\Elements\Parts\InputHidden;
 use Qpdb\HtmlBuilder\Elements\Parts\InputNumber;
 use Qpdb\HtmlBuilder\Elements\Parts\InputPassword;
@@ -121,6 +123,25 @@ class HtmlInput
 	 */
 	public function hidden() {
 		return new InputHidden();
+	}
+
+	/**
+	 * @return InputDate
+	 * @throws \Qpdb\Common\Exceptions\CommonException
+	 * @throws \Qpdb\HtmlBuilder\Exceptions\HtmlBuilderException
+	 */
+	public function date() {
+		return new InputDate();
+	}
+
+	/**
+	 * @param $type
+	 * @return InputCustom
+	 * @throws \Qpdb\Common\Exceptions\CommonException
+	 * @throws \Qpdb\HtmlBuilder\Exceptions\HtmlBuilderException
+	 */
+	public function other( $type ) {
+		return new InputCustom( $type );
 	}
 
 }
