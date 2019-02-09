@@ -2,8 +2,8 @@
 /**
  * Created by PhpStorm.
  * User: Adi
- * Date: 2/1/2019
- * Time: 11:37 PM
+ * Date: 2/9/2019
+ * Time: 11:07 PM
  */
 
 namespace Qpdb\HtmlBuilder\Elements;
@@ -12,19 +12,17 @@ namespace Qpdb\HtmlBuilder\Elements;
 use Qpdb\HtmlBuilder\Abstracts\AbstractHtmlElement;
 use Qpdb\HtmlBuilder\Traits\CanHaveChildren;
 
-class HtmlLabel extends AbstractHtmlElement
+class HtmlLegend extends AbstractHtmlElement
 {
 	use CanHaveChildren;
 
 	/**
-	 * @param string $elementId
+	 * @param string ...$label
 	 * @return $this
-	 * @throws \Qpdb\Common\Exceptions\CommonException
 	 * @throws \Qpdb\HtmlBuilder\Exceptions\HtmlBuilderException
 	 */
-	public function for( $elementId ) {
-		$this->withAttribute( 'for', $elementId );
-
+	public function label( ...$label ) {
+		$this->withPlainText( $label );
 		return $this;
 	}
 
@@ -32,6 +30,6 @@ class HtmlLabel extends AbstractHtmlElement
 	 * @return string
 	 */
 	public function getTag() {
-		return 'label';
+		return 'legend';
 	}
 }

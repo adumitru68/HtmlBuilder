@@ -20,7 +20,7 @@ class HtmlTextarea extends AbstractHtmlElement
 	 * @return $this
 	 * @throws HtmlBuilderException
 	 */
-	public function withPlainText( $text ) {
+	public function withPlainText( ...$text ) {
 		$this->htmlElements[] = ( new HtmlPlainText() )->withPlainText( $text );
 
 		return $this;

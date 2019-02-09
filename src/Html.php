@@ -10,18 +10,35 @@ namespace Qpdb\HtmlBuilder;
 
 
 use Qpdb\Common\Exceptions\CommonException;
+use Qpdb\HtmlBuilder\Abstracts\HtmlFieldset;
 use Qpdb\HtmlBuilder\Elements\HtmlA;
+use Qpdb\HtmlBuilder\Elements\HtmlArticle;
+use Qpdb\HtmlBuilder\Elements\HtmlAside;
 use Qpdb\HtmlBuilder\Elements\HtmlButton;
 use Qpdb\HtmlBuilder\Elements\HtmlDiv;
+use Qpdb\HtmlBuilder\Elements\HtmlFooter;
 use Qpdb\HtmlBuilder\Elements\HtmlForm;
+use Qpdb\HtmlBuilder\Elements\HtmlHead;
+use Qpdb\HtmlBuilder\Elements\HtmlHeader;
 use Qpdb\HtmlBuilder\Elements\HtmlImg;
 use Qpdb\HtmlBuilder\Elements\HtmlInput;
 use Qpdb\HtmlBuilder\Elements\HtmlLabel;
+use Qpdb\HtmlBuilder\Elements\HtmlLegend;
+use Qpdb\HtmlBuilder\Elements\HtmlLi;
+use Qpdb\HtmlBuilder\Elements\HtmlNav;
+use Qpdb\HtmlBuilder\Elements\HtmlOl;
+use Qpdb\HtmlBuilder\Elements\HtmlP;
 use Qpdb\HtmlBuilder\Elements\HtmlPlainText;
+use Qpdb\HtmlBuilder\Elements\HtmlSection;
 use Qpdb\HtmlBuilder\Elements\HtmlSelect;
 use Qpdb\HtmlBuilder\Elements\HtmlSpan;
+use Qpdb\HtmlBuilder\Elements\HtmlTable;
+use Qpdb\HtmlBuilder\Elements\HtmlTd;
 use Qpdb\HtmlBuilder\Elements\HtmlTemplate;
 use Qpdb\HtmlBuilder\Elements\HtmlTextarea;
+use Qpdb\HtmlBuilder\Elements\HtmlTh;
+use Qpdb\HtmlBuilder\Elements\HtmlTr;
+use Qpdb\HtmlBuilder\Elements\HtmlUl;
 use Qpdb\HtmlBuilder\Elements\HtmlView;
 use Qpdb\HtmlBuilder\Elements\Parts\CustomElement;
 use Qpdb\HtmlBuilder\Elements\Parts\InputNumber;
@@ -177,5 +194,140 @@ class Html
 		return new HtmlButton();
 	}
 
+	/**
+	 * @return HtmlArticle
+	 * @throws HtmlBuilderException
+	 */
+	public static function article() {
+		return new HtmlArticle();
+	}
+
+	/**
+	 * @return HtmlAside
+	 * @throws HtmlBuilderException
+	 */
+	public static function aside() {
+		return new HtmlAside();
+	}
+
+	/**
+	 * @return HtmlFooter
+	 * @throws HtmlBuilderException
+	 */
+	public static function footer() {
+		return new HtmlFooter();
+	}
+
+	/**
+	 * @return HtmlSection
+	 * @throws HtmlBuilderException
+	 */
+	public static function section() {
+		return new HtmlSection();
+	}
+
+	/**
+	 * @return HtmlHead
+	 * @throws HtmlBuilderException
+	 */
+	public static function head() {
+		return new HtmlHead();
+	}
+
+	/**
+	 * @return HtmlHeader
+	 * @throws HtmlBuilderException
+	 */
+	public static function header() {
+		return new HtmlHeader();
+	}
+
+	/**
+	 * @return HtmlP
+	 * @throws HtmlBuilderException
+	 */
+	public static function p() {
+		return new HtmlP();
+	}
+
+	/**
+	 * @return HtmlTable
+	 * @throws HtmlBuilderException
+	 */
+	public static  function table() {
+		return new HtmlTable();
+	}
+
+	/**
+	 * @return HtmlTr
+	 * @throws HtmlBuilderException
+	 */
+	public static function tr() {
+		return new HtmlTr();
+	}
+
+	/**
+	 * @return HtmlTd
+	 * @throws HtmlBuilderException
+	 */
+	public static  function td() {
+		return new HtmlTd();
+	}
+
+	/**
+	 * @return HtmlTh
+	 * @throws HtmlBuilderException
+	 */
+	public static function th() {
+		return new HtmlTh();
+	}
+
+	/**
+	 * @return HtmlUl
+	 * @throws HtmlBuilderException
+	 */
+	public static function ul() {
+		return new HtmlUl();
+	}
+
+	/**
+	 * @return HtmlOl
+	 * @throws HtmlBuilderException
+	 */
+	public static function ol() {
+		return new HtmlOl();
+	}
+
+	/**
+	 * @return HtmlLi
+	 * @throws HtmlBuilderException
+	 */
+	public static function li() {
+		return new HtmlLi();
+	}
+
+	/**
+	 * @return HtmlFieldset
+	 * @throws HtmlBuilderException
+	 */
+	public static function fieldset() {
+		return new HtmlFieldset();
+	}
+
+	/**
+	 * @return HtmlLegend
+	 * @throws HtmlBuilderException
+	 */
+	public static function legend() {
+		return new HtmlLegend();
+	}
+
+	/**
+	 * @return HtmlNav
+	 * @throws HtmlBuilderException
+	 */
+	public static function nav() {
+		return new HtmlNav();
+	}
 
 }
