@@ -29,7 +29,7 @@ class HtmlImg extends AbstractHtmlElement
 	 * @throws CommonException
 	 * @throws HtmlBuilderException
 	 */
-	public function withSrc( $src ) {
+	public function src( $src ) {
 		$this->withAttribute( ConstHtml::ATTRIBUTE_SRC, $src );
 
 		return $this;
@@ -41,7 +41,7 @@ class HtmlImg extends AbstractHtmlElement
 	 * @throws CommonException
 	 * @throws HtmlBuilderException
 	 */
-	public function withAlt( $alt ) {
+	public function alt( $alt ) {
 		$this->withAttribute( ConstHtml::ATTRIBUTE_ALT, $alt );
 
 		return $this;

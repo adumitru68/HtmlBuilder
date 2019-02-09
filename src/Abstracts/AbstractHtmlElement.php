@@ -150,8 +150,39 @@ abstract class AbstractHtmlElement implements HtmlElementInterface
 	 * @throws HtmlBuilderException
 	 * @throws CommonException
 	 */
-	public function withId( $id ) {
+	public function id( $id ) {
 		$this->withAttribute( ConstHtml::ATTRIBUTE_ID, $id );
+
+		return $this;
+	}
+
+	/**
+	 * @param string $title
+	 * @return $this
+	 * @throws HtmlBuilderException
+	 * @throws CommonException
+	 */
+	public function title( $title ) {
+		$this->withAttribute( ConstHtml::ATTRIBUTE_TITLE, $title );
+
+		return $this;
+	}
+
+	/**
+	 * @param $dataName
+	 * @param $dataValue
+	 * @return $this
+	 * @throws CommonException
+	 * @throws HtmlBuilderException
+	 */
+	public function data( $dataName, $dataValue = null ) {
+		$dataName = 'data-' . $dataName;
+		if(HtmlHelper::validateNameOfAttribute($dataName) && HtmlHelper::isDataAttribute($dataName)) {
+			$this->withAttribute( $dataName, $dataValue );
+		} else {
+			throw new HtmlBuilderException('Invalid data attribute');
+		}
+
 
 		return $this;
 	}
@@ -248,18 +279,6 @@ abstract class AbstractHtmlElement implements HtmlElementInterface
 		HtmlHelper::validateNameOfAttribute( $propertyName );
 		$propertyValue = Strings::toString( $propertyValue );
 		$this->attributes[ ConstHtml::ATTRIBUTE_STYLE ][ $propertyName ] = $propertyValue;
-
-		return $this;
-	}
-
-	/**
-	 * @param string $title
-	 * @return $this
-	 * @throws HtmlBuilderException
-	 * @throws CommonException
-	 */
-	public function withTitle( $title ) {
-		$this->withAttribute( ConstHtml::ATTRIBUTE_TITLE, $title );
 
 		return $this;
 	}
@@ -366,7 +385,7 @@ abstract class AbstractHtmlElement implements HtmlElementInterface
 			}
 			$value = trim( $value );
 			$computed = $key;
-			if ( !Strings::isEmpty($value) ) {
+			if ( !Strings::isEmpty( $value ) ) {
 				$computed .= ' = ' . HtmlHelper::getSafeHtmlString( $value );
 			}
 			$attributes[] = $computed;

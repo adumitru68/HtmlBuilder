@@ -10,7 +10,7 @@ namespace Qpdb\HtmlBuilder;
 
 
 use Qpdb\Common\Exceptions\CommonException;
-use Qpdb\HtmlBuilder\Elements\HtmlBlockStyle;
+use Qpdb\HtmlBuilder\Elements\HtmlA;
 use Qpdb\HtmlBuilder\Elements\HtmlButton;
 use Qpdb\HtmlBuilder\Elements\HtmlDiv;
 use Qpdb\HtmlBuilder\Elements\HtmlForm;
@@ -42,6 +42,15 @@ class Html
 	}
 
 	/**
+	 * @param null|string $label
+	 * @return HtmlA
+	 * @throws HtmlBuilderException
+	 */
+	public static function a( $label = null ) {
+		return new HtmlA( $label );
+	}
+
+	/**
 	 * @return CustomElement
 	 * @throws HtmlBuilderException
 	 */
@@ -66,7 +75,7 @@ class Html
 	public static function img( $src = null ) {
 		$img = new HtmlImg();
 		if ( !empty( $src ) ) {
-			$img->withSrc( $src );
+			$img->src( $src );
 		}
 
 		return $img;
