@@ -32,4 +32,5 @@ abstract class AbstractCheck extends AbstractInput
 		return $this;
 	}
 
+
 }
