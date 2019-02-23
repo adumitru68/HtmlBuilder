@@ -26,7 +26,7 @@ class HtmlDataList extends AbstractHtmlElement
 	 * @throws \Qpdb\HtmlBuilder\Exceptions\HtmlBuilderException]
 	 */
 	public function options( ...$options ) {
-		$options = Arrays::flatValues( $options );
+		$options = Arrays::flattenValues( $options );
 		foreach ( $options as $index => $option ) {
 			if ( $option instanceof DatalistOption ) {
 				$this->withHtmlElement( $option );

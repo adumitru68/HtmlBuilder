@@ -31,7 +31,7 @@ trait CanHaveChildren
 	 * @throws HtmlBuilderException
 	 */
 	public function withHtmlElement( ...$htmlElement ) {
-		$htmlElement = Arrays::flatValues( $htmlElement );
+		$htmlElement = Arrays::flattenValues( $htmlElement );
 		foreach ( $htmlElement as $element ) {
 			if ( !$element instanceof HtmlElementInterface ) {
 				throw new HtmlBuilderException( 'The element needs to be implemented HtmlElementInterface' );

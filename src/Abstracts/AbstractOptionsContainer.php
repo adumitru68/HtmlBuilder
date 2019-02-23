@@ -56,7 +56,7 @@ abstract class AbstractOptionsContainer extends AbstractHtmlElement
 			}
 		}
 
-		return Arrays::flatValues( $options );
+		return Arrays::flattenValues( $options );
 	}
 
 	/**

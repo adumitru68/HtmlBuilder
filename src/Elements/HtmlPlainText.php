@@ -42,7 +42,7 @@ class HtmlPlainText extends AbstractHtmlElement
 	 * @throws HtmlBuilderException
 	 */
 	public function withPlainText( ...$texts ) {
-		$texts = Arrays::flatValues( $texts );
+		$texts = Arrays::flattenValues( $texts );
 		foreach ( $texts as $text ) {
 			try {
 				$this->plainTexts[] = Strings::toString( $text );

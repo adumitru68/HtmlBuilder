@@ -56,7 +56,7 @@ class HtmlSelect extends AbstractOptionsContainer
 	 * @throws \Qpdb\HtmlBuilder\Exceptions\HtmlBuilderException
 	 */
 	public function selectValue( ...$values ) {
-		$values = Arrays::flatValues( $values );
+		$values = Arrays::flattenValues( $values );
 		foreach ( $this->getOptions() as $element ) {
 			/** @var SelectOption $element */
 			$element->withOutAttribute( 'selected' );

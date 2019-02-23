@@ -116,7 +116,7 @@ abstract class AbstractHtmlElement implements HtmlElementInterface
 			}
 			switch ( $key ) {
 				case ConstHtml::ATTRIBUTE_CLASS:
-					$preparedArray[ $key ] = Arrays::flatValues( $value, true );
+					$preparedArray[ $key ] = Arrays::flattenValues( $value, true );
 					break;
 				default:
 					$preparedArray[ $key ] = $value;
@@ -219,7 +219,7 @@ abstract class AbstractHtmlElement implements HtmlElementInterface
 	 */
 	public function withClass( ...$classes ) {
 
-		$classes = Arrays::flatValues( $classes );
+		$classes = Arrays::flattenValues( $classes );
 		foreach ( $classes as $class ) {
 			$class = str_ireplace( [ ',', ';' ], ' ', $class );
 			$class = Strings::removeMultipleSpace( $class, true );
@@ -242,7 +242,7 @@ abstract class AbstractHtmlElement implements HtmlElementInterface
 	 */
 	public function withStyle( ...$styles ) {
 
-		$styles = Arrays::flatValues( $styles );
+		$styles = Arrays::flattenValues( $styles );
 
 		foreach ( $styles as $style ) {
 			$arrayProps = HtmlHelper::parseInLineStyle( $style );
@@ -289,7 +289,7 @@ abstract class AbstractHtmlElement implements HtmlElementInterface
 	 */
 	public function withOutCssProperty( ...$propertyName ) {
 
-		$propertyNames = Arrays::flatValues( $propertyName );
+		$propertyNames = Arrays::flattenValues( $propertyName );
 		foreach ( $propertyNames as $property ) {
 			if ( isset( $this->attributes[ ConstHtml::ATTRIBUTE_STYLE ][ $property ] ) ) {
 				unset( $this->attributes[ ConstHtml::ATTRIBUTE_STYLE ][ $property ] );
@@ -306,7 +306,7 @@ abstract class AbstractHtmlElement implements HtmlElementInterface
 	 */
 	public function withOutAttribute( ...$attributeName ) {
 
-		$attributeNames = Arrays::flatValues( $attributeName );
+		$attributeNames = Arrays::flattenValues( $attributeName );
 		foreach ( $attributeNames as $attr ) {
 			HtmlHelper::validateNameOfAttribute( $attr );
 			switch ( $attributeName ) {
@@ -330,7 +330,7 @@ abstract class AbstractHtmlElement implements HtmlElementInterface
 	 */
 	public function withOutClass( ...$classes ) {
 
-		$classes = Arrays::flatValues( $classes );
+		$classes = Arrays::flattenValues( $classes );
 		foreach ( $classes as $class ) {
 			$class = str_ireplace( [ ',', ';' ], ' ', $class );
 			$class = Strings::removeMultipleSpace( $class, true );
@@ -398,7 +398,7 @@ abstract class AbstractHtmlElement implements HtmlElementInterface
 	 * @return string
 	 */
 	protected function getComputedClass() {
-		return implode( ' ', Arrays::flatValues( $this->attributes[ ConstHtml::ATTRIBUTE_CLASS ], true ) );
+		return implode( ' ', Arrays::flattenValues( $this->attributes[ ConstHtml::ATTRIBUTE_CLASS ], true ) );
 	}
 
 	/**
