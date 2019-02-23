@@ -22,7 +22,7 @@ class SelectOptgroup extends AbstractOptionsContainer
 	 * @throws CommonException
 	 * @throws HtmlBuilderException
 	 */
-	public function withLabel( $label ) {
+	public function label( $label ) {
 		return $this->withAttribute( 'label', $label );
 	}
 

@@ -69,7 +69,7 @@ abstract class AbstractOptionsContainer extends AbstractHtmlElement
 		array_walk_recursive( $array, function( $a, $k ) use ( &$return ) {
 			$return[] = $a instanceof SelectOption || $a instanceof SelectOptgroup
 				? $a
-				: ( new SelectOption() )->withValue( $k )->withLabel( $a );
+				: ( new SelectOption() )->value( $k )->label( $a );
 		} );
 
 		return $return;

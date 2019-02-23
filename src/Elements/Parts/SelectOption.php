@@ -23,7 +23,7 @@ class SelectOption extends AbstractHtmlElement
 	 * @return $this
 	 * @throws HtmlBuilderException
 	 */
-	public function withLabel( $labelText ) {
+	public function label( $labelText ) {
 		$this->htmlElements[] = Html::plainText( $labelText );
 
 		return $this;
@@ -35,7 +35,7 @@ class SelectOption extends AbstractHtmlElement
 	 * @throws HtmlBuilderException
 	 * @throws CommonException
 	 */
-	public function withValue( $value ) {
+	public function value( $value ) {
 		if ( null === $value ) {
 			return $this;
 		}
