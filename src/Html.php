@@ -182,7 +182,7 @@ class Html
 	}
 
 	/**
-	 * @return HtmlInput|InputNumber
+	 * @return HtmlInput
 	 */
 	public static function input() {
 		return new HtmlInput();
