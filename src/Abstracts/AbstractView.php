@@ -52,4 +52,18 @@ abstract class AbstractView implements HtmlViewInterface
 
 		return ob_get_clean();
 	}
+
+	/**
+	 * @return void
+	 */
+	public function render() {
+		echo $this->getMarkup();
+	}
+
+	/**
+	 * @return $this
+	 */
+	public function getClone() {
+		return clone $this;
+	}
 }

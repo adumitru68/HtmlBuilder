@@ -40,7 +40,7 @@ interface HtmlViewInterface extends HtmlElementInterface
 	 * @param string $templatePath
 	 * @return $this
 	 */
-	public function withTemplate( $templatePath );
+	public function loadTemplate( $templatePath );
 
 
 }

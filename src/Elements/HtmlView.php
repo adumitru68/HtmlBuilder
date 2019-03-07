@@ -14,10 +14,4 @@ use Qpdb\HtmlBuilder\Abstracts\AbstractView;
 class HtmlView extends AbstractView
 {
 
-	/**
-	 * @return $this
-	 */
-	public function getClone() {
-		return clone $this;
-	}
 }
