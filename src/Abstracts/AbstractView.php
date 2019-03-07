@@ -10,7 +10,9 @@ namespace Qpdb\HtmlBuilder\Abstracts;
 
 
 use Qpdb\Common\Exceptions\CommonException;
+use Qpdb\Common\Helpers\Arrays;
 use Qpdb\Common\Prototypes\Traits\AsStoredSettings;
+use Qpdb\HtmlBuilder\Elements\HtmlLink;
 use Qpdb\HtmlBuilder\Interfaces\HtmlViewInterface;
 
 abstract class AbstractView implements HtmlViewInterface
@@ -28,7 +30,7 @@ abstract class AbstractView implements HtmlViewInterface
 	 * @param string $templatePath
 	 * @return $this
 	 */
-	public function withTemplate( $templatePath ) {
+	public function loadTemplate( $templatePath ) {
 		$this->templatePath = $templatePath;
 
 		return $this;
@@ -46,29 +48,8 @@ abstract class AbstractView implements HtmlViewInterface
 		ob_start();
 
 		/** @noinspection PhpIncludeInspection */
-		include $this->getRealTemplatePath();
+		include $this->templatePath;
 
 		return ob_get_clean();
 	}
-
-	/**
-	 * @return void
-	 */
-	public function render() {
-		echo $this->getMarkup();
-	}
-
-	/**
-	 * @return string
-	 */
-	protected function getRealTemplatePath() {
-		$templatePath = '';
-
-		if ( empty( $templatePath ) ) {
-			$templatePath = __DIR__ . '/../../resources/views/view_not_found.phtml';
-		}
-
-		return $templatePath;
-	}
-
 }

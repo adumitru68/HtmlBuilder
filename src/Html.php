@@ -26,10 +26,12 @@ use Qpdb\HtmlBuilder\Elements\HtmlInput;
 use Qpdb\HtmlBuilder\Elements\HtmlLabel;
 use Qpdb\HtmlBuilder\Elements\HtmlLegend;
 use Qpdb\HtmlBuilder\Elements\HtmlLi;
+use Qpdb\HtmlBuilder\Elements\HtmlLink;
 use Qpdb\HtmlBuilder\Elements\HtmlNav;
 use Qpdb\HtmlBuilder\Elements\HtmlOl;
 use Qpdb\HtmlBuilder\Elements\HtmlP;
 use Qpdb\HtmlBuilder\Elements\HtmlPlainText;
+use Qpdb\HtmlBuilder\Elements\HtmlScript;
 use Qpdb\HtmlBuilder\Elements\HtmlSection;
 use Qpdb\HtmlBuilder\Elements\HtmlSelect;
 use Qpdb\HtmlBuilder\Elements\HtmlSpan;
@@ -348,6 +350,23 @@ class Html
 	 */
 	public static function datalist() {
 		return new HtmlDataList();
+	}
+
+	/**
+	 * @return HtmlLink
+	 * @throws CommonException
+	 * @throws HtmlBuilderException
+	 */
+	public static function link() {
+		return new HtmlLink();
+	}
+
+	/**
+	 * @return HtmlScript
+	 * @throws HtmlBuilderException
+	 */
+	public static function script() {
+		return new HtmlScript();
 	}
 
 }
