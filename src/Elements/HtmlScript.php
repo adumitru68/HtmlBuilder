@@ -9,10 +9,10 @@
 namespace Qpdb\HtmlBuilder\Elements;
 
 
-use Qpdb\HtmlBuilder\Abstracts\AbstractHtmlElement;
+use Qpdb\HtmlBuilder\Abstracts\AbstractResource;
 use Qpdb\HtmlBuilder\Exceptions\HtmlBuilderException;
 
-class HtmlScript extends AbstractHtmlElement
+class HtmlScript extends AbstractResource
 {
 
 	/**

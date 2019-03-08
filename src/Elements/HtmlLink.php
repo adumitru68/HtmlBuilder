@@ -9,9 +9,9 @@
 namespace Qpdb\HtmlBuilder\Elements;
 
 
-use Qpdb\HtmlBuilder\Abstracts\AbstractHtmlElement;
+use Qpdb\HtmlBuilder\Abstracts\AbstractResource;
 
-class HtmlLink extends AbstractHtmlElement
+class HtmlLink extends AbstractResource
 {
 	/**
 	 * @param string $rel
