@@ -34,5 +34,4 @@ abstract class AbstractResource extends AbstractHtmlElement
 		return $this->location;
 	}
 
-
 }

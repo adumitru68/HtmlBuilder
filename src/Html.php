@@ -45,7 +45,6 @@ use Qpdb\HtmlBuilder\Elements\HtmlUl;
 use Qpdb\HtmlBuilder\Elements\HtmlView;
 use Qpdb\HtmlBuilder\Elements\Parts\CustomElement;
 use Qpdb\HtmlBuilder\Elements\Parts\DatalistOption;
-use Qpdb\HtmlBuilder\Elements\Parts\InputNumber;
 use Qpdb\HtmlBuilder\Elements\Parts\SelectOptgroup;
 use Qpdb\HtmlBuilder\Elements\Parts\SelectOption;
 use Qpdb\HtmlBuilder\Exceptions\HtmlBuilderException;
@@ -137,10 +136,12 @@ class Html
 	}
 
 	/**
+	 * @param null  $templatePath
+	 * @param array $params
 	 * @return HtmlView
 	 */
-	public static function view() {
-		return new HtmlView();
+	public static function view( $templatePath = null, array $params = [] ) {
+		return new HtmlView( $templatePath, $params );
 	}
 
 	/**
@@ -258,7 +259,7 @@ class Html
 	 * @return HtmlTable
 	 * @throws HtmlBuilderException
 	 */
-	public static  function table() {
+	public static function table() {
 		return new HtmlTable();
 	}
 
@@ -274,7 +275,7 @@ class Html
 	 * @return HtmlTd
 	 * @throws HtmlBuilderException
 	 */
-	public static  function td() {
+	public static function td() {
 		return new HtmlTd();
 	}
 
@@ -340,8 +341,8 @@ class Html
 	 * @throws CommonException
 	 * @throws HtmlBuilderException
 	 */
-	public static function optionData($value = null) {
-		return new DatalistOption($value);
+	public static function optionData( $value = null ) {
+		return new DatalistOption( $value );
 	}
 
 	/**
@@ -354,7 +355,6 @@ class Html
 
 	/**
 	 * @return HtmlLink
-	 * @throws CommonException
 	 * @throws HtmlBuilderException
 	 */
 	public static function link() {

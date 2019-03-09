@@ -37,10 +37,15 @@ interface HtmlViewInterface extends HtmlElementInterface
 	public function withStoredData( array $data );
 
 	/**
+	 * @return mixed
+	 */
+	public function getTemplatePath();
+
+	/**
 	 * @param string $templatePath
 	 * @return $this
 	 */
-	public function loadTemplate( $templatePath );
+	public function setTemplatePath( $templatePath );
 
 
 }
