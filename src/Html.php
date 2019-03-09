@@ -15,6 +15,7 @@ use Qpdb\HtmlBuilder\Elements\HtmlA;
 use Qpdb\HtmlBuilder\Elements\HtmlArticle;
 use Qpdb\HtmlBuilder\Elements\HtmlAside;
 use Qpdb\HtmlBuilder\Elements\HtmlButton;
+use Qpdb\HtmlBuilder\Elements\HtmlContainer;
 use Qpdb\HtmlBuilder\Elements\HtmlDataList;
 use Qpdb\HtmlBuilder\Elements\HtmlDiv;
 use Qpdb\HtmlBuilder\Elements\HtmlFooter;
@@ -71,11 +72,11 @@ class Html
 	}
 
 	/**
-	 * @return CustomElement
+	 * @return HtmlContainer
 	 * @throws HtmlBuilderException
 	 */
 	public static function container() {
-		return new CustomElement( '' );
+		return new HtmlContainer();
 	}
 
 	/**
