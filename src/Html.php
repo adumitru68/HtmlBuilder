@@ -370,4 +370,25 @@ class Html
 		return new HtmlScript();
 	}
 
+	/**
+	 * @param string|null $url
+	 * @return HtmlLink
+	 * @throws CommonException
+	 * @throws HtmlBuilderException
+	 */
+	public static function loadCss( $url = null ) {
+		return ( new HtmlLink( $url ) )->relStylesheet();
+	}
+
+	/**
+	 * @param string|null $url
+	 * @return HtmlScript
+	 * @throws CommonException
+	 * @throws HtmlBuilderException
+	 */
+	public static function loadJs( $url = null ) {
+		return ( new HtmlScript( $url ) )->type();
+
+	}
+
 }

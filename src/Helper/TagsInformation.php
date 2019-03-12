@@ -31,6 +31,11 @@ class TagsInformation
 	 */
 	private $htmlInlineTags;
 
+	/**
+	 * @var array
+	 */
+	private $htmlNewLineTags;
+
 
 	/**
 	 * TagsInformation constructor.
@@ -39,6 +44,7 @@ class TagsInformation
 		$this->htmlTags = require __DIR__ . '/../../resources/tags_html5.php';
 		$this->htmlTagsSelfClosed = require __DIR__ . '/../../resources/tags_html5_self_clossing.php';
 		$this->htmlInlineTags = require __DIR__ . '/../../resources/tags_html5_inline.php';
+		$this->htmlNewLineTags = require __DIR__ . '/../../resources/tags_html5_new_line.php';
 	}
 
 	/**
@@ -63,6 +69,14 @@ class TagsInformation
 	 */
 	public function isInlineTag( $tag ) {
 		return in_array( trim( $tag ), $this->htmlInlineTags );
+	}
+
+	/**
+	 * @param string $tag
+	 * @return bool
+	 */
+	public function isNewLineTag( $tag ) {
+		return in_array( trim( $tag ), $this->htmlNewLineTags );
 	}
 
 }

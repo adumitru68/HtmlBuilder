@@ -25,6 +25,8 @@ trait MarkupGenerator
 	 */
 	protected $endLine = PHP_EOL;
 
+	protected $newLine = '';
+
 
 	/**
 	 * @return string
@@ -34,6 +36,10 @@ trait MarkupGenerator
 
 		if ( $this->isInlineTag() ) {
 			$this->endLine = '';
+		}
+
+		if($this->isNewLineTag()){
+			$this->newLine = PHP_EOL;
 		}
 
 		$content = $this->isSelfClosed() ? '' : $this->getHtmlElementContent();
@@ -78,7 +84,7 @@ trait MarkupGenerator
 			return $content;
 		}
 
-		$formattedTag = "<{$tag}";
+		$formattedTag = $this->newLine . "<{$tag}";
 		$formattedTag .= empty( $attributes ) ? '>' : " {$attributes}>";
 		$formattedTag .= empty($this->getChildren()) ? '' : $this->endLine;
 		$formattedTag .= $content;

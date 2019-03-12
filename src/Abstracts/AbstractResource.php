@@ -18,6 +18,18 @@ abstract class AbstractResource extends AbstractHtmlElement
 	protected $location;
 
 	/**
+	 * @var string|null
+	 */
+	protected $resourceUrl;
+
+
+
+	public function __construct( $resourceUrl = null ) {
+		parent::__construct();
+		$this->resourceUrl = $resourceUrl;
+	}
+
+	/**
 	 * @param mixed $location
 	 * @return $this
 	 */

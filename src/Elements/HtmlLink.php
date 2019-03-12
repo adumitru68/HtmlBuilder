@@ -13,6 +13,18 @@ use Qpdb\HtmlBuilder\Abstracts\AbstractResource;
 
 class HtmlLink extends AbstractResource
 {
+
+	/**
+	 * HtmlLink constructor.
+	 * @param null $resourceUrl
+	 * @throws \Qpdb\Common\Exceptions\CommonException
+	 * @throws \Qpdb\HtmlBuilder\Exceptions\HtmlBuilderException
+	 */
+	public function __construct( $resourceUrl = null ) {
+		parent::__construct( $resourceUrl );
+		$this->href($resourceUrl);
+	}
+
 	/**
 	 * @param string $rel
 	 * @return $this

@@ -49,5 +49,4 @@ return [
 	'span',
 	'textarea',
 	'option',
-	'script'
 ];

@@ -145,6 +145,13 @@ abstract class AbstractHtmlElement implements HtmlElementInterface
 	}
 
 	/**
+	 * @return bool
+	 */
+	public function isNewLineTag() {
+		return TagsInformation::getInstance()->isNewLineTag( $this->getTag() );
+	}
+
+	/**
 	 * @param $id
 	 * @return $this
 	 * @throws HtmlBuilderException

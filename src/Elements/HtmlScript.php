@@ -16,6 +16,17 @@ class HtmlScript extends AbstractResource
 {
 
 	/**
+	 * HtmlScript constructor.
+	 * @param string|null $resourceUrl
+	 * @throws HtmlBuilderException
+	 * @throws \Qpdb\Common\Exceptions\CommonException
+	 */
+	public function __construct( $resourceUrl = null ) {
+		parent::__construct( $resourceUrl );
+		$this->src( $resourceUrl );
+	}
+
+	/**
 	 * @param $text
 	 * @return $this
 	 * @throws HtmlBuilderException
