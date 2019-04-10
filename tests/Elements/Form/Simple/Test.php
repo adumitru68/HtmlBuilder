@@ -23,10 +23,8 @@ class Test extends TestCase
             Html::input()->submit()->name('Send')
         );
 
-        $input = new Input(__DIR__);
-        $input->setGeneratedInput($form);
-        $expected = $input->getExpectedInput();
-        $actual = $input->getGeneratedInput();
+        $expected = file_get_contents(__DIR__ . '/expected-input.txt');
+        $actual = $form->getMarkup();
 
         self::assertEquals($expected, $actual);
     }

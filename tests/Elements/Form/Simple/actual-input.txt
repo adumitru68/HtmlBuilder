@@ -1,3 +1,0 @@
-<form method = "post">
-<input name = "Send" type = "submit">
-</form>

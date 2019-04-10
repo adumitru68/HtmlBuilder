@@ -8,7 +8,7 @@ use PHPUnit\Framework\TestCase;
 use Qpdb\Common\Exceptions\CommonException;
 use Qpdb\HtmlBuilder\Exceptions\HtmlBuilderException;
 use Qpdb\HtmlBuilder\Html;
-use Qpdb\Tests\Input;
+use Qpdb\Tests\Strings;
 
 class Test extends TestCase
 {
@@ -44,11 +44,9 @@ class Test extends TestCase
                 Html::textarea()->id('job-description')->name('job_description')
             );
 
-        $input = new Input(__DIR__);
-        $input->setGeneratedInput($form);
-        $expected = $input->getExpectedInput();
-        $actual = $input->getGeneratedInput();
+        $expected = file_get_contents(__DIR__ . '/expected-input.txt');
+        $actual = $form->getMarkup();
 
-        self::assertEquals($expected, $actual);
+        self::assertEquals(Strings::removeAllSpacesFromString($expected), Strings::removeAllSpacesFromString($actual));
     }
 }
