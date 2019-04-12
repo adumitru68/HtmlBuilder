@@ -18,7 +18,7 @@ class Test extends TestCase
      * @throws HtmlBuilderException
      */
     public function createLegend() {
-        $legend = Html::legend()->label(['Personalia:']);
+        $legend = Html::legend()->label('Personalia:');
 
         $expected = file_get_contents(__DIR__  . '/' . 'expected-tag.txt');
         $actual = $legend->getMarkup();

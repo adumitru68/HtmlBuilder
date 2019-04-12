@@ -8,7 +8,6 @@ use PHPUnit\Framework\TestCase;
 use Qpdb\Common\Exceptions\CommonException;
 use Qpdb\HtmlBuilder\Exceptions\HtmlBuilderException;
 use Qpdb\HtmlBuilder\Html;
-use Qpdb\Tests\Input;
 
 class Test extends TestCase
 {
