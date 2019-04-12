@@ -9,7 +9,9 @@
 namespace Qpdb\HtmlBuilder\Exceptions;
 
 
-class HtmlBuilderException extends \Exception
+use Exception;
+
+class HtmlBuilderException extends Exception
 {
 
 }

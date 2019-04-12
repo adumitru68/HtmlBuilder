@@ -1,0 +1,1 @@
+<a class="test-class second-class" style="color:red; margin: 0" href="href.com" title="title" target="_parent">A tag</a>
