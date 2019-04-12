@@ -1,0 +1,10 @@
+<form method="post" action="http://sample.com">
+    <input name="text-input" type="text">
+    <input name="password" type="password">
+    <input name="favcolor" value="#ff0000" type="color">
+    <input name="favnumber" type="number">
+    <input name="points" type="range" min="0" max="10">
+    <input name="hidden" type="hidden">
+    <input name="birthday" type="date">
+    <input name="other" type="other">
+</form>
