@@ -24,17 +24,18 @@ class ParseInLineStyleTest extends TestCase
             ['height: 10px; width:
                 5px', ['height' => '10px', 'width' => '5px']],
             ['NULL', []],
-            ['null', []]
+            ['null', []],
+            [null, []],
         ];
     }
 
     /**
      * @return array
      */
-    public function invalidInlineStyles() {
+    public function invalidInlineStyles()
+    {
         return [
-            [null],
-            [1, 2, 3, 4],
+            [[1, 2, 3, 4]],
             [new stdClass()]
         ];
     }
@@ -56,11 +57,13 @@ class ParseInLineStyleTest extends TestCase
     /**
      * @test
      * @dataProvider invalidInlineStyles
+     * @param mixed $invalidInlineStyles
      * @throws CommonException
      * @throws HtmlBuilderException
      */
-    public function parseInLineStylesThrowsException($invalidInlineStyles) {
+    public function parseInLineStylesThrowsException($invalidInlineStyles)
+    {
         $this->expectException(CommonException::class);
-        HtmlHelper::parseInLineStyle([1, 3, 4]);
+        HtmlHelper::parseInLineStyle($invalidInlineStyles);
     }
 }
