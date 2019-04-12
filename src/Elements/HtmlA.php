@@ -20,7 +20,7 @@ class HtmlA extends AbstractHtmlElement
 
 	/**
 	 * HtmlA constructor.
-	 * @param null $label
+	 * @param string|null $label
 	 * @throws HtmlBuilderException
 	 */
 	public function __construct( $label = null ) {
