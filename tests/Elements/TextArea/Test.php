@@ -23,6 +23,6 @@ class Test extends TestCase
         $expected = file_get_contents(__DIR__  . '/' . 'expected-tag.txt');
         $actual = $textArea->getMarkup();
 
-        self::assertEquals($expected, $actual);
+        self::assertEquals(Strings::removeAllSpacesFromString($expected), Strings::removeAllSpacesFromString($actual));
     }
 }
