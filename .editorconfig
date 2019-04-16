@@ -1,0 +1,2 @@
+[*.{php,json}]
+indent_size = 4

@@ -9,7 +9,9 @@
 namespace Qpdb\HtmlBuilder\Elements;
 
 
+use Qpdb\Common\Exceptions\CommonException;
 use Qpdb\HtmlBuilder\Abstracts\AbstractHtmlElement;
+use Qpdb\HtmlBuilder\Exceptions\HtmlBuilderException;
 use Qpdb\HtmlBuilder\Traits\CanHaveChildren;
 
 class HtmlA extends AbstractHtmlElement
@@ -18,8 +20,8 @@ class HtmlA extends AbstractHtmlElement
 
 	/**
 	 * HtmlA constructor.
-	 * @param null $label
-	 * @throws \Qpdb\HtmlBuilder\Exceptions\HtmlBuilderException
+	 * @param string|null $label
+	 * @throws HtmlBuilderException
 	 */
 	public function __construct( $label = null ) {
 		parent::__construct();
@@ -29,8 +31,8 @@ class HtmlA extends AbstractHtmlElement
 	/**
 	 * @param $url
 	 * @return $this
-	 * @throws \Qpdb\Common\Exceptions\CommonException
-	 * @throws \Qpdb\HtmlBuilder\Exceptions\HtmlBuilderException
+	 * @throws CommonException
+	 * @throws HtmlBuilderException
 	 */
 	public function href( $url ) {
 		$this->withAttribute( 'href', $url );
@@ -41,7 +43,7 @@ class HtmlA extends AbstractHtmlElement
 	/**
 	 * @param mixed ...$label
 	 * @return $this
-	 * @throws \Qpdb\HtmlBuilder\Exceptions\HtmlBuilderException
+	 * @throws HtmlBuilderException
 	 */
 	public function label( ...$label ) {
 		$this->withPlainText( $label );
@@ -51,8 +53,8 @@ class HtmlA extends AbstractHtmlElement
 
 	/**
 	 * @return $this
-	 * @throws \Qpdb\Common\Exceptions\CommonException
-	 * @throws \Qpdb\HtmlBuilder\Exceptions\HtmlBuilderException
+	 * @throws CommonException
+	 * @throws HtmlBuilderException
 	 */
 	public function targetSelf() {
 		$this->withAttribute( 'target', '_self' );
@@ -62,8 +64,8 @@ class HtmlA extends AbstractHtmlElement
 
 	/**
 	 * @return $this
-	 * @throws \Qpdb\Common\Exceptions\CommonException
-	 * @throws \Qpdb\HtmlBuilder\Exceptions\HtmlBuilderException
+	 * @throws CommonException
+	 * @throws HtmlBuilderException
 	 */
 	public function targetBlank() {
 		$this->withAttribute( 'target', '_blank' );
@@ -73,8 +75,8 @@ class HtmlA extends AbstractHtmlElement
 
 	/**
 	 * @return $this
-	 * @throws \Qpdb\Common\Exceptions\CommonException
-	 * @throws \Qpdb\HtmlBuilder\Exceptions\HtmlBuilderException
+	 * @throws CommonException
+	 * @throws HtmlBuilderException
 	 */
 	public function targetParent() {
 		$this->withAttribute( 'target', '_parent' );
@@ -84,11 +86,11 @@ class HtmlA extends AbstractHtmlElement
 
 	/**
 	 * @return $this
-	 * @throws \Qpdb\Common\Exceptions\CommonException
-	 * @throws \Qpdb\HtmlBuilder\Exceptions\HtmlBuilderException
+	 * @throws CommonException
+	 * @throws HtmlBuilderException
 	 */
 	public function targetTop() {
-		$this->withAttribute( 'target', 'top' );
+		$this->withAttribute( 'target', '_top' );
 
 		return $this;
 	}
