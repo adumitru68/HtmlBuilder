@@ -18,8 +18,7 @@
     "require": {
         "php": ">=5.6",
         "ext-json": "*",
-        "qpdb/common": "^1.0.2",
-        "ext-tidy": "*"
+        "qpdb/common": "^1.0.2"
     },
     "autoload": {
         "psr-4": {

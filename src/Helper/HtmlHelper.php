@@ -21,7 +21,6 @@ class HtmlHelper
 
     /**
      * @param string $name
-     * @return bool
      * @throws HtmlBuilderException
      */
 	public static function validateNameOfAttribute( $name ) {
@@ -31,8 +30,6 @@ class HtmlHelper
 		if ( !preg_match( '/^[a-zA-Z0-9_-]+$/', $name ) ) {
 			throw new HtmlBuilderException( 'Invalid name of attribute: ' . $name );
 		}
-
-		return true;
 	}
 
 	/**

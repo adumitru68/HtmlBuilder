@@ -184,7 +184,8 @@ abstract class AbstractHtmlElement implements HtmlElementInterface
 	 */
 	public function data( $dataName, $dataValue = null ) {
 		$dataName = 'data-' . $dataName;
-		if(HtmlHelper::validateNameOfAttribute($dataName) && HtmlHelper::isDataAttribute($dataName)) {
+		HtmlHelper::validateNameOfAttribute($dataName);
+		if( HtmlHelper::isDataAttribute($dataName)) {
 			$this->withAttribute( $dataName, $dataValue );
 		} else {
 			throw new HtmlBuilderException('Invalid data attribute');

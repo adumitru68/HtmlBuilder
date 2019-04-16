@@ -356,6 +356,7 @@ class Html
 
 	/**
 	 * @return HtmlLink
+	 * @throws CommonException
 	 * @throws HtmlBuilderException
 	 */
 	public static function link() {
@@ -364,6 +365,7 @@ class Html
 
 	/**
 	 * @return HtmlScript
+	 * @throws CommonException
 	 * @throws HtmlBuilderException
 	 */
 	public static function script() {
