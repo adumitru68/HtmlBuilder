@@ -113,4 +113,22 @@ class HtmlLink extends AbstractResource
 	public function getTag() {
 		return 'link';
 	}
+
+	/**
+	 * @return string
+	 * @throws \Qpdb\Common\Exceptions\CommonException
+	 * @throws \Qpdb\HtmlBuilder\Exceptions\HtmlBuilderException
+	 */
+	public function getMarkup() {
+		if ( $this->version ) {
+			$attributes = $this->getAttributes();
+			if ( isset( $attributes[ 'href' ] ) ) {
+				$versionSrc = $attributes[ 'href' ] . '?v=' . $this->version;
+				$this->withAttribute( 'href', $versionSrc );
+			}
+		}
+
+		return parent::getMarkup();
+	}
+
 }

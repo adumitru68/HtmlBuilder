@@ -101,4 +101,22 @@ class HtmlScript extends AbstractResource
 	public function getTag() {
 		return 'script';
 	}
+
+	/**
+	 * @return string
+	 * @throws HtmlBuilderException
+	 * @throws \Qpdb\Common\Exceptions\CommonException
+	 */
+	public function getMarkup() {
+		if ( $this->version ) {
+			$attributes = $this->getAttributes();
+			if ( isset( $attributes[ 'src' ] ) ) {
+				$versionSrc = $attributes[ 'src' ] . '?v=' . $this->version;
+				$this->withAttribute( 'src', $versionSrc );
+			}
+		}
+
+		return parent::getMarkup();
+	}
+
 }

@@ -22,11 +22,26 @@ abstract class AbstractResource extends AbstractHtmlElement
 	 */
 	protected $resourceUrl;
 
+	/**
+	 * @var string|null
+	 */
+	protected $version;
+
 
 
 	public function __construct( $resourceUrl = null ) {
 		parent::__construct();
 		$this->resourceUrl = $resourceUrl;
+	}
+
+	/**
+	 * @param null|string $version
+	 * @return $this
+	 */
+	public function setVersion( $version = null ) {
+		$this->version = $version;
+
+		return $this;
 	}
 
 	/**
