@@ -22,6 +22,7 @@ use Qpdb\HtmlBuilder\Elements\HtmlFooter;
 use Qpdb\HtmlBuilder\Elements\HtmlForm;
 use Qpdb\HtmlBuilder\Elements\HtmlHead;
 use Qpdb\HtmlBuilder\Elements\HtmlHeader;
+use Qpdb\HtmlBuilder\Elements\HtmlIframe;
 use Qpdb\HtmlBuilder\Elements\HtmlImg;
 use Qpdb\HtmlBuilder\Elements\HtmlInput;
 use Qpdb\HtmlBuilder\Elements\HtmlLabel;
@@ -100,6 +101,21 @@ class Html
 		}
 
 		return $img;
+	}
+
+	/**
+	 * @param null $src
+	 * @return HtmlIframe
+	 * @throws CommonException
+	 * @throws HtmlBuilderException
+	 */
+	public static function iframe( $src = null ) {
+		$iframe = new HtmlIframe();
+		if ( !empty( $src ) ) {
+			$iframe->src( $src );
+		}
+
+		return $iframe;
 	}
 
 	/**

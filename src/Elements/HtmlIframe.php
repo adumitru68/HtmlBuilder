@@ -1,10 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Adi
- * Date: 2/1/2019
- * Time: 10:38 PM
- */
+
 
 namespace Qpdb\HtmlBuilder\Elements;
 
@@ -14,13 +9,14 @@ use Qpdb\HtmlBuilder\Abstracts\AbstractHtmlElement;
 use Qpdb\HtmlBuilder\Exceptions\HtmlBuilderException;
 use Qpdb\HtmlBuilder\Helper\ConstHtml;
 
-class HtmlImg extends AbstractHtmlElement
+class HtmlIframe extends AbstractHtmlElement
 {
+
 	/**
-	 * @return string
+	 * @inheritDoc
 	 */
 	public function getTag() {
-		return 'img';
+		return 'iframe';
 	}
 
 	/**
@@ -36,18 +32,6 @@ class HtmlImg extends AbstractHtmlElement
 	}
 
 	/**
-	 * @param $alt
-	 * @return $this
-	 * @throws CommonException
-	 * @throws HtmlBuilderException
-	 */
-	public function alt( $alt ) {
-		$this->withAttribute( ConstHtml::ATTRIBUTE_ALT, $alt );
-
-		return $this;
-	}
-
-	/**
 	 * @return $this
 	 * @throws CommonException
 	 * @throws HtmlBuilderException
@@ -57,4 +41,5 @@ class HtmlImg extends AbstractHtmlElement
 
 		return $this;
 	}
+
 }
