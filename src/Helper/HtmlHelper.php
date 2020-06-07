@@ -38,7 +38,7 @@ class HtmlHelper
 	 */
 	public static function isDataAttribute( $attribute ) {
 		$attribute = explode( '-', $attribute );
-		if ( $attribute[ 0 ] === 'data' && count( $attribute ) > 1 ) {
+		if ( $attribute[ 0 ] === ConstHtml::ATTRIBUTE_DATA && count( $attribute ) > 1 ) {
 			return true;
 		}
 
@@ -82,7 +82,7 @@ class HtmlHelper
 	public static function getSafeHtmlString( $string, $forcedClean = false ) {
 
 		if ( $forcedClean ) {
-			return htmlspecialchars( $string );
+			return self::$doubleQuote . htmlspecialchars( $string ) . self::$doubleQuote;
 		}
 
 		switch ( true ) {

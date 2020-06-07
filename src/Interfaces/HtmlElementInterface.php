@@ -27,7 +27,7 @@ interface HtmlElementInterface
 	/**
 	 * @return void
 	 */
-	public function render();
+	public function output();
 
 
 }

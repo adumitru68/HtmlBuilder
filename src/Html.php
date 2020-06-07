@@ -137,12 +137,12 @@ class Html
 	}
 
 	/**
-	 * @param null  $templatePath
+	 * @param null  $basePath
 	 * @param array $params
 	 * @return HtmlView
 	 */
-	public static function view( $templatePath = null, array $params = [] ) {
-		return new HtmlView( $templatePath, $params );
+	public static function view( $basePath = null, array $params = [] ) {
+		return new HtmlView( $basePath, null, $params );
 	}
 
 	/**

@@ -47,5 +47,23 @@ interface HtmlViewInterface extends HtmlElementInterface
 	 */
 	public function setTemplatePath( $templatePath );
 
+	/**
+	 * @param string|null $basePath
+	 * @return $this
+	 */
+	public function setBasePath( $basePath );
+
+	/**
+	 * @return string|null
+	 */
+	public function getBasePath();
+
+	/**
+	 * @param string $templatePath
+	 * @param array  $params
+	 * @return $this
+	 */
+	public function render( $templatePath, array $params = [] );
+
 
 }

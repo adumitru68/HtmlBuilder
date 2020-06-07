@@ -61,11 +61,4 @@ class HtmlPlainText extends AbstractHtmlElement
 		return implode( $this->separator, $this->plainTexts );
 	}
 
-	/**
-	 * @return void
-	 */
-	public function render() {
-		echo $this->getMarkup();
-	}
-
 }

@@ -394,7 +394,11 @@ abstract class AbstractHtmlElement implements HtmlElementInterface
 			$value = trim( $value );
 			$computed = $key;
 			if ( !Strings::isEmpty( $value ) ) {
-				$computed .= ' = ' . HtmlHelper::getSafeHtmlString( $value );
+				if(HtmlHelper::isDataAttribute($key)) {
+					$computed .= ' = "' . $value . '"';
+				} else {
+					$computed .= ' = ' . HtmlHelper::getSafeHtmlString( $value );
+				}
 			}
 			$attributes[] = $computed;
 		}

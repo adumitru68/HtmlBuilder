@@ -21,26 +21,33 @@ abstract class AbstractView implements HtmlViewInterface
 	/**
 	 * @var string|null
 	 */
+	protected $basePath;
+
+	/**
+	 * @var string|null
+	 */
 	protected $templatePath;
 
 
 	/**
 	 * AbstractView constructor.
+	 * @param string|null $basePath
 	 * @param string|null $templatePath
 	 * @param array       $params
 	 */
-	public function __construct( $templatePath = null, array $params = [] ) {
+	public function __construct( $basePath = null, $templatePath = null, array $params = [] ) {
+		$this->basePath = $basePath;
 		$this->templatePath = $templatePath;
 		$this->withStoredData( $params );
 	}
 
 
 	/**
-	 * @param string $templatePath
+	 * @param null|string $templatePath
 	 * @return $this
 	 */
 	public function setTemplatePath( $templatePath ) {
-		$this->templatePath = $templatePath;
+		$this->templatePath = (string)$templatePath;
 
 		return $this;
 	}
@@ -58,11 +65,11 @@ abstract class AbstractView implements HtmlViewInterface
 	 */
 	public function getMarkup() {
 
-		if ( empty( $this->getTemplatePath() ) ) {
+		if ( empty( $this->getFullPath() ) ) {
 			throw new HtmlBuilderException( 'Empty template file path' );
 		}
 
-		if ( !file_exists( $this->getTemplatePath() ) ) {
+		if ( !file_exists( $this->getFullPath() ) ) {
 			throw new HtmlBuilderException( 'Invalid template file path' );
 		}
 
@@ -73,17 +80,38 @@ abstract class AbstractView implements HtmlViewInterface
 		ob_start();
 
 		/** @noinspection PhpIncludeInspection */
-		include $this->getTemplatePath();
+		include $this->getFullPath();
 
 		return ob_get_clean();
+	}
+
+	/**
+	 * @param string $templatePath
+	 * @param array  $params
+	 * @return $this
+	 */
+	public function render( $templatePath, array $params = [] ) {
+		$renderView = $this->getClone();
+		$renderView->setTemplatePath( $templatePath );
+		$renderView->withStoredData( $params );
+
+		return $renderView;
 	}
 
 	/**
 	 * @return void
 	 * @throws HtmlBuilderException
 	 */
-	public function render() {
+	public function output() {
 		echo $this->getMarkup();
+	}
+
+	/**
+	 * @return string
+	 * @throws HtmlBuilderException
+	 */
+	public function __toString() {
+		return $this->getMarkup();
 	}
 
 	/**
@@ -92,4 +120,29 @@ abstract class AbstractView implements HtmlViewInterface
 	public function getClone() {
 		return clone $this;
 	}
+
+	/**
+	 * @return string|null
+	 */
+	public function getBasePath() {
+		return $this->basePath;
+	}
+
+	/**
+	 * @param string|null $basePath
+	 */
+	public function setBasePath( $basePath ) {
+		$this->basePath = (string)$basePath;
+	}
+
+	public function getFullPath() {
+		$fullPath = [];
+		$fullPath[] = trim( (string)$this->getBasePath() );
+		$fullPath[] = trim( (string)$this->getTemplatePath() );
+		$fullPath = implode( '/', $fullPath );
+		$fullPath = preg_replace( '#/+#', '/', $fullPath );
+
+		return trim( $fullPath, '/' );
+	}
+
 }

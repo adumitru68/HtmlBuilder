@@ -49,26 +49,10 @@ trait MarkupGenerator
 
 	/**
 	 * Display Html content
+	 * @throws HtmlBuilderException
 	 */
-	public function render() {
-		if ( function_exists( 'tidy_parse_string' ) && 1 === 2 ) {
-			echo tidy_parse_string(
-				$this->getMarkup(),
-				array(
-					'show-body-only' => true,
-					'indent' => true,
-					'wrap' => 1000,
-					'drop-empty-elements' => false,
-//					'new-blocklevel-tags' => TagsCollection::getInstance()->getNewTags( true ),
-//					'new-empty-tags' => TagsCollection::getInstance()->getNewClosedTags( true ),
-//					'new-inline-tags' => TagsCollection::getInstance()->getNewInlineTags( true ),
-//					'new-pre-tags' => '',
-				)
-			);
-		} else {
-			echo $this->getMarkup();
-		}
-
+	public function output() {
+		echo $this->getMarkup();
 	}
 
 	private function makeTag( $attributes, $content = '' ) {
