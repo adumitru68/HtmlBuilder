@@ -15,11 +15,10 @@ class Test extends TestCase
     /**
      * @test
      * @throws HtmlBuilderException
-     * @throws HtmlBuilderException
      * @throws CommonException
      */
-    public function createHead() {
-        $image = Html::img('image')->alt('image');
+    public function createImg() {
+        $image = Html::img('image')->lazyLoading()->alt('image');
 
         $expected = file_get_contents(__DIR__  . '/' . 'expected-tag.txt');
         $actual = $image->getMarkup();

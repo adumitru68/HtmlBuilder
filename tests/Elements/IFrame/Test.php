@@ -14,10 +14,11 @@ class Test extends TestCase
 {
 
 	/**
+	 * @test
 	 * @throws CommonException
 	 * @throws HtmlBuilderException
 	 */
-	public function testIframe() {
+	public function createIframe() {
 		$iframe = Html::iframe('iframe')->lazyLoading();
 
 		$expected = file_get_contents(__DIR__  . '/' . 'expected-tag.txt');
