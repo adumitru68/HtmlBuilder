@@ -8,7 +8,7 @@ use PHPUnit\Framework\TestCase;
 use Qpdb\Common\Exceptions\CommonException;
 use Qpdb\HtmlBuilder\Exceptions\HtmlBuilderException;
 use Qpdb\HtmlBuilder\Html;
-use Qpdb\Tests\Strings;
+use Qpdb\Tests\TestStrings;
 
 class Test extends TestCase
 {
@@ -48,6 +48,6 @@ class Test extends TestCase
         $actual = $div->getMarkup();
         $expected = file_get_contents(__DIR__ . '/expected-input.txt');
 
-        self::assertEquals(Strings::removeAllSpacesFromString($expected), Strings::removeAllSpacesFromString($actual));
+        self::assertEquals(TestStrings::removeAllSpacesFromString($expected), TestStrings::removeAllSpacesFromString($actual));
     }
 }

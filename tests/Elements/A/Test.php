@@ -8,7 +8,7 @@ use PHPUnit\Framework\TestCase;
 use Qpdb\Common\Exceptions\CommonException;
 use Qpdb\HtmlBuilder\Exceptions\HtmlBuilderException;
 use Qpdb\HtmlBuilder\Html;
-use Qpdb\Tests\Strings;
+use Qpdb\Tests\TestStrings;
 
 class Test extends TestCase
 {
@@ -28,7 +28,7 @@ class Test extends TestCase
         $actual = $a->getMarkup();
         $expected = file_get_contents(__DIR__ . '/expected-input-target-blank.txt');
 
-        self::assertEquals(Strings::removeAllSpacesFromString($expected), Strings::removeAllSpacesFromString($actual));
+        self::assertEquals(TestStrings::removeAllSpacesFromString($expected), TestStrings::removeAllSpacesFromString($actual));
     }
 
     /**
@@ -46,7 +46,7 @@ class Test extends TestCase
         $actual = $a->getMarkup();
         $expected = file_get_contents(__DIR__ . '/expected-input-target-self.txt');
 
-        self::assertEquals(Strings::removeAllSpacesFromString($expected), Strings::removeAllSpacesFromString($actual));
+        self::assertEquals(TestStrings::removeAllSpacesFromString($expected), TestStrings::removeAllSpacesFromString($actual));
     }
 
     /**
@@ -64,7 +64,7 @@ class Test extends TestCase
         $actual = $a->getMarkup();
         $expected = file_get_contents(__DIR__ . '/expected-input-target-parent.txt');
 
-        self::assertEquals(Strings::removeAllSpacesFromString($expected), Strings::removeAllSpacesFromString($actual));
+        self::assertEquals(TestStrings::removeAllSpacesFromString($expected), TestStrings::removeAllSpacesFromString($actual));
     }
 
     /**
@@ -82,7 +82,7 @@ class Test extends TestCase
         $actual = $a->getMarkup();
         $expected = file_get_contents(__DIR__ . '/expected-input-target-top.txt');
 
-        self::assertEquals(Strings::removeAllSpacesFromString($expected), Strings::removeAllSpacesFromString($actual));
+        self::assertEquals(TestStrings::removeAllSpacesFromString($expected), TestStrings::removeAllSpacesFromString($actual));
     }
 
     /**
@@ -101,6 +101,6 @@ class Test extends TestCase
         $actual = $a->getMarkup();
         $expected = file_get_contents(__DIR__ . '/expected-input-label-method.txt');
 
-        self::assertEquals(Strings::removeAllSpacesFromString($expected), Strings::removeAllSpacesFromString($actual));
+        self::assertEquals(TestStrings::removeAllSpacesFromString($expected), TestStrings::removeAllSpacesFromString($actual));
     }
 }

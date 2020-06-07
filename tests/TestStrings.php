@@ -4,7 +4,7 @@
 namespace Qpdb\Tests;
 
 
-class Strings
+class TestStrings
 {
     /**
      * @param $content

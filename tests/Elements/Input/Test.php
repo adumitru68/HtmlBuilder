@@ -8,7 +8,7 @@ use PHPUnit\Framework\TestCase;
 use Qpdb\Common\Exceptions\CommonException;
 use Qpdb\HtmlBuilder\Exceptions\HtmlBuilderException;
 use Qpdb\HtmlBuilder\Html;
-use Qpdb\Tests\Strings;
+use Qpdb\Tests\TestStrings;
 
 class Test extends TestCase
 {
@@ -24,7 +24,7 @@ class Test extends TestCase
         $actual = $button->getMarkup();
         $expected = file_get_contents(__DIR__ . '/expected-input-button.txt');
 
-        self::assertEquals(Strings::removeAllSpacesFromString($expected), Strings::removeAllSpacesFromString($actual));
+        self::assertEquals(TestStrings::removeAllSpacesFromString($expected), TestStrings::removeAllSpacesFromString($actual));
     }
 
     /**
@@ -47,7 +47,7 @@ class Test extends TestCase
         $actual = $form->getMarkup();
         $expected = file_get_contents(__DIR__ . '/expected-input-form-with-many-inputs.txt');
 
-        self::assertEquals(Strings::removeAllSpacesFromString($expected), Strings::removeAllSpacesFromString($actual));
+        self::assertEquals(TestStrings::removeAllSpacesFromString($expected), TestStrings::removeAllSpacesFromString($actual));
     }
 
     /**
@@ -67,7 +67,7 @@ class Test extends TestCase
         $actual = $multipleSelect->getMarkup();
         $expected = file_get_contents(__DIR__ . '/expected-input-multiple-select.txt');
 
-        self::assertEquals(Strings::removeAllSpacesFromString($expected), Strings::removeAllSpacesFromString($actual));
+        self::assertEquals(TestStrings::removeAllSpacesFromString($expected), TestStrings::removeAllSpacesFromString($actual));
     }
 
     /**
@@ -82,7 +82,7 @@ class Test extends TestCase
         $actual = $reset->getMarkup();
         $expected = file_get_contents(__DIR__ . '/expected-input-reset.txt');
 
-        self::assertEquals(Strings::removeAllSpacesFromString($expected), Strings::removeAllSpacesFromString($actual));
+        self::assertEquals(TestStrings::removeAllSpacesFromString($expected), TestStrings::removeAllSpacesFromString($actual));
     }
 
 
@@ -103,7 +103,7 @@ class Test extends TestCase
         $actual = $multipleSelect->getMarkup();
         $expected = file_get_contents(__DIR__ . '/expected-input-select.txt');
 
-        self::assertEquals(Strings::removeAllSpacesFromString($expected), Strings::removeAllSpacesFromString($actual));
+        self::assertEquals(TestStrings::removeAllSpacesFromString($expected), TestStrings::removeAllSpacesFromString($actual));
     }
 
     /**
@@ -118,6 +118,6 @@ class Test extends TestCase
         $actual = $reset->getMarkup();
         $expected = file_get_contents(__DIR__ . '/expected-input-submit.txt');
 
-        self::assertEquals(Strings::removeAllSpacesFromString($expected), Strings::removeAllSpacesFromString($actual));
+        self::assertEquals(TestStrings::removeAllSpacesFromString($expected), TestStrings::removeAllSpacesFromString($actual));
     }
 }

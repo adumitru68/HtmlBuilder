@@ -7,7 +7,7 @@ namespace Qpdb\Tests\Elements\Aside;
 use PHPUnit\Framework\TestCase;
 use Qpdb\HtmlBuilder\Exceptions\HtmlBuilderException;
 use Qpdb\HtmlBuilder\Html;
-use Qpdb\Tests\Strings;
+use Qpdb\Tests\TestStrings;
 
 class Test extends TestCase
 {
@@ -21,7 +21,7 @@ class Test extends TestCase
         $actual = $aside->getMarkup();
         $expected = file_get_contents(__DIR__ . '/expected-input.txt');
 
-        self::assertEquals(Strings::removeAllSpacesFromString($expected), Strings::removeAllSpacesFromString($actual));
+        self::assertEquals(TestStrings::removeAllSpacesFromString($expected), TestStrings::removeAllSpacesFromString($actual));
     }
 
     /**
@@ -37,6 +37,6 @@ class Test extends TestCase
         $actual = $aside->getMarkup();
         $expected = file_get_contents(__DIR__ . '/expected-input-with-content.txt');
 
-        self::assertEquals(Strings::removeAllSpacesFromString($expected), Strings::removeAllSpacesFromString($actual));
+        self::assertEquals(TestStrings::removeAllSpacesFromString($expected), TestStrings::removeAllSpacesFromString($actual));
     }
 }
